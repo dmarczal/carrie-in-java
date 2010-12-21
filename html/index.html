@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Progressões Geométricas em Fractais</title>
+<style type="text/css" media="all">
+html, body {height:100%;}
+body {
+	margin:0;
+	padding:0;
+	background:#678fc2;
+	color:gray;
+	font:75%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	text-align:center;
+	}
+#tudo {
+	width:800px;
+	position:relative;  /*Contexto de posicionamento */
+	background:#fff;
+	margin:0 auto;
+	text-align:left;
+	min-height:100%;/**/
+	border: 5px solid #FFF;
+}
+* html #tudo {height: 100%;}
+
+#conteudo {padding-bottom:30px;}
+
+#topo {
+	background:#c8defc;
+	height:50px;
+	border:1px solid #89c0dc;
+	text-align:center;
+	padding-top:1px;
+}
+
+#principal {
+    text-align:justify;
+	border: 5px solid #3593c3;
+}
+
+#rodape {
+	background:#c8defc;
+	width:100%;
+	height:20px;
+	position: absolute;
+	bottom: 0;
+	border:solid 1px #89c0dc;
+	text-align:center;
+}
+
+#rodape p {
+	margin:0;
+	font-weight:bold;
+	color:gray;
+	}
+
+h1, h2, h4 {
+	font:bold 22px Arial, Helvetica, sans-serif;
+	color:gray;
+}
+
+h4 {font-size:16px;}
+.clear {clear:both;}
+
+</style>
+
+</head>
+<body>
+  <div id="tudo">
+    <div id="conteudo">
+        <div id="topo">
+          <h1><b class="dest">Progressões Geométricas em Fractais</h1>
+        </div>
+
+        <div id="principal">
+			<div id="applet">
+			</div>700
+        <div class="clear"></div>
+
+      </div> <!-- Fim da div#conteudo -->
+
+      <div id="rodape">
+        <p> &copy; Projeto Condigital-UFPR, todos os direitos reservados. <a href="http://www.c3sl.ufpr.br">UFPR</a>.<br />
+      </div>
+</div> <!-- Fim da div#tudo -->
+
+</body>
+<script type="text/javascript">	document.getElementById("applet").innerHTML = "<applet code='org.c3sl.ufpr.br.main.Fractal.class' width='790' height='600'> "
+	+ "<param name='archive' value='jars/fractal.jar, jars/mysql-connector-java-5.0.8-bin.jar, jars/db4o-7.12.156.14667-all-java5.jar' >" 
+	+ "</applet>";
+</script>
+</html>

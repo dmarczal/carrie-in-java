@@ -1,0 +1,44 @@
+<project name="CARRIE" default="run" basedir=".">
+    <property name="lib.dir" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean">
+       <!-- <delete dir="bin"/> -->
+    </target>
+	
+    <target name="compile" depends="clean">
+        <mkdir dir="bin" />
+
+       <copy  todir="bin">
+         <fileset dir="src" excludes="**/*.java"/>
+         <fileset dir="fractal" excludes="**/*.java"/>
+       </copy>
+       <javac srcdir="src:fractal" destdir="bin" classpathref="classpath" 
+ 			executable="/home/marczal/jdk1.6.0_21/bin/javac" compiler="extJavac" >
+       </javac>
+        <echo>Compile Sucessfull</echo>
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <copy file="lib/mysql-connector-java-5.0.8-bin.jar" todir="html/jars" overwrite="true" />
+        <jar destfile="html/jars/fractal.jar" basedir="bin">
+        </jar>
+        <echo>The Jar File was sucessfull generated!!</echo>
+    </target>
+
+	 <target name="run" depends="jar">
+	    <property name="browser" location="/usr/bin/firefox"/>
+	    <property name="file" location="html/index.html"/>
+
+            <!-- <exec executable="${browser}" spawn="true">
+	        <arg value="${file}"/>
+            </exec> -->
+
+	    <echo>Browser Opened</echo>
+	  </target>
+	
+</project>
