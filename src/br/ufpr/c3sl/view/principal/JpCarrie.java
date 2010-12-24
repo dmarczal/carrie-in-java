@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import br.ufpr.c3sl.connection.Internet;
 import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
@@ -19,6 +20,7 @@ import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.model.User;
+import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
 import br.ufpr.c3sl.view.footer.JpMenuBarFooter;
 import br.ufpr.c3sl.view.user.InitialDialog;
@@ -43,7 +45,7 @@ public class JpCarrie extends JPanel{
 
 	private static final Border BORDER = BorderFactory.createEtchedBorder();
 
-	private static JpCarrie carrie = new JpCarrie();
+	private static JpCarrie carrie = new JpCarrie(true);
 
 	private static Font FONT = new Font("Arial", Font.PLAIN, 6);
 	private static Font FONT_TITLE = new Font("Arial", Font.BOLD, 14);
@@ -59,23 +61,15 @@ public class JpCarrie extends JPanel{
 	}
 
 	public static void newInstance(){
-		carrie = new JpCarrie();
+		carrie = new JpCarrie(false);
 	}
-	
-//	private void resetCarrie(){
-//		jpHeader = new JPanel(new BorderLayout());
-//		jpBody = new JPanel(new BorderLayout());
-//		jpFooter  = new JPanel();
-//		jpMenuFooter = new JpMenuBarFooter();
-//		jpFontSize = new JPanel();
-//		create();
-//	}
 	
 	/**
 	 * Private Constructor , initialize variables
 	 */ 
-	private JpCarrie(){
-		InitialDialog.showDialog();
+	private JpCarrie(boolean showDialogMode){
+		if (showDialogMode)
+			InitialDialog.showDialog();
 		jpHeader = new JPanel(new BorderLayout());
 		jpBody = new JPanel(new BorderLayout());
 		jpFooter  = new JPanel();
@@ -129,7 +123,7 @@ public class JpCarrie extends JPanel{
 		String email = "";
 		String mode =  "";
 
-		User user = Util.getCurrentUserl();
+		User user = Session.getCurrentUser();
 		if(user != null){
 			email = user.getEmail();
 			mode =  user.getMode();	
@@ -198,8 +192,8 @@ public class JpCarrie extends JPanel{
 	private void setLookAndFell() {
 		try {
 			// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			//	UIManager.getCrossPlatformLookAndFeelClassName());
-			//	UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			// UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			// UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -229,12 +223,14 @@ public class JpCarrie extends JPanel{
 		panel.setName(name);
 		jpMenuFooter.addPanelToPaginator(panel);
 	}
-
+		
 	/**
 	 *  Save the main panel state 
 	 *  @param mistake information about the mistake
 	 */
 	public void saveState(final MistakeInfo mistakeInfo){
+		Internet.verifyConnection();
+		
 		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
@@ -243,7 +239,7 @@ public class JpCarrie extends JPanel{
 				mistake.setLearningObject(JpCarrie.this.getName());
 				mistake.setMistakeInfo(mistakeInfo);
 				mistake.setObject(ObjectByteArray.getByteOfArray(jpMain));
-				mistake.setUser(Util.getCurrentUserl());
+				mistake.setUser(Session.getCurrentUser());
 
 				DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 				MistakeDAO mistakedao = dao.getMistakeDAO();
@@ -258,14 +254,13 @@ public class JpCarrie extends JPanel{
 		});
 	}
 
+	
 	public void loadDataFromBD() {
 		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 		MistakeDAO mistakedao = dao.getMistakeDAO();
 
-		List<Mistake> list = mistakedao.getAll(Util.getCurrentUserl(), this.getName());
+		List<Mistake> list = mistakedao.getAll(Session.getCurrentUser(), this.getName());
 
-		System.out.println(list.size());
-		
 		for (Mistake mistake : list) {
 			jpMenuFooter.addErrorToMenu(mistake);
 		}

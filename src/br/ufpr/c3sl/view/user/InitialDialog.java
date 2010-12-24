@@ -17,10 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import br.ufpr.c3sl.connection.Internet;
 import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.User;
+import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
 
 public class InitialDialog extends JDialog {
@@ -124,6 +126,9 @@ public class InitialDialog extends JDialog {
 	private void configureSession(){
 		DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
 		
+		Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
+				"\n seu modo de execução foi alterado para local");
+			
 		System.out.println(DAOFactory.DATABASE_CHOOSE);
 		
 		DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
@@ -145,7 +150,7 @@ public class InitialDialog extends JDialog {
 			}
 		}
 		user.setMode(mode);
-		Util.setCurrentUserl(user);
+		Session.setCurrentUser(user);
 		this.dispose();
 	}
 
