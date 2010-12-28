@@ -9,9 +9,11 @@ public class User {
 	private String mode;
 	private int id;
 	private Long time;
+	private boolean newRecord;
 	
 	public User(){
 		time = new Date().getTime();
+		newRecord = true;
 	}
 	
 	public Timestamp getCreatedAt() {
@@ -49,5 +51,17 @@ public class User {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public boolean isNewRecord(){
+		return newRecord;
+	}
+	
+	public void setNotNewRecord(){
+		newRecord = false;
+	}
+	
+	public void setNewRecord(){
+		newRecord = true;
 	}
 }

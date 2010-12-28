@@ -8,5 +8,5 @@ public interface UserDAO {
   int insert(User user) throws UserException;
   boolean delete(int id);
   User findByEmail(String email);
-  
+  User findOrCreateByEmail(String email) throws UserException;
 }

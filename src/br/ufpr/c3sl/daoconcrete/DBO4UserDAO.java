@@ -30,10 +30,27 @@ public class DBO4UserDAO implements UserDAO{
 		_user.setCreatedAt(null);
 		ObjectSet<User> result = dbo.queryByExample(_user);
 		
-		if (result.hasNext())
+		if (result.hasNext()){
 			user = result.next();
+			user.setNotNewRecord();
+		}
 		dbo.close();
 		
+
+		return user;
+	}
+
+	@Override
+	public User findOrCreateByEmail(String email) throws UserException {
+		User user = findByEmail(email); 
+		
+		if(user == null){
+			user = new User(email);
+			insert(user);
+			user = findByEmail(email);
+			user.setNewRecord();
+		}
+		 
 		return user;
 	}
 

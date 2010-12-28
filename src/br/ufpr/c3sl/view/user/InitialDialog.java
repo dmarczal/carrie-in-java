@@ -44,6 +44,7 @@ public class InitialDialog extends JDialog {
 	private JLabel lbErrors;
 
 	public InitialDialog() {
+		setTitle("Configuraçào Inicial");
 		setModal(true);	
 		buildDialog();
 	}
@@ -125,32 +126,28 @@ public class InitialDialog extends JDialog {
 
 	private void configureSession(){
 		DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
-		
+
 		Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
-				"\n seu modo de execução foi alterado para local");
-			
+		"\n seu modo de execução foi alterado para local");
+
 		System.out.println(DAOFactory.DATABASE_CHOOSE);
-		
+
 		DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 		UserDAO userDAO = bd.getUserDAO();
 
 		String email = jtfEmail.getText();
 		String mode = jrbLocal.isSelected() ? "Local" : "Server";
-		
-		User user = userDAO.findByEmail(email); 
-		
-		if(user == null){
-			try {
-				user = new User(email);
-				userDAO.insert(user);
-				user = userDAO.findByEmail(email);
+
+		try {
+			User user = userDAO.findOrCreateByEmail(email);
+			if(user.isNewRecord()){
 				JOptionPane.showMessageDialog(this, "Novo Cadastro Realizado Com Sucesso");
-			} catch (UserException e) {
-				e.printStackTrace();
 			}
+			user.setMode(mode);
+			Session.setCurrentUser(user);
+		} catch (UserException e) {
+			e.printStackTrace();
 		}
-		user.setMode(mode);
-		Session.setCurrentUser(user);
 		this.dispose();
 	}
 

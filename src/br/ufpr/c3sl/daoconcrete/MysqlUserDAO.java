@@ -47,6 +47,7 @@ public class MysqlUserDAO implements UserDAO{
 			ResultSet rset = pstmt.executeQuery();
 			if (rset.next())
 				return createUser(rset);
+			
 			return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,6 +59,21 @@ public class MysqlUserDAO implements UserDAO{
 		User user = new User(rset.getString("email"));
 		user.setCreatedAt(rset.getTimestamp("created_at").getTime());
 		user.setId(rset.getInt("id"));
+		user.setNotNewRecord();
+		return user;
+	}
+	
+	@Override
+	public User findOrCreateByEmail(String email) throws UserException {
+		User user = findByEmail(email); 
+		
+		if(user == null){
+			user = new User(email);
+			insert(user);
+			user = findByEmail(email);
+			user.setNewRecord();
+		}
+		 
 		return user;
 	}
 }

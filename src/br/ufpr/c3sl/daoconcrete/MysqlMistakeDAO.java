@@ -39,6 +39,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 			pstmt.setTimestamp(9, mistake.getCreatedAt());
 
 			int rowAfecteds = pstmt.executeUpdate();
+			c.close();
 			return rowAfecteds;
 		} catch (SQLException e) {
 			throw new UserException(e.getMessage());
@@ -62,11 +63,11 @@ public class MysqlMistakeDAO implements MistakeDAO{
 				m.setUser(user);
 				list.add(m);
 			}
-
+			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return list; 
 	}
 
@@ -83,5 +84,17 @@ public class MysqlMistakeDAO implements MistakeDAO{
 		mistake.setCreatedAt(rset.getTimestamp("created_at").getTime());
 
 		return mistake;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean delete(Mistake mistake) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
