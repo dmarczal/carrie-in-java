@@ -1,5 +1,9 @@
 package br.ufpr.c3sl.daoconcrete;
 
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+
 import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
 import br.ufpr.c3sl.exception.UserException;
@@ -8,36 +12,26 @@ import br.ufpr.c3sl.model.User;
 import com.db4o.EmbeddedObjectContainer;
 import com.db4o.ObjectSet;
 
-public class DBO4UserDAO implements UserDAO{
+public class DB4OUserDAO implements UserDAO{
 
-	public int insert(User user) throws UserException {
+	public User insert(User user) throws UserException {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
+		user.setCreatedAt(new Date().getTime());
 		dbo.store(user);
-		dbo.close();
-		return 1;
+		return findByEmail(user.getEmail());
 	}
 
 	@Override
-	public boolean delete(int id) {
-		return false;
-	}
-
-	@Override
-	public User findByEmail(String email) {
-		User user = null;
+	public User findByEmail(final String email) {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
-		User _user = new User(email);
-		_user.setCreatedAt(null);
-		ObjectSet<User> result = dbo.queryByExample(_user);
+		User user = new User(email); 
+		ObjectSet<User> result = dbo.queryByExample(user);
 		
 		if (result.hasNext()){
-			user = result.next();
-			user.setNotNewRecord();
+			User _user = result.next();
+			return _user;
 		}
-		dbo.close();
-		
-
-		return user;
+		return null;
 	}
 
 	@Override
@@ -46,9 +40,8 @@ public class DBO4UserDAO implements UserDAO{
 		
 		if(user == null){
 			user = new User(email);
-			insert(user);
-			user = findByEmail(email);
-			user.setNewRecord();
+			user = insert(user);
+			JOptionPane.showMessageDialog(null, "Novo Cadastro Realizado Com Sucesso");
 		}
 		 
 		return user;

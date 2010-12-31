@@ -1,6 +1,7 @@
 package br.ufpr.c3sl.daoconcrete;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.ufpr.c3sl.dao.MistakeDAO;
@@ -16,11 +17,11 @@ import com.db4o.query.Predicate;
 public class DB4OMistake implements MistakeDAO{
 
 	@Override
-	public int insert(Mistake mistake) throws UserException {
+	public Mistake insert(Mistake mistake) throws UserException {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
+		mistake.setCreatedAt(new Date().getTime());
 		dbo.store(mistake);
-		dbo.close();
-		return 1;
+		return mistake;
 	}
 
 	@Override
@@ -38,18 +39,8 @@ public class DB4OMistake implements MistakeDAO{
 
 		ArrayList<Mistake> list = new ArrayList<Mistake>();
 		list.addAll(results);
-		dbo.close();
 
 		return list;
-	}
-
-	/**
-	 * delete a mistake from DB40
-	 * @param id
-	 */
-	public boolean delete(int id) {
-		System.err.println("Está Funcionalidade não está pronta!");
-		return false;
 	}
 
 	/**
@@ -63,7 +54,7 @@ public class DB4OMistake implements MistakeDAO{
 			Mistake found = null;
 			Mistake m = new Mistake();
 			
-			m.setCreatedAt(mistake.getCreatedAt().getTime());
+			m.setCreatedAt(mistake.getCreatedAt());
 			m.setLearningObject(mistake.getLearningObject());
 			m.setUser(mistake.getUser());
 			m.setMistakeInfo(null);
@@ -71,8 +62,7 @@ public class DB4OMistake implements MistakeDAO{
 			
 			found = result.next();
 			dbo.delete(found);
-			
-			dbo.close();
+			dbo.delete(found.getMistakeInfo());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;

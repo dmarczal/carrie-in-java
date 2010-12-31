@@ -1,32 +1,25 @@
 package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 public class User {
 	
 	private String email;
-	private String mode;
-	private int id;
-	private Long time;
-	private boolean newRecord;
+	private Long id;
+	private Long createdAt;
 	
-	public User(){
-		time = new Date().getTime();
-		newRecord = true;
-	}
-	
-	public Timestamp getCreatedAt() {
-		return new Timestamp(time);
-	}
-
-	public void setCreatedAt(Long time) {
-		this.time = time;
-	}
-
 	public User(String email) {
-		this();
+		super();
 		this.email = email;
+	}
+
+	public Long getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Long createdAt) {
+		this.createdAt = createdAt;
 	}
 	
 	public String getEmail() {
@@ -37,31 +30,20 @@ public class User {
 		this.email = email;
 	}
 	
-	public String getMode() {
-		return mode;
-	}
-	
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
-	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	public boolean isNewRecord(){
-		return newRecord;
+	public Timestamp getCreateAtTime(){
+		return new Timestamp(createdAt);
 	}
 	
-	public void setNotNewRecord(){
-		newRecord = false;
-	}
-	
-	public void setNewRecord(){
-		newRecord = true;
+	@Override
+	public String toString() {
+		return email+"/"+id+"/"+createdAt;
 	}
 }

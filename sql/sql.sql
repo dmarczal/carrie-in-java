@@ -1,14 +1,14 @@
 create database carrie;
 
 create table users (
-	id INT NOT NULL AUTO_INCREMENT,
+	id BIGINT NOT NULL AUTO_INCREMENT,
 	email varchar(30) not null unique key,
 	created_at timestamp,
 	PRIMARY KEY (id)
 );
 
 create table mistakes (
-	id INT NOT NULL AUTO_INCREMENT,
+	id BIGINT NOT NULL AUTO_INCREMENT,
 	object longblob,
 	exercise varchar(200),
 	learningObject varchar(200),
@@ -17,7 +17,7 @@ create table mistakes (
 	correctAnswer varchar(400),
 	title varchar(300),
 	created_at timestamp,
-	user_id integer,
+	user_id  BIGINT NOT NULL,
 	
 	PRIMARY KEY (id),
 	
@@ -25,3 +25,18 @@ create table mistakes (
              ON DELETE SET NULL         
 );
 
+
+create table retroactions (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	created_at timestamp,
+	user_id  BIGINT NOT NULL,
+	mistake_id  BIGINT NOT NULL,
+	
+	PRIMARY KEY (id),
+	
+	FOREIGN KEY (user_id) REFERENCES users(id)
+             ON DELETE SET NULL,
+             
+    FOREIGN KEY (mistake_id) REFERENCES users(id)
+             ON DELETE SET NULL         
+);

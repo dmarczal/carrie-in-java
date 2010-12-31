@@ -16,8 +16,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import br.ufpr.c3sl.dao.RetroactionDAO;
+import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
+import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
+import br.ufpr.c3sl.model.Retroaction;
+import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 
@@ -30,7 +35,7 @@ import br.ufpr.c3sl.view.principal.JpCarrie;
  */ 
 @SuppressWarnings("serial")
 public class ErrorMenuBar extends JMenuBar {
-	
+
 	private JMenu menu;
 	private JMenu subMenuerror;
 	private String imagePath = "error_up";
@@ -43,11 +48,11 @@ public class ErrorMenuBar extends JMenuBar {
 		setLocation(getLocation().x, 10);
 		setPreferredSize(new Dimension(32, 32));
 		menu = new JMenu("Menu");
-		
+
 		menu.setName("MenuBar");
 		menu.setToolTipText("Erros Cometidos");
 		menu.addMouseListener(new MenuErrorMouseListener());
-		
+
 		subMenuerror = new JMenu("Erros Cometidos");
 		menu.add(subMenuerror);
 		this.add(menu);
@@ -56,41 +61,41 @@ public class ErrorMenuBar extends JMenuBar {
 	public void update(Graphics g) {
 		Graphics buffer;
 		Image offscreen = null;
-		
+
 		offscreen =  createImage(getSize().width, getSize().height);
 		buffer = offscreen.getGraphics();
-		
+
 		paint(buffer);
 		g.setColor(getParent().getBackground());
 		g.drawImage(offscreen, 0,0, this);
 		buffer.dispose();
 	}
-	
+
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g.setColor(getBackground());
 		g.fillRect(0, 0, getSize().width, getSize().height);
 		g2.drawImage(getToolkit().getImage(Util.getIconURL(getClass(), imagePath)), 0, 0, this);
 	}
-
+	
 	/**
-	 *  Add a error in the menu
+	 *  Add a error in the menu 
 	 *  @param errorInfo A object who has all information about the error
 	 */
 	public void updateMenu(Mistake mistake){
 		JMenuItem item = new JMenuItem(
 				"Erro: " + mistake.getExercise() + " - "
-				+ Util.getDateTimeFormated(mistake.getCreatedAt()));
-		
-		item.setToolTipText(mistake.getDescription());
+				+ Util.getDateTimeFormated(mistake.getCreatedAtTime()));
+
+		item.setToolTipText(mistake.getMistakeInfo().getDescription());
 		item.addActionListener(new MenuMistakeItemListener(mistake));
 
 		subMenuerror.add(item);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
-	
+
 	private class MenuErrorMouseListener implements MouseListener {
-		
+
 		public void mouseClicked(MouseEvent e) {}
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {
@@ -110,24 +115,40 @@ public class ErrorMenuBar extends JMenuBar {
 	private class MenuMistakeItemListener implements ActionListener {
 
 		private Mistake mistake;
-		
+
 		public MenuMistakeItemListener(Mistake mistake) {
 			this.mistake = mistake;
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			JFrame frame = new JFrame();
-	        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
+			RetroactionDAO retroactionDao = dao.getRetroactionDAO();
+			
+			Retroaction retroaction = new Retroaction();
+			retroaction.setMistake(mistake);
+			retroaction.setUser(Session.getCurrentUser());
+			
+			try {
+				retroactionDao.insert(retroaction);
+			} catch (UserException e1) {
+				e1.printStackTrace();
+			}
+			
+			JFrame frame = new JFrame("Retroação a Erro");
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-	        JPanel clone = (JPanel) ObjectByteArray.getObject(mistake.getObject());
-	        Util.updateStaticFields(clone);
-	        clone.setPreferredSize(clone.getSize());
-	        
-	        //Display the window.
-	        frame.setContentPane(clone);
-	        frame.pack();
-	        frame.setLocationRelativeTo(JpCarrie.getInstance());
-	        frame.setVisible(true);
+			JPanel clone = (JPanel) ObjectByteArray.getObject(mistake.getObject());
+			Util.updateStaticFields(clone);
+			//clone.setName(clone.getName() + " - Retroação");
+
+			clone.setPreferredSize(clone.getSize());
+
+			//Display the window.
+			frame.setContentPane(clone);
+			
+			frame.pack();
+			frame.setLocationRelativeTo(JpCarrie.getInstance());
+			frame.setVisible(true);
 		}		
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 
+import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 
 @SuppressWarnings("serial")
@@ -40,6 +41,7 @@ public class JAppletCarrie extends JApplet {
 	@Override
 	public void destroy() {
 		JpCarrie.newInstance();
+		DB4ODAOFactory.getConnection().close();
 		super.destroy();
 	}
 }

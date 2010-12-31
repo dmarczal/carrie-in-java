@@ -10,10 +10,12 @@ import javax.swing.JPanel;
 
 import br.ufpr.c3sl.connection.Internet;
 import br.ufpr.c3sl.dao.MistakeDAO;
+import br.ufpr.c3sl.dao.RetroactionDAO;
 import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
+import br.ufpr.c3sl.model.Retroaction;
 import br.ufpr.c3sl.model.User;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
@@ -114,33 +116,49 @@ public class JpMenuBarFooter extends JPanel {
 		DAOFactory daoServer = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		MistakeDAO mistakeDaoS = daoServer.getMistakeDAO();
 		UserDAO userDao = daoServer.getUserDAO();
-
+		RetroactionDAO retroactionDAOS = daoServer.getRetroactionDAO();
+		
 		DAOFactory daoLocal = DAOFactory.getDAOFactory(DAOFactory.DB4O);
 		MistakeDAO mistakeDaoL = daoLocal.getMistakeDAO();
-
+		RetroactionDAO retroactionDAOL = daoLocal.getRetroactionDAO();
+		
 		try {
 			User user = userDao.findOrCreateByEmail(Session.getCurrentUser().getEmail());
-		
-			if (user.isNewRecord())
-				JOptionPane.showMessageDialog(this, "Novo cadastro no servidor realizado com sucesso");
 		
 			List<Mistake> list = mistakeDaoL.getAll(user,
 					JpCarrie.getInstance().getName());
 
 			for (Mistake mistake : list) {
+				List<Retroaction> retroactionList = retroactionDAOL.getAll(mistake);
 				mistakeDaoL.delete(mistake);
+				
 				mistake.setUser(user);
-				mistakeDaoS.insert(mistake);
+				mistake = mistakeDaoS.insert(mistake);
+				
+				for (Retroaction retroaction : retroactionList) {
+					retroactionDAOL.delete(retroaction);
+					
+					retroaction.setUser(user);
+					retroaction.setMistake(mistake);
+					retroactionDAOS.insert(retroaction);
+				}
 			}
 
 			JOptionPane.showMessageDialog(null, "Os dados foram atualizados com sucesso!!!");
 			imgButtonSendServer.setVisible(false);
+			resetMenuBar();
 
 		} catch (UserException e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void resetMenuBar(){
+		this.remove(errorMenuBar);
+		errorMenuBar = null;
+		validate();
+	}
+	
 	/**
 	 *  add a panel to the paginator
 	 *  @param jPanel to be added

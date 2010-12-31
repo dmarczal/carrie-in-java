@@ -8,8 +8,7 @@ import br.ufpr.c3sl.model.User;
 
 public interface MistakeDAO {
 
-	int insert(Mistake mistake) throws UserException;
+	Mistake insert(Mistake mistake) throws UserException;
 	List<Mistake> getAll(User user, String learningObjectString);
-	boolean delete(int id);
 	boolean delete(Mistake mistake);
 }

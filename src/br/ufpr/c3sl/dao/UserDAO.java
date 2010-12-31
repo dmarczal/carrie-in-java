@@ -5,8 +5,7 @@ import br.ufpr.c3sl.model.User;
 
 public interface UserDAO {
 
-  int insert(User user) throws UserException;
-  boolean delete(int id);
+  User insert(User user) throws UserException;
   User findByEmail(String email);
   User findOrCreateByEmail(String email) throws UserException;
 }

@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.daoFactory.MysqlDAOFactory;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
+import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.model.User;
 
 
@@ -22,26 +24,40 @@ public class MysqlMistakeDAO implements MistakeDAO{
 	private static final String FIND_BY_USER = "SELECT * FROM mistakes " +
 			"WHERE user_id LIKE ? and learningObject LIKE ?";
 
-
-	public int insert(Mistake mistake) throws UserException {
+	/**
+	 * insert
+	 * @param mistake
+	 * @return mistake The mistake inserted	
+	 */
+	public Mistake insert(Mistake mistake) throws UserException {
 		Connection c = MysqlDAOFactory.createConnection();
 		PreparedStatement pstmt;
+		
+		if (mistake.getCreatedAt() == null)
+			mistake.setCreatedAt(new Date().getTime());
+		
 		try {
 			pstmt = c.prepareStatement(INSERT);
 			pstmt.setBytes(1, mistake.getObject());
 			pstmt.setString(2, mistake.getExercise());
 			pstmt.setString(3, mistake.getLearningObject());
-			pstmt.setString(4, mistake.getDescription());
-			pstmt.setString(5, mistake.getAnswer());
-			pstmt.setString(6, mistake.getCorrectAnswer());
-			pstmt.setString(7, mistake.getTitle());
-			pstmt.setInt(8, mistake.getUser().getId());
-			pstmt.setTimestamp(9, mistake.getCreatedAt());
+			pstmt.setString(4, mistake.getMistakeInfo().getDescription());
+			pstmt.setString(5, mistake.getMistakeInfo().getAnswer());
+			pstmt.setString(6, mistake.getMistakeInfo().getCorrectAnswer());
+			pstmt.setString(7, mistake.getMistakeInfo().getTitle());
+			pstmt.setLong(8, mistake.getUser().getId());
+			pstmt.setTimestamp(9, mistake.getCreatedAtTime());
 
-			int rowAfecteds = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			ResultSet rset = pstmt.getGeneratedKeys();
+			rset.next();
+			Long idGenerated = rset.getLong(1);
+			mistake.setId(idGenerated);
+			pstmt.close();
 			c.close();
-			return rowAfecteds;
+			return mistake;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new UserException(e.getMessage());
 		}
 	}
@@ -54,7 +70,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 		PreparedStatement pstmt;
 		try {
 			pstmt = c.prepareStatement(FIND_BY_USER);
-			pstmt.setInt(1, user.getId());
+			pstmt.setLong(1, user.getId());
 			pstmt.setString(2, learningObject);
 			rset = pstmt.executeQuery();
 			
@@ -63,6 +79,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 				m.setUser(user);
 				list.add(m);
 			}
+			pstmt.close();
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,23 +90,19 @@ public class MysqlMistakeDAO implements MistakeDAO{
 
 	private Mistake createMistake(ResultSet rset) throws SQLException {
 		Mistake mistake = new Mistake();
-		mistake.setId(rset.getInt("id"));
+		mistake.setId(rset.getLong("id"));
 		mistake.setObject(rset.getBytes("object"));
 		mistake.setExercise(rset.getString("exercise"));
 		mistake.setLearningObject(rset.getString("learningObject"));
-		mistake.setDescription(rset.getString("description"));
-		mistake.setAnswer(rset.getString("answer"));
-		mistake.setCorrectAnswer(rset.getString("correctAnswer"));
-		mistake.setTitle(rset.getString("title"));
 		mistake.setCreatedAt(rset.getTimestamp("created_at").getTime());
+		
+		MistakeInfo mistakeInfo = new MistakeInfo(rset.getString("title"),
+				rset.getString("answer"), rset.getString("correctAnswer"),
+				rset.getString("description"));
+		
+		mistake.setMistakeInfo(mistakeInfo);
 
 		return mistake;
-	}
-
-	@Override
-	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	@Override

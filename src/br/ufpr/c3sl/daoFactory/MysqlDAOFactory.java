@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import br.ufpr.c3sl.dao.MistakeDAO;
+import br.ufpr.c3sl.dao.RetroactionDAO;
+import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoconcrete.MysqlMistakeDAO;
+import br.ufpr.c3sl.daoconcrete.MysqlRetroactionDAO;
 import br.ufpr.c3sl.daoconcrete.MysqlUserDAO;
 
 public class MysqlDAOFactory extends DAOFactory {
@@ -33,11 +36,17 @@ public class MysqlDAOFactory extends DAOFactory {
 		return null;
 	}
 
-	public MysqlUserDAO getUserDAO() {
+	public UserDAO getUserDAO() {
 		return new MysqlUserDAO();
 	}
 
 	public MistakeDAO getMistakeDAO() {
 		return new MysqlMistakeDAO();
+	}
+
+	@Override
+	public RetroactionDAO getRetroactionDAO() {
+		// TODO Auto-generated method stub
+		return new MysqlRetroactionDAO();
 	}
 }

@@ -126,7 +126,7 @@ public class JpCarrie extends JPanel{
 		User user = Session.getCurrentUser();
 		if(user != null){
 			email = user.getEmail();
-			mode =  user.getMode();	
+			mode =  Session.getMode();	
 		}
 
 		JLabel lbemail = new JLabel("Olá " + email);
@@ -245,7 +245,7 @@ public class JpCarrie extends JPanel{
 				MistakeDAO mistakedao = dao.getMistakeDAO();
 
 				try {
-					mistakedao.insert(mistake);
+					mistake = mistakedao.insert(mistake);
 					jpMenuFooter.addErrorToMenu(mistake);
 				} catch (UserException e) {
 					e.printStackTrace();

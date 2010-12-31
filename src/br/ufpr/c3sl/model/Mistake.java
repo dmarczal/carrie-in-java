@@ -1,7 +1,6 @@
 package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Mistake {
 	
@@ -16,19 +15,23 @@ public class Mistake {
 	
 	private User user;
 	
-	private int id;
+	private Long id;
 	
 	public Mistake(){
-		createdAt = new Date().getTime();
-		mistakeInfo = new  MistakeInfo("", "", "", "");
+		mistakeInfo = null;
+		user = null;
 	}
 	
-	public Timestamp getCreatedAt() {
+	public Timestamp getCreatedAtTime() {
 		return new Timestamp(createdAt);
 	}
 	
 	public void setCreatedAt(Long time) {
 		this.createdAt = time;
+	}
+	
+	public Long getCreatedAt(){
+		return this.createdAt;
 	}
 	
 	public byte[] getObject() {
@@ -43,12 +46,8 @@ public class Mistake {
 		this.mistakeInfo = mistakeInfo;
 	}
 	
-	public String getTitle() {
-		return mistakeInfo.getTitle();
-	}
-	
-	public void setTitle(String title) {
-		this.mistakeInfo.setTitle(title);
+	public MistakeInfo getMistakeInfo(){
+		return this.mistakeInfo;
 	}
 	
 	public String getExercise() {
@@ -67,22 +66,6 @@ public class Mistake {
 		this.learningObject = learningObject;
 	}
 	
-	public String getDescription() {
-		return mistakeInfo.getDescription();
-	}
-	
-	public void setDescription(String description) {
-		this.mistakeInfo.setDescription(description);
-	}
-	
-	public String getAnswer() {
-		return mistakeInfo.getAnswer();
-	}
-	
-	public void setAnswer(String answer) {
-		this.mistakeInfo.setAnswer(answer);
-	}
-	
 	public User getUser() {
 		return user;
 	}
@@ -91,19 +74,11 @@ public class Mistake {
 		this.user = user;
 	}
 	
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
-	}
-	
-	public String getCorrectAnswer() {
-		return mistakeInfo.getCorrectAnswer();
-	}
-
-	public void setCorrectAnswer(String correctAnswer) {
-		this.mistakeInfo.setCorrectAnswer(correctAnswer);
 	}
 }

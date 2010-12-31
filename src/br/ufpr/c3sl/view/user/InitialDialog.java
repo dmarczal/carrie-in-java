@@ -12,7 +12,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -135,15 +134,11 @@ public class InitialDialog extends JDialog {
 		DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 		UserDAO userDAO = bd.getUserDAO();
 
-		String email = jtfEmail.getText();
-		String mode = jrbLocal.isSelected() ? "Local" : "Server";
+		String email = jtfEmail.getText(); 
 
 		try {
 			User user = userDAO.findOrCreateByEmail(email);
-			if(user.isNewRecord()){
-				JOptionPane.showMessageDialog(this, "Novo Cadastro Realizado Com Sucesso");
-			}
-			user.setMode(mode);
+			Session.setMode(jrbLocal.isSelected() ? "Local" : "Server");
 			Session.setCurrentUser(user);
 		} catch (UserException e) {
 			e.printStackTrace();
