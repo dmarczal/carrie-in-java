@@ -1,4 +1,4 @@
-package br.ufpr.c3sl.fractal;
+package org.c3sl.ufpr.br.fractal;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;

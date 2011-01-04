@@ -15,7 +15,7 @@
  * along with this program.
  */
 
-package br.ufpr.c3sl.fractal;
+package org.c3sl.ufpr.br.fractal;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -47,9 +47,8 @@ public class JpCarrie extends JPanel{
 
 	private static JpCarrie carrie = new JpCarrie(true);
 
-	private static Font FONT = new Font("Arial", Font.PLAIN, 6);
-	private static Font FONT_TITLE = new Font("Arial", Font.BOLD, 14);
-	
+	private static Font FONT = new Font("Arial", Font.PLAIN, 16);
+	private static Font FONT_TITLE = new Font("Arial", Font.BOLD, 16);
 	private JLabel lbTitle;
 
 	private ImageButton upSizeLetter;
@@ -115,7 +114,7 @@ public class JpCarrie extends JPanel{
 		configureBorder(jpBody);
 		configureBorder(jpFooter);
 	}
-
+	
 	private void configureHeader(){
 		JPanel jpInfo = new JPanel();
 		jpInfo.setLayout(new BoxLayout(jpInfo, BoxLayout.Y_AXIS));
@@ -129,12 +128,16 @@ public class JpCarrie extends JPanel{
 			mode =  Session.getMode();	
 		}
 
-		JLabel lbemail = new JLabel("Olá " + email);
+		JLabel lbemail = new JLabel();
 		lbemail.setFont(FONT);
 		lbemail.setForeground(Color.red);
-		JLabel lbmode = new JLabel("Modo e execução " + mode);
+		lbemail.setText("Olá " + email);
+		
+		JLabel lbmode = new JLabel();	
 		lbmode.setFont(FONT);
 		lbmode.setForeground(Color.red);
+		lbmode.setText("Modo e execução " + mode);
+		
 
 		jpInfo.add(lbemail);
 		jpInfo.add(lbmode);
@@ -145,13 +148,13 @@ public class JpCarrie extends JPanel{
 	private void configTitle() {
 		JPanel jpTitle = new JPanel();
 		lbTitle = new JLabel("Default Title");
-		lbTitle.setFont(FONT_TITLE);
 		jpTitle.add(lbTitle);
 		jpHeader.add(jpTitle, BorderLayout.CENTER);
 	}
 
 	private void updateTitle(){
 		String parte = jpMain.getName().split(":")[0];
+		lbTitle.setFont(FONT_TITLE);
 		lbTitle.setText(this.getName() + " - " + parte);
 	}
 

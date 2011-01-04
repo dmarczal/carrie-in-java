@@ -43,7 +43,7 @@ public class InitialDialog extends JDialog {
 	private JLabel lbErrors;
 
 	public InitialDialog() {
-		setTitle("Configuraçào Inicial");
+		setTitle("Configuração Inicial");
 		setModal(true);	
 		buildDialog();
 	}

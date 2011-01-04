@@ -1,0 +1,59 @@
+-------------------------------------------------- ---------------------- 
+Reflexive Access Controller and Retroactive indexed for Errors (CARRIE) 
+-------------------------------------------------- ---------------------- 
+
+Copyright (c) 2008-2010 Center for Scientific Computing and Free Software 
+Department of Informatics - Federal University of Parana - C3SL/UFPR 
+
+This program is free software; Can you redistribute it and / or modify 
+it under the terms of the GNU General Public License published by the 
+the Free Software Foundation; Either version 3 of the License, or (at 
+your option) any later version. 
+
+This program is distributed in the hope That It Will Be Useful, But 
+WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+General Public License for more details. 
+
+You Should Have received a copy of the GNU General Public License 
+along with this program. 
+
+-------------------------------------------------------------------- 
+CARRIE Description
+--------------------------------------------------------------------
+
+CARRIE is a framework to create Learning Objects (OA). 
+With it you can create OA without concern for the codification of 
+following characteristics: 
+
+(A) paging forward and backward; 
+(B) Access by the general index; 
+(C) Glossary of terms; 
+(D) Calculator; 
+(E) Virtual Keyboard for more natural input operands an expression; 
+(F) Control font size of the text inside the OA; 
+(G) Note Pad; 
+(H) Save the state of application; 
+(I) Access mistakes of the user made previously and long time. 
+
+The CARRIE was built to be a framework for the development of OAs using of Java Applets and
+ Java with Swing JFrames.
+
+First, to use this framework it is necessary to add the jar 
+carrie.jar in the ClassPath of your application. 
+
+After that, for use with Applets is necessary to extend the
+AppletCARRIE class and to use it with JFrames you must
+extend the class JFrameCARRIE. 
+
+After that, you can create your own panels and then to add 
+them in the CARRIE. 
+
+The settings that will be presented can be used both for 
+applets and for the JFrame. But for simplification measure will 
+indicated how these settings apply to Applets.
+
+-------------------------------------------------- ----------------- 
+Adding JPanels in the framework CARRIE
+-------------------------------------------------- -----------------  
+

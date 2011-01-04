@@ -13,18 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import br.ufpr.c3sl.dao.RetroactionDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
-import br.ufpr.c3sl.deepClone.ObjectByteArray;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.Retroaction;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
-import br.ufpr.c3sl.view.principal.JpCarrie;
+import br.ufpr.c3sl.view.retroaction.RetroactionFrame;
 
 /**
  * CARRIE Framework
@@ -115,12 +113,31 @@ public class ErrorMenuBar extends JMenuBar {
 	private class MenuMistakeItemListener implements ActionListener {
 
 		private Mistake mistake;
+		private JFrame frame;
 
 		public MenuMistakeItemListener(Mistake mistake) {
 			this.mistake = mistake;
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			if (frame == null)
+				//Schedule a job for the event-dispatching thread:
+				//creating and showing this application's GUI.
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						frame = RetroactionFrame.createAndShowGUI(mistake);
+						saveRetroaction();
+					}
+				});
+			else{
+				if (!frame.isVisible()){
+					saveRetroaction();
+				}				
+				frame.setVisible(!frame.isVisible());
+			}
+		}
+		
+		private void saveRetroaction(){
 			DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 			RetroactionDAO retroactionDao = dao.getRetroactionDAO();
 			
@@ -133,22 +150,6 @@ public class ErrorMenuBar extends JMenuBar {
 			} catch (UserException e1) {
 				e1.printStackTrace();
 			}
-			
-			JFrame frame = new JFrame("Retroação a Erro");
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-			JPanel clone = (JPanel) ObjectByteArray.getObject(mistake.getObject());
-			Util.updateStaticFields(clone);
-			//clone.setName(clone.getName() + " - Retroação");
-
-			clone.setPreferredSize(clone.getSize());
-
-			//Display the window.
-			frame.setContentPane(clone);
-			
-			frame.pack();
-			frame.setLocationRelativeTo(JpCarrie.getInstance());
-			frame.setVisible(true);
-		}		
+		}
 	}
 }

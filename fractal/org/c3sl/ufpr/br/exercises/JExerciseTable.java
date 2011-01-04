@@ -21,9 +21,9 @@ import javax.swing.table.TableColumn;
 
 import org.c3sl.ufpr.br.correction.Correction;
 import org.c3sl.ufpr.br.correction.CorrectionOne;
+import org.c3sl.ufpr.br.fractal.Drawing;
+import org.c3sl.ufpr.br.fractal.Fractal;
 
-import br.ufpr.c3sl.fractal.Drawing;
-import br.ufpr.c3sl.fractal.Fractal;
 import br.ufpr.c3sl.state.SaveState;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 import br.ufpr.c3sl.virtualkeyboard.events.VirtualKeyBoardEvent;
@@ -187,9 +187,8 @@ public class JExerciseTable extends JTable implements VirtualKeyBoardListener, S
 		if(row == ROW)
 			keyBoard.enableVariableN();
 		
-			
-		keyBoard.setFormula((ElementOfFormula) getValueAt(row, column));
-		keyBoard.setVisible(true);
+		this.keyBoard.setFormula((ElementOfFormula) getValueAt(row, column));
+		this.keyBoard.setVisible(true);
 	}
 	
 	@Override
