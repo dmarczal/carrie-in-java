@@ -1,7 +1,10 @@
 package br.ufpr.c3sl.view;
 
+import java.util.regex.Pattern;
+
 import javax.swing.JFrame;
 
+import br.ufpr.c3sl.mistakes.MistakeOccurrence;
 import br.ufpr.c3sl.view.user.InitialDialog;
 
 
@@ -13,16 +16,25 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Oi");
-		 //Make sure we have nice window decorations.
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        //Create and set up the window.
-        InitialDialog innerframe = new InitialDialog();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Display the window.
-        innerframe.setVisible(true);
+		
+		String m = MistakeOccurrence.getMistakeMessage("1", 1);
+		
+		System.out.println(m);
+		
+		//Pattern patternComment = Pattern.compile("/{2}.*");
+		
+		//System.out.println(patternComment.matcher("// adf").matches());
+		
+//		JFrame frame = new JFrame("Oi");
+//		 //Make sure we have nice window decorations.
+//        JFrame.setDefaultLookAndFeelDecorated(true);
+//
+//        //Create and set up the window.
+//        InitialDialog innerframe = new InitialDialog();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        //Display the window.
+//        innerframe.setVisible(true);
 		
 		
 //		    frame.add(innerframe);
@@ -31,8 +43,8 @@ public class Main {
 //	        } catch (java.beans.PropertyVetoException e) {}
 //		
 		
-		frame.setSize(200,200);
-		frame.setVisible(true);
+//		frame.setSize(200,200);
+//		frame.setVisible(true);
 //		DAOFactory daoLocal = DAOFactory.getDAOFactory(DAOFactory.DB4O);
 		
 		//MistakeDAO mistakeDaoL = daoLocal.getMistakeDAO();

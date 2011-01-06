@@ -46,6 +46,9 @@ After that, for use with Applets is necessary to extend the
 AppletCARRIE class and to use it with JFrames you must
 extend the class JFrameCARRIE. 
 
+IMPORTANT: You need to set the title like this "super.init("Fractal Simulator")" in your init() method
+		
+
 After that, you can create your own panels and then to add 
 them in the CARRIE. 
 
@@ -56,4 +59,18 @@ indicated how these settings apply to Applets.
 -------------------------------------------------- ----------------- 
 Adding JPanels in the framework CARRIE
 -------------------------------------------------- -----------------  
+TODO: Description
+
+-------------------------------------------------- ----------------- 
+Save Mistakes CARRIE
+-------------------------------------------------- -----------------  
+TODO: Description
+
+-------------------------------------------------- ----------------- 
+Mistakes Messages 
+-------------------------------------------------- -----------------  
+TODO: Description
+"/org/c3sl/ufpr/br/mistakes/messages"
+UTF-8
+
 
