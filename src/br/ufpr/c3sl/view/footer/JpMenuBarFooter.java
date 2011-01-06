@@ -19,6 +19,7 @@ import br.ufpr.c3sl.model.Retroaction;
 import br.ufpr.c3sl.model.User;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
+import br.ufpr.c3sl.view.footer.paginator.JpPaginator;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 import br.ufpr.c3sl.view.util.ImageButton;
 
@@ -39,7 +40,7 @@ public class JpMenuBarFooter extends JPanel {
 		addListeners();
 	}
 
-	private JpPaginator getPaginator() {
+	private JpPaginator paginator() {
 		if (jpPaginator == null){
 			jpPaginator = new JpPaginator();
 			this.add(jpPaginator, FlowLayout.LEFT);
@@ -164,7 +165,15 @@ public class JpMenuBarFooter extends JPanel {
 	 *  @param jPanel to be added
 	 */
 	public void addPanelToPaginator(JPanel jPanel){
-		getPaginator().addPanel(jPanel);
+		paginator().addPanel(jPanel);
+	}
+	
+	/**
+	 *  Get the paginator Object
+	 *  @return paginator Objetc
+	 */
+	public JpPaginator getPaginator(){
+		return paginator();
 	}
 
 	/**

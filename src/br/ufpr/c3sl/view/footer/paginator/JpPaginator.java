@@ -1,10 +1,11 @@
-package br.ufpr.c3sl.view.footer;
+package br.ufpr.c3sl.view.footer.paginator;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,9 +37,12 @@ public class JpPaginator extends JPanel {
 	
 	private LinkedHashMap<String, JPanel> list = new LinkedHashMap<String, JPanel>();
 	
+	private List<PaginatorListener> listeners;
+	
 	public JpPaginator() {
 		inicializeVariables();
 		setListeners();
+		listeners = new ArrayList<PaginatorListener>();
 	}
 	
 	private void inicializeVariables(){
@@ -112,6 +116,7 @@ public class JpPaginator extends JPanel {
 		if (++x < jcbList.getItemCount()){
 		  jcbList.setSelectedIndex(x);
 		}
+		paginatorDispacher("AHEAD");
 	};
 	
 	/**
@@ -122,6 +127,7 @@ public class JpPaginator extends JPanel {
 		if (x > 0 && x <= jcbList.getItemCount() ){
 		  jcbList.setSelectedIndex(--x);
 		}
+		paginatorDispacher("BACK");
 	};
 
 	/**
@@ -131,6 +137,8 @@ public class JpPaginator extends JPanel {
 	public void moveToIndex(int index) {
 		if (index >= 0 && index < jcbList.getItemCount())
 			jcbList.setSelectedIndex(index);
+		
+		paginatorDispacher("TO:"+ index);
 	}
 	
 	/**
@@ -138,6 +146,35 @@ public class JpPaginator extends JPanel {
 	 */
 	public void moveToLast() {
 		jcbList.setSelectedIndex(jcbList.getItemCount()-1);
+		paginatorDispacher("LAST");
+	}
+
+	//Listeners
+	public synchronized void addPaginatorListener(PaginatorListener listener) {
+		if(!listeners.contains(listener)) {
+			listeners.add(listener);
+		}
+	}
+
+	public synchronized void removePaginatorListener(PaginatorListener listener) {
+		listeners.remove(listener);
+	}
+	
+	private void paginatorDispacher(Object object) {
+		PaginatorEvent<Object> evento = new PaginatorEvent<Object>(object);
+		
+		for (PaginatorListener listener : getListenerClone()) {
+			listener.paginated(evento);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<PaginatorListener> getListenerClone(){
+		synchronized (this) {
+			// Clonar para evitar problemas de sincronização
+			// durante a propagação
+			return (List<PaginatorListener>) ((ArrayList<PaginatorListener>) listeners).clone();
+		}
 	}
 	
 	private class MyComboBoxRenderer extends BasicComboBoxRenderer {
@@ -161,5 +198,6 @@ public class JpPaginator extends JPanel {
 		}
 
 	}
+
 }
 

@@ -30,6 +30,8 @@ import org.c3sl.ufpr.br.fractal.Drawing;
 import org.c3sl.ufpr.br.fractal.Fractal;
 
 import br.ufpr.c3sl.state.SaveState;
+import br.ufpr.c3sl.view.footer.paginator.PaginatorEvent;
+import br.ufpr.c3sl.view.footer.paginator.PaginatorListener;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 import br.ufpr.c3sl.virtualkeyboard.events.VirtualKeyBoardEvent;
 import br.ufpr.c3sl.virtualkeyboard.formula.ElementOfFormula;
@@ -38,7 +40,7 @@ import br.ufpr.c3sl.virtualkeyboard.listeners.VirtualKeyBoardListener;
 import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 @SuppressWarnings("serial")
-public class JExerciseTable extends JTable implements VirtualKeyBoardListener, SaveState{
+public class JExerciseTable extends JTable implements VirtualKeyBoardListener, SaveState, PaginatorListener{
 
 	private TableModel model = new TableModel();
 	private String axiom;
@@ -65,6 +67,7 @@ public class JExerciseTable extends JTable implements VirtualKeyBoardListener, S
 		configureFractal();
 		buildEventsAndTransientvariables();
 		configureEditable();
+		JpCarrie.getInstance().getPaginator().addPaginatorListener(this);
 	}
 
 	private void configureEditable(){
@@ -235,5 +238,12 @@ public class JExerciseTable extends JTable implements VirtualKeyBoardListener, S
 	public void buildEventsAndTransientvariables() {
 		this.keyBoard = new VirtualKeyBoardMain(false);
 		this.keyBoard.addKeyBoardListener(this);
+	}
+
+	@Override
+	public void paginated(PaginatorEvent<Object> event) {
+		System.out.println(event);
+		this.keyBoard.setVisible(false);
+		closeBallonTip();
 	}
 }

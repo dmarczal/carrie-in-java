@@ -23,6 +23,7 @@ import br.ufpr.c3sl.model.User;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
 import br.ufpr.c3sl.view.footer.JpMenuBarFooter;
+import br.ufpr.c3sl.view.footer.paginator.JpPaginator;
 import br.ufpr.c3sl.view.user.InitialDialog;
 import br.ufpr.c3sl.view.util.ImageButton;
 
@@ -215,6 +216,14 @@ public class JpCarrie extends JPanel{
 
 		updateTitle();
 		SwingUtilities.updateComponentTreeUI(jpBody);		
+	}
+	
+	/**
+	 *  Get the paginator Object
+	 *  @return paginator Objetc
+	 */
+	public JpPaginator getPaginator(){
+		return jpMenuFooter.getPaginator();
 	}
 
 	/**
