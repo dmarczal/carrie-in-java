@@ -60,6 +60,15 @@ indicated how these settings apply to Applets.
 Adding JPanels in the framework CARRIE
 -------------------------------------------------- -----------------  
 TODO: Description
+Remove
+
+-------------------------------------------------- ----------------- 
+Paginator event CARRIE
+-------------------------------------------------- -----------------  
+TODO: Description
+Forward
+Backward
+Any
 
 -------------------------------------------------- ----------------- 
 Save Mistakes CARRIE
@@ -74,11 +83,19 @@ TODO: Description
 UTF-8
 
 -------------------------------------------------- ----------------- 
-Paginator event CARRIE
--------------------------------------------------- -----------------  
-TODO: Description
-Forward
-Backward
-Any
+Page From HTML CARRIE
+-------------------------------------------------- -----------------
+Link with the web
+Link with the Glossary
+Links with the Page
 
+addPageFromHtmlFile
 
+-------------------------------------------------- ----------------- 
+Enunciation From HTML CARRIE
+-------------------------------------------------- -----------------
+Link with the web
+Link with the Glossary
+Links with the Page
+
+addPageFromHtmlFile

@@ -31,6 +31,13 @@ public class JAppletCarrie extends JApplet {
 	}
 	
 	/**
+	 *  add a panel to the paginator from a html file
+	 *  @param String filepath path
+	 */
+	public void addPageFromHtmlFile(String filepath) {
+		carrie.addPageFromHtmlFile(filepath);
+	}
+	/**
 	 *  Set Object Learning name
 	 *  @param name Objet learing name
 	 */

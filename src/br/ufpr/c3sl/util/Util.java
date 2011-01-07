@@ -3,6 +3,10 @@ package br.ufpr.c3sl.util;
 import java.awt.Canvas;
 import java.awt.Component;
 import java.awt.Container;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,16 +30,33 @@ public class Util {
 	
 	/**
 	 * CARRIE Framework
-	 * class JpCarrie the main panel of CARRIE framework
 	 * @param kclass Class to get URL path
 	 * @param imgName name of the icon, the extension is png
 	 */ 
 	public static java.net.URL getIconURL(Class<?> kclass, String imgName) {
-		java.net.URL imgURL = kclass.getResource(ICONS_PATH + imgName + ".png");
+		java.net.URL imgURL = getPath(kclass, ICONS_PATH + imgName + ".png");
 		if (imgURL != null) {
 			return imgURL;
 		} else {
 			System.err.println("Couldn't find file: " + ICONS_PATH + imgName + ".png");
+			return null;
+		}
+	}
+
+	/**
+	 * CARRIE Framework
+	 * Get Full path of a file
+	 * @param kclass Class to get URL path
+	 * @param imgName name of the icon, the extension is png
+	 * @return  URL path
+	 * 			or null if the file not exists 
+	 */ 
+	public static URL getPath(Class<?> clazz, String path){
+		URL fileURL = clazz.getResource(path);
+		if (fileURL != null) {
+			return fileURL;
+		} else {
+			System.err.println("Couldn't find file: " + path);
 			return null;
 		}
 	}
@@ -73,6 +94,26 @@ public class Util {
 			if (!(c instanceof Canvas))
 				updateStaticFields((Container)c);
 		}
+	}
+	
+	public static String getTextFromFile(Class<?> kclass, String filepath){
+		URL url = Util.getPath(kclass, filepath);
+		URLConnection urlcon;
+		try {
+			urlcon = url.openConnection();
+			BufferedReader input = new BufferedReader(new InputStreamReader(urlcon.getInputStream(), "UTF-8"));
+			StringBuffer content = new StringBuffer();
+
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				content.append(line);
+			}
+			
+			return content.toString();
+		} catch (Exception e) {
+			new Exception("Can't find file in: "+ filepath).printStackTrace();
+		}
+		return "";
 	}
 	
 	/**

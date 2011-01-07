@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.view;
 
+import java.net.URL;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -17,9 +18,13 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		String m = MistakeOccurrence.getMistakeMessage("1", 1);
+		//String m = MistakeOccurrence.getMistakeMessage("1", 1);
 		
-		System.out.println(m);
+		//System.out.println(m);
+		
+		URL url = Main.class.getResource("/org/c3sl/ufpr/br/introduction/introductionOne.html");
+		
+		System.out.println(url);
 		
 		//Pattern patternComment = Pattern.compile("/{2}.*");
 		

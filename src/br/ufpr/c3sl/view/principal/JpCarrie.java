@@ -20,8 +20,10 @@ import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.model.User;
+import br.ufpr.c3sl.pageHTML.Html;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
+import br.ufpr.c3sl.view.PageHTML.JPanelHTML;
 import br.ufpr.c3sl.view.footer.JpMenuBarFooter;
 import br.ufpr.c3sl.view.footer.paginator.JpPaginator;
 import br.ufpr.c3sl.view.user.InitialDialog;
@@ -235,6 +237,24 @@ public class JpCarrie extends JPanel{
 		panel.setName(name);
 		jpMenuFooter.addPanelToPaginator(panel);
 	}
+	
+	/**
+	 *  add a panel to the paginator from a html file
+	 *  @param String filepath path
+	 */
+	public void addPageFromHtmlFile(String filepath) {
+		addHtmlContent(Util.getTextFromFile(getClass(), filepath));
+	}
+
+	private void addHtmlContent(String code) {
+		JPanelHTML panel = new JPanelHTML();
+		Html html = new Html(code);
+		panel.setTextualContent(html.getCode());
+		panel.setTitle(html.getTitle());
+		panel.create();
+		addPanel(html.getLegend(), panel);
+	}
+
 		
 	/**
 	 *  Save the main panel state 
