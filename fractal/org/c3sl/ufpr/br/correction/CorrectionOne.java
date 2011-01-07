@@ -1,21 +1,14 @@
 package org.c3sl.ufpr.br.correction;
 
-import java.io.Serializable;
-
 import br.ufpr.c3sl.mistakes.MistakeOccurrence;
 import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.virtualkeyboard.mathevaluator.MathEvaluator;
 
-public class CorrectionOne implements Correction, Serializable{
+public class CorrectionOne extends AbstractCorrection{
 
 	private static final long serialVersionUID = 2412805759758300505L;
 
 	private double firstAnswer;
-	private double correctAnswer, answerDouble;
-
-	transient private MistakeInfo mistake;
-
-	private String message = null;
 
 	@Override
 	public boolean isCorrect(String answer, int row, int column) {
@@ -77,7 +70,7 @@ public class CorrectionOne implements Correction, Serializable{
 	 * @return -1 If size smaller than the correct size
 	 * @return -2 If size bigger than the correct size
 	 */
-	private int compareDouble(double correctAnswer, double answer, double error){
+	public int compareDouble(double correctAnswer, double answer, double error){
 		correctAnswer = correctAnswer * 1000;
 
 		int changeValue = (int) (correctAnswer);
@@ -115,26 +108,9 @@ public class CorrectionOne implements Correction, Serializable{
 		return greaterOrSmaller;
 	}
 
-
-
 	private void saveState(String answer, String correctAnswer, int row, int column){
-				mistake = new MistakeInfo(
-				"Exercise na Iteração "+ row + " " + column, answer, correctAnswer,
-		"Erro no ensino de progressões geométrica");
-	}
-
-	public MistakeInfo getMistakeInfo(){
-		return mistake;
-	}
-
-	public boolean thereIsMessage(){
-		if (this.message != null)
-			return true;
-		else
-			return false;
-	}
-
-	public String getErrorMessage(){
-		return this.message;
+		mistake = new MistakeInfo(
+				"Erro no exercicio 2 Iteração "+ row + " " + column, answer, correctAnswer,
+		"Erro no ensino de progressões geométrica durante o exercício 1");
 	}
 }

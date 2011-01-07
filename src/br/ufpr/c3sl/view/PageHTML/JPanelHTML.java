@@ -57,6 +57,7 @@ public class JPanelHTML extends JPanel{
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public void create() {
 		mainPanel = new JPanel(new BorderLayout()){
 			public Dimension getPreferredSize(){

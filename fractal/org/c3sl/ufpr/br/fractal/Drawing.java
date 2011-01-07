@@ -34,7 +34,7 @@ public class Drawing extends JPanel {
     }
     
     /* Set the boolean value in variable */
-    public void setBoolean(boolean paintExercise){
+    public void setPaintWithColor(boolean paintExercise){
     	this.paintExercise = paintExercise;
     }
     

@@ -2,7 +2,10 @@
 1:
   <html>O valor está incorreto.<br>Você notou que o tamanho do lado deve<br>diminuir em relação
   ao anterior?<br>Tente um outro valor!</html>
- 
+
 2:
   <html>O valor está incorreto.<br>A relação entre o lado atual e o anterior é 1/2 
-  <br> (razão da progressão geométrica).<br>Tente um outro valor!</htm>;	 	 
+  <br> (razão da progressão geométrica).<br>Tente um outro valor!</htm>
+
+3:
+  <html><div><img src="/org/c3sl/ufpr/br/images/sierpinsk.png"></div></html>  	 	 
