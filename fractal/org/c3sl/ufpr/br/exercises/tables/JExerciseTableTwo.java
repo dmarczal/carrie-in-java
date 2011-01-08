@@ -39,4 +39,9 @@ public class JExerciseTableTwo extends JExerciseTable{
 		this.keyBoard.addKeyBoardListener(this);
 	}
 
+	@Override
+	public String[] arrayHeader() {
+		return new String[] {"Iteração", "Fractal", "Tamanho do lado do menor Triângulo"};
+	}
+
 }

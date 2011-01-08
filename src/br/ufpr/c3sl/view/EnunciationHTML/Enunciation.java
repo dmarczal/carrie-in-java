@@ -96,5 +96,8 @@ public class Enunciation extends JPanel implements SaveState {
 		
 		createComonents();
 		jcbShowHideEnun.addActionListener(new ActionListenerjrbShowHideEnun());
+		if (jcbShowHideEnun.isSelected()){
+			panel.setVisible(false);
+		}
 	}
 }

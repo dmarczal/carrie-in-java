@@ -636,6 +636,7 @@ public class VirtualKeyBoardMain extends JFrame {
 				power.setFirstElementOfPower(lastElement);
 			}
 			newNumber();
+			newVariable();
 		}else
 			displayErrorMessage(ERROR_MESSAGE);
 		updateDisplay();
@@ -728,6 +729,7 @@ public class VirtualKeyBoardMain extends JFrame {
 		listOfElementsAdded = new LinkedList<ElementOfFormula>();
 		setElementFocus(formula);
 		listOfElementsAdded.add(formula);
+		clearErrorMessage();
 		updateDisplay();
 	}
 
@@ -938,7 +940,7 @@ public class VirtualKeyBoardMain extends JFrame {
 	public static void createAndShowGUI() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				VirtualKeyBoardMain frame = new VirtualKeyBoardMain(true, false, true, true, true);
+				VirtualKeyBoardMain frame = new VirtualKeyBoardMain(true, true, true, true, true);
 				frame.setVisible(true);
 			}
 		});

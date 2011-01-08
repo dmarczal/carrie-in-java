@@ -124,12 +124,12 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		model.setValueAt(new FormulaInitial(), numberRow, 2);
 	}
 
+	public abstract String[] arrayHeader();
+	
 	private class TableModel extends DefaultTableModel{
 
 		public TableModel() {
-			super(new Object[][]{},
-					new String[] {"Iteração", "Fractal", "Tamanho do lado do menor Triângulo"});
-
+			super(new Object[][]{}, arrayHeader());
 		}
 
 		@Override

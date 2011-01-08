@@ -18,4 +18,9 @@ public class JExerciseTableOne extends JExerciseTable{
 		this.keyBoard = new VirtualKeyBoardMain(false);
 		this.keyBoard.addKeyBoardListener(this);
 	}
+
+	@Override
+	public String[] arrayHeader() {
+		return new String[] {"Iteração", "Fractal", "Tamanho do lado do menor Triângulo"};
+	}
 }
