@@ -1,12 +1,5 @@
 package br.ufpr.c3sl.view;
 
-import java.net.URL;
-import java.util.regex.Pattern;
-
-import javax.swing.JFrame;
-
-import br.ufpr.c3sl.mistakes.MistakeOccurrence;
-import br.ufpr.c3sl.view.user.InitialDialog;
 
 
 
@@ -21,10 +14,10 @@ public class Main {
 		//String m = MistakeOccurrence.getMistakeMessage("1", 1);
 		
 		//System.out.println(m);
-		
-		URL url = Main.class.getResource("/org/c3sl/ufpr/br/introduction/introductionOne.html");
-		
-		System.out.println(url);
+//		
+//		URL url = Main.class.getResource("/org/c3sl/ufpr/br/introduction/introductionOne.html");
+//		
+//		System.out.println(url);
 		
 		//Pattern patternComment = Pattern.compile("/{2}.*");
 		
@@ -52,7 +45,7 @@ public class Main {
 //		frame.setVisible(true);
 //		DAOFactory daoLocal = DAOFactory.getDAOFactory(DAOFactory.DB4O);
 		
-		//MistakeDAO mistakeDaoL = daoLocal.getMistakeDAO();
+//		MistakeDAO mistakeDaoL = daoLocal.getMistakeDAO();
 		//RetroactionDAO retroactionDAOL = daoLocal.getRetroactionDAO();
 		
 //		UserDAO uDao = daoLocal.getUserDAO();
@@ -69,11 +62,28 @@ public class Main {
 		//dbo.store(t);
 		//dbo.close();
 		
-//		List<Mistake> list = mistakeDaoL.getAll(user,
-//				"Fractal Simulator");
+//		List<Mistake> list = mistakeDaoL.getAll(user,"Fractal Simulator");
 //		
 //		Mistake m = list.get(0);
+//	
 //		
+//		JPanel mistakePanel = (JPanel) ObjectByteArray.getObject(m.getObject());
+//		
+//		try {
+//			Class vm = mistakePanel.getClass().forName("br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain");
+//			System.out.println(vm.getField("hashCode"));
+//		} catch (ClassNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (SecurityException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NoSuchFieldException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		};	
+		
+		
 //		List<Retroaction> retroactionList = retroactionDAOL.getAll(m);
 //		
 //		for (Retroaction retroaction : retroactionList) {

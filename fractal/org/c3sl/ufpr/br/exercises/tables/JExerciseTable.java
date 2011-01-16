@@ -6,14 +6,19 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.io.Serializable;
 import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.JViewport;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -52,7 +57,8 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 	transient protected TablecellBalloonTip balloonMessage;
 
 	protected boolean[][] cellEditable;
-
+	private boolean[][] isRowCollumnCorrect;
+	
 	private Correction correction;
 	
 	private int numberRow;
@@ -67,6 +73,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		this.correction = correction;
 		this.numberColumn = numberColumn;
 		this.numberRow = numberRow;
+		this.isRowCollumnCorrect = new boolean[numberRow+1][numberColumn+1];
 		configureModel();
 		configureFractal();
 		buildEventsAndTransientvariables();
@@ -74,17 +81,28 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		JpCarrie.getInstance().getPaginator().addPaginatorListener(this);
 	}
 
+	public boolean isRowCollumnCorrect(int row, int column){
+		return isRowCollumnCorrect[row][column];
+	}
+	
+	public void setRowCollumnCorrect(int row, int column, boolean correct){
+		this.isRowCollumnCorrect[row][column] = correct;
+	}
+	
 	public void configureEditable(){
-		cellEditable = new boolean[numberRow][numberColumn];
+		cellEditable = new boolean[numberRow+1][numberColumn];
 		cellEditable[0][2] = true;
 	}
 
 	private void configureModel(){
 		Enumeration<TableColumn> columns = this.getColumnModel().getColumns();
 
+		 MultiLineHeaderRenderer renderer = new MultiLineHeaderRenderer();
+		
 		while (columns.hasMoreElements()) {
 			TableColumn column = columns.nextElement();
 			column.setMinWidth(16);
+			column.setHeaderRenderer(renderer);
 			column.setCellRenderer(new Renderer(getDefaultRenderer(JPanel.class)));
 		}
 
@@ -105,12 +123,16 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		this.getTableHeader().setBackground(Color.white);
 	}
 
+	public boolean getFractalPaintColor(){
+		return false;
+	}
+	
 	private void configureFractal(){
 		for (int i = 0; i < numberRow; i++) {
 			Fractal fractal = new Fractal(this.axiom, this.rules, this.angle, i);
 
 			Drawing drawing = new Drawing(true);
-			drawing.setPaintWithColor(false);
+			drawing.setPaintWithColor(getFractalPaintColor());
 			drawing.setFractal(fractal);
 
 			JPanel jpFractal = new JPanel(new BorderLayout());
@@ -143,22 +165,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		}
 	}
 
-	class Renderer implements TableCellRenderer, Serializable {
-		private DefaultTableCellRenderer __defaultRenderer;
 
-		public Renderer(TableCellRenderer renderer) {
-			__defaultRenderer = (DefaultTableCellRenderer) renderer;
-			__defaultRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		}
-
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			if(value instanceof Component) {
-				((Component)value).setBackground(null);
-				return (Component)value;
-			}
-			return __defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		}
-	}
 
 	@Override
 	public void formulaSended(VirtualKeyBoardEvent<JPanel> formula) {
@@ -174,14 +181,17 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 	private void processCorrectAnswer(JPanel answer){
 		setValueAt(answer, getSelectedRow(), getSelectedColumn());
 
+		setRowCollumnCorrect(getSelectedRow(), getSelectedColumn(), true);
 		activeCell(true);		
 		answer.setLayout(new FlowLayout());
 		answer.setBorder(BorderFactory.createTitledBorder(
 				new LineBorder(new Color(0, 150, 0), 5), "Correto",
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.CENTER, getFont(), Color.black));
+		
 	}
 
 	private void processWrongAnswer(JPanel answer){
+		setRowCollumnCorrect(getSelectedRow(), getSelectedColumn(), false);
 		activeCell(false);
 		answer.setLayout(new FlowLayout());
 		setValueAt(answer, getSelectedRow(), getSelectedColumn());
@@ -189,8 +199,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 				new LineBorder(new Color(250, 0, 0), 5), "Incorreto",
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.CENTER, getFont(), Color.black));
 
-		showMessageErrorIfNecessary();
-
+		showMessageErrorIfNecessary();		
 		JpCarrie.getInstance().saveState(correction.getMistakeInfo());
 	}
 
@@ -247,5 +256,69 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		System.out.println(event);
 		this.keyBoard.setVisible(false);
 		closeBallonTip();
+	}
+	
+	public int getMaxHeaderLength(){
+		return 20;
+	}
+	
+	class Renderer implements TableCellRenderer, Serializable {
+		private DefaultTableCellRenderer __defaultRenderer;
+
+		public Renderer(TableCellRenderer renderer) {
+			__defaultRenderer = (DefaultTableCellRenderer) renderer;
+			__defaultRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+			if(value instanceof Component) {
+				((Component)value).setBackground(null);
+				return (Component)value;
+			}
+			return __defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		}
+	}
+	
+	class MultiLineHeaderRenderer extends JList implements TableCellRenderer, Serializable {
+		private static final long serialVersionUID = 1L;
+
+		public MultiLineHeaderRenderer() {
+			
+			setOpaque(true);
+			setForeground(UIManager.getColor("TableHeader.foreground"));
+			setBackground(UIManager.getColor("TableHeader.background"));
+			setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+			
+			ListCellRenderer renderer = getCellRenderer();
+			 ((JLabel) renderer).setHorizontalAlignment(SwingConstants.CENTER);
+			 
+			setCellRenderer(renderer);
+		}
+		
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+			setFont(table.getFont());
+			String str = (value == null) ? "" : value.toString(), line = "";
+			String[] words = str.split(" ");
+			int maxLen = getMaxHeaderLength();
+			Vector<String> v = new Vector<String>();
+			try {
+				for (int i = 0; i < words.length; i++) {
+					int len = line.length() + words[i].length(); 
+					if (len < maxLen) {
+						line += words[i] + " ";
+					}
+					else {
+						v.addElement(line);
+						line = words[i] + " ";
+					}
+				}
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			v.addElement(line);
+			setListData(v);
+			return this;
+		}
 	}
 }

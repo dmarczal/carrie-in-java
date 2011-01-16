@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -115,8 +116,8 @@ public class JpPaginator extends JPanel {
 		
 		if (++x < jcbList.getItemCount()){
 		  jcbList.setSelectedIndex(x);
+		  paginatorDispacher("AHEAD");
 		}
-		paginatorDispacher("AHEAD");
 	};
 	
 	/**
@@ -126,8 +127,8 @@ public class JpPaginator extends JPanel {
 		int x = jcbList.getSelectedIndex();
 		if (x > 0 && x <= jcbList.getItemCount() ){
 		  jcbList.setSelectedIndex(--x);
+		  paginatorDispacher("BACK");
 		}
-		paginatorDispacher("BACK");
 	};
 
 	/**
@@ -135,10 +136,11 @@ public class JpPaginator extends JPanel {
 	 *  @param index index of the panel
 	 */
 	public void moveToIndex(int index) {
-		if (index >= 0 && index < jcbList.getItemCount())
+		if (index >= 0 && index < jcbList.getItemCount()){
 			jcbList.setSelectedIndex(index);
+			paginatorDispacher("TO:"+ index);
+		}
 		
-		paginatorDispacher("TO:"+ index);
 	}
 	
 	/**
@@ -148,6 +150,15 @@ public class JpPaginator extends JPanel {
 		jcbList.setSelectedIndex(jcbList.getItemCount()-1);
 		paginatorDispacher("LAST");
 	}
+	
+	/**
+	 *  getAllPanels
+	 *  @return all panels added at the CARRIE
+	 */
+	public Collection<JPanel> getAllPanels() {
+		return list.values();
+	}
+	
 
 	//Listeners
 	public synchronized void addPaginatorListener(PaginatorListener listener) {

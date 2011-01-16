@@ -1,0 +1,24 @@
+Fractais:
+  (do latim fractus, fração, quebrado) são figuras da geometria não-Euclidiana.
+  
+Geometria fractal:
+  É o ramo da matemática que estuda as propriedades e comportamento dos fractais. 
+  Descreve muitas situações que não podem ser explicadas facilmente pela geometria clássica, 
+  e foram aplicadas em ciência, tecnologia e arte gerada por computador. 
+  As raízes conceituais dos fractais remontam a tentativas de medir o tamanho de objetos para os 
+  quais as definições tradicionais baseadas na geometria euclidiana falham.
+  
+Triângulo de Sierpinsk:
+  É uma figura geométrica obtida através de um processo recursivo. Ele é uma das formas elementares
+  da geometria fractal por apresentar algumas propriedades, tais como: ter tantos pontos como o do 
+  conjunto dos números reais; ter área igual a zero; ser auto-semelhante (uma sua parte é idêntica ao todo);
+  não perder a sua definição inicial à medida que é ampliado.
+
+Curva de Koch:
+  A curva de Koch é uma curva geométrica e um dos primeiros fractais a serem descritos. 
+  Aparece pela primeira vez num artigo de 1906, intitulado "Une méthode géométrique élémentaire pour l'étude de
+  certaines questions de la théorie des courbes planes", de autoria do matemático sueco Helge von Koch. 
+  O mais conhecido Floco de neve de Koch (ou estrela de Koch) correponde à mesma curva, tirando que se 
+  inicia a sua construção a partir de um triângulo equilátero (em vez de um segmento de recta). 
+  Eric Haines desenvolveu o mesmo conceito, a três dimensões, o que resultou num fractal com volume de um floco de
+  neve.  

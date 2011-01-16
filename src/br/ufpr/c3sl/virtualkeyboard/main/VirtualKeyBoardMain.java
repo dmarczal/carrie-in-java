@@ -21,16 +21,21 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,7 +61,7 @@ import br.ufpr.c3sl.virtualkeyboard.listeners.VirtualKeyBoardListener;
  * 
  */
 @SuppressWarnings("serial")
-public class VirtualKeyBoardMain extends JFrame {
+public class VirtualKeyBoardMain extends JDialog {
 
 	private JPanel jpMain;
 	private JPanel jpDisplay;
@@ -97,11 +102,13 @@ public class VirtualKeyBoardMain extends JFrame {
 
 	private List<VirtualKeyBoardListener> keyBoardListeners;
 	
+	private JComponent parent;
+	
 	/**
 	 * Instantiates a new virtual keyboard GUI.
 	 */
-	public VirtualKeyBoardMain() {
-		this(true,true);
+	public VirtualKeyBoardMain(JComponent parent) {
+		this(parent, true,true);
 	}
 
 	/**
@@ -110,7 +117,8 @@ public class VirtualKeyBoardMain extends JFrame {
 	 * @param enableOperations the enable operations
 	 */
 	
-	public VirtualKeyBoardMain(boolean enableOperations, boolean... enableVariables) {
+	public VirtualKeyBoardMain(JComponent parent, boolean enableOperations, boolean... enableVariables) {
+		this.parent = parent;
 		this.isEnableOperations = enableOperations;
 		if (enableVariables.length > 0)
 			this.isEnableVariableN = enableVariables[0];
@@ -131,7 +139,7 @@ public class VirtualKeyBoardMain extends JFrame {
 		
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		this.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) { cmdKeyTyped(e); }
@@ -150,6 +158,34 @@ public class VirtualKeyBoardMain extends JFrame {
 		jpDisplay.add(formula);
 
 		updateDisplay();
+		
+		this.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				VirtualKeyBoardMain.this.setVisible(false);	
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				VirtualKeyBoardMain.this.setVisible(false);
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {}
+		});
 	}
 
 	/**
@@ -934,16 +970,30 @@ public class VirtualKeyBoardMain extends JFrame {
 			this.setVisible(false);
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+	}
+	
+	@Override
+	public Window getOwner() {
+		if (parent != null)
+			return SwingUtilities.getWindowAncestor(parent);
+		else
+			return super.getOwner();
+	}
+	
+	
 	/**
 	 * Creates the and show gui.
 	 */
 	public static void createAndShowGUI() {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				VirtualKeyBoardMain frame = new VirtualKeyBoardMain(true, true, true, true, true);
-				frame.setVisible(true);
-			}
-		});
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				VirtualKeyBoardMain frame = new VirtualKeyBoardMain(true, true, true, true, true);
+//				frame.setVisible(true);
+//			}
+//		});
 	
 	}
 

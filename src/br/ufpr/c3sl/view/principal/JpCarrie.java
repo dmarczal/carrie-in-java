@@ -3,6 +3,8 @@ package br.ufpr.c3sl.view.principal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -17,6 +19,7 @@ import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
 import br.ufpr.c3sl.exception.UserException;
+import br.ufpr.c3sl.fontControl.FontSize;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.model.User;
@@ -58,6 +61,8 @@ public class JpCarrie extends JPanel{
 	private ImageButton downSizeLetter;
 	private ImageButton originalSizeLetter;
 
+	private JPanel paneToSave = null;
+	
 	public static JpCarrie getInstance(){
 		return carrie;
 	}
@@ -87,6 +92,7 @@ public class JpCarrie extends JPanel{
 		configure();
 		addComponents();
 		addBorder();
+		setJButtosListeners();
 	}
 
 	/*
@@ -205,6 +211,15 @@ public class JpCarrie extends JPanel{
 		}
 	}
 
+
+	/**
+	 *  get main panel
+	 *  @return JPanel the main panel
+	 */
+	public JPanel getMainPanel(){
+		return jpMain;
+	}
+	
 	/**
 	 *  update main panel
 	 *  @param JPanel newPanel new main panel
@@ -255,6 +270,25 @@ public class JpCarrie extends JPanel{
 		addPanel(html.getLegend(), panel);
 	}
 
+	private void setJButtosListeners() {
+		upSizeLetter.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				FontSize.getInstance().incrementSize();
+			}
+		});
+		
+		downSizeLetter.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				FontSize.getInstance().decrementSize();
+			}
+		});
+
+		originalSizeLetter.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				FontSize.getInstance().beginSize();
+			}
+		});
+	}
 		
 	/**
 	 *  Save the main panel state 
@@ -266,11 +300,18 @@ public class JpCarrie extends JPanel{
 		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
+				
+				JPanel toSave = null;
+				if (paneToSave == null)
+					toSave = jpMain;
+				else
+					toSave = paneToSave;
+					
 				Mistake mistake = new Mistake();
-				mistake.setExercise(jpMain.getName());
+				mistake.setExercise(toSave.getName());
 				mistake.setLearningObject(JpCarrie.this.getName());
 				mistake.setMistakeInfo(mistakeInfo);
-				mistake.setObject(ObjectByteArray.getByteOfArray(jpMain));
+				mistake.setObject(ObjectByteArray.getByteOfArray(toSave));
 				mistake.setUser(Session.getCurrentUser());
 
 				DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
@@ -285,17 +326,19 @@ public class JpCarrie extends JPanel{
 			}
 		});
 	}
-
 	
+	public void setPanelToSave(JPanel paneToSave){
+		this.paneToSave = paneToSave;
+	}
+
 	public void loadDataFromBD() {
 		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 		MistakeDAO mistakedao = dao.getMistakeDAO();
 
 		List<Mistake> list = mistakedao.getAll(Session.getCurrentUser(), this.getName());
 
-		for (Mistake mistake : list) {
-			jpMenuFooter.addErrorToMenu(mistake);
-		}
+		if(list.size() > 0)
+			jpMenuFooter.getPaginateMistakes().addMistakes(list);
 	}
 
 }

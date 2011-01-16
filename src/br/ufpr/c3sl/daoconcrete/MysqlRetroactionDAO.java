@@ -16,7 +16,7 @@ import br.ufpr.c3sl.model.Retroaction;
 public class MysqlRetroactionDAO implements RetroactionDAO{
 
 	private static final String INSERT = "INSERT INTO retroactions " +
-	"(mistake_id, user_id, created_at) VALUES (?, ?, ?)";
+	"(mistake_id, created_at) VALUES (?, ?)";
 	
 	@Override
 	public Retroaction insert(Retroaction retroaction) throws UserException {
@@ -27,8 +27,7 @@ public class MysqlRetroactionDAO implements RetroactionDAO{
 		try {
 			pstmt = c.prepareStatement(INSERT);
 			pstmt.setLong(1, retroaction.getMistake().getId());
-			pstmt.setLong(2, retroaction.getUser().getId());
-			pstmt.setTimestamp(3, retroaction.getCreatedAtTime());
+			pstmt.setTimestamp(2, retroaction.getCreatedAtTime());
 
 			pstmt.executeUpdate();
 			
@@ -41,6 +40,7 @@ public class MysqlRetroactionDAO implements RetroactionDAO{
 			c.close();
 			return retroaction;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new UserException(e.getMessage());
 		}
 	}

@@ -6,11 +6,9 @@ public class Retroaction {
 	
 	private Long id;
 	private Long createdAt;
-	private User user;
 	private Mistake mistake;
 	
 	public Retroaction(){
-		user = null;
 		mistake = null;
 	}
 	
@@ -33,12 +31,7 @@ public class Retroaction {
 	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
 	public Mistake getMistake() {
 		return mistake;
 	}

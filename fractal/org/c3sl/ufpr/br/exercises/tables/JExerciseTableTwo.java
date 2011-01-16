@@ -25,6 +25,11 @@ public class JExerciseTableTwo extends JExerciseTable{
 	}
 	
 	@Override
+	public int getMaxHeaderLength(){
+		return 60;
+	}
+	
+	@Override
 	public void activeCell(boolean _true){
 		if (getSelectedRow() != 1){
 			cellEditable[getSelectedRow()-1][getSelectedColumn()] = !_true;
@@ -35,7 +40,7 @@ public class JExerciseTableTwo extends JExerciseTable{
 	
 	@Override
 	public void buildEventsAndTransientvariables() {
-		this.keyBoard = new VirtualKeyBoardMain(true, true, true);
+		this.keyBoard = new VirtualKeyBoardMain(this, true, true, true);
 		this.keyBoard.addKeyBoardListener(this);
 	}
 

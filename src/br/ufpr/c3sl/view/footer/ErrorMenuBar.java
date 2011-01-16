@@ -20,7 +20,6 @@ import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.Retroaction;
-import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.util.Util;
 import br.ufpr.c3sl.view.retroaction.RetroactionFrame;
 
@@ -143,7 +142,6 @@ public class ErrorMenuBar extends JMenuBar {
 			
 			Retroaction retroaction = new Retroaction();
 			retroaction.setMistake(mistake);
-			retroaction.setUser(Session.getCurrentUser());
 			
 			try {
 				retroactionDao.insert(retroaction);

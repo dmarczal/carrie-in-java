@@ -36,18 +36,24 @@ public class Enunciation extends JPanel implements SaveState {
 		jcbShowHideEnun.setFont(FONT_SHOW_HIDE_TEXT);
 
 		this.text = Util.getTextFromFile(getClass(), filepath);
-		
+
 		setLayout(new BorderLayout());
 
 		if (showRadioButton)
 			addComponents();
-		
+
 		createComonents();
 	}
 
+	@SuppressWarnings("serial")
 	private void createComonents() {
-		panel = new JPanelHTML();
-		
+		panel = new JPanelHTML(){
+			public Dimension getPreferredSize(){
+			Dimension d = super.getPreferredSize();
+			d.height = 200;
+			return d;
+		}};
+
 		Html html = new Html(text);
 		panel.setTextualContent(html.getCode());
 		panel.setTitle(html.getTitle());
@@ -91,13 +97,21 @@ public class Enunciation extends JPanel implements SaveState {
 
 	@Override
 	public void buildEventsAndTransientvariables() {
-		if (panel != null)
+		if (panel != null){
+			String textualContent = "";
+
+			textualContent = panel.getTextualContent();
 			remove(panel);
-		
-		createComonents();
-		jcbShowHideEnun.addActionListener(new ActionListenerjrbShowHideEnun());
-		if (jcbShowHideEnun.isSelected()){
-			panel.setVisible(false);
+
+			createComonents();
+			panel.setTextualContent(textualContent);
+			panel.refreshPane();
+
+			
+			if (jcbShowHideEnun.isSelected()){
+				panel.setVisible(false);
+			}
 		}
+		jcbShowHideEnun.addActionListener(new ActionListenerjrbShowHideEnun());
 	}
 }

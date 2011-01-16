@@ -15,6 +15,9 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
+import br.ufpr.c3sl.view.glossary.GlossaryGUI;
+import br.ufpr.c3sl.view.principal.JpCarrie;
+
 //import br.ufpr.c3sl.condigital.app.view.glossary.GlossaryGUI;
 
 public class JPanelHTML extends JPanel{
@@ -48,7 +51,7 @@ public class JPanelHTML extends JPanel{
 	
 	public void refreshPane() {
 		if (getTextualContent() != null) {
-			content = new JEditorPane();
+			content.removeAll();
 			content.setContentType("text/html");
 			content.setText(getTextualContent());
 			content.setEditable(false);
@@ -85,7 +88,7 @@ public class JPanelHTML extends JPanel{
 		}
 
 		refreshPane();
-		add(mainPanel, BorderLayout.CENTER);
+		add(scroll, BorderLayout.CENTER);
 	}
 	
 	public StyleSheet getStyleSheetFromEditorPane(){
@@ -110,11 +113,10 @@ public class JPanelHTML extends JPanel{
 		            }
 				} else{
 					String info[] = e.getDescription().split(":");
-					System.out.println(info);
-					//if (info[0].compareTo("glossary") == 0)
-						//TODO: GlossaryGUI.updateHyperLink(info[1]);
-					//else if (info[0].compareTo("page") == 0)
-						//TODO: JPanelCARRIE.getInstance().moveToIndex(Integer.parseInt(info[1]));
+					if (info[0].compareTo("glossary") == 0)
+						GlossaryGUI.updateHyperLink(info[1]);
+					else if (info[0].compareTo("page") == 0)
+						JpCarrie.getInstance().getPaginator().moveToIndex(Integer.parseInt(info[1]));
 				}
 			}
 		}

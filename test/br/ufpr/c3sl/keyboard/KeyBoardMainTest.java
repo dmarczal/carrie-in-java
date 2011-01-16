@@ -1,8 +1,10 @@
 package br.ufpr.c3sl.keyboard;
 
+import javax.swing.JPanel;
+
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
-import org.fest.swing.fixture.FrameFixture;
+import org.fest.swing.fixture.DialogFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,17 +13,17 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 public class KeyBoardMainTest {
 
-	private FrameFixture window;
+	private DialogFixture window;
 	
 	@Before
 	public void setUp(){
 		 VirtualKeyBoardMain frame = GuiActionRunner.execute(new GuiQuery<VirtualKeyBoardMain>() {
 		      protected VirtualKeyBoardMain executeInEDT() {
-		        return new VirtualKeyBoardMain(true, true, true, true, true);  
+		        return new VirtualKeyBoardMain(new JPanel(), true, true, true, true);  
 		      }
 		  });
 		 
-		  window = new FrameFixture(frame);
+		  window = new DialogFixture(frame);
 		  window.show();	
 	}
 	

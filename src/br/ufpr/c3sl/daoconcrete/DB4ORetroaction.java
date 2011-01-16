@@ -32,7 +32,7 @@ public class DB4ORetroaction implements RetroactionDAO{
 			private static final long serialVersionUID = 7067504373296785410L;
 
 			public boolean match(Retroaction retroaction){
-				return (retroaction.getUser().getEmail().equals(mistake.getUser().getEmail()) &&
+				return (retroaction.getMistake().getUser().getEmail().equals(mistake.getUser().getEmail()) &&
 						retroaction.getMistake() == mistake);
 			}
 		});
@@ -52,7 +52,6 @@ public class DB4ORetroaction implements RetroactionDAO{
 			Retroaction r = new Retroaction();
 			
 			r.setCreatedAt(retroaction.getCreatedAt());
-			r.setUser(retroaction.getUser());
 			r.setMistake(null);
 			ObjectSet<Retroaction> result = dbo.queryByExample(r);
 			

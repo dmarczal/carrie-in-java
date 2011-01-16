@@ -15,12 +15,17 @@ public class JExerciseTableOne extends JExerciseTable{
 
 	@Override
 	public void buildEventsAndTransientvariables() {
-		this.keyBoard = new VirtualKeyBoardMain(false);
+		this.keyBoard = new VirtualKeyBoardMain(this, false);
 		this.keyBoard.addKeyBoardListener(this);
 	}
-
+	
 	@Override
 	public String[] arrayHeader() {
 		return new String[] {"Iteração", "Fractal", "Tamanho do lado do menor Triângulo"};
+	}
+	
+	@Override
+	public int getMaxHeaderLength(){
+		return 50;
 	}
 }

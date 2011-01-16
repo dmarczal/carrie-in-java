@@ -25,14 +25,12 @@ public class CorrectionThree extends AbstractCorrection{
 				expression = "( 3 ^ ( n + 1 ) ) * ℓ/ ( 2 ^ n ) ";
 			else
 				expression = "ℓ/ ( 2 ^ n )";
-			System.out.println("5 " + expression);
 			break;
 		default:
 			if (column == 3)
 				expression = "3^"+(row+1) + "*" + "ℓ/2^" + row;
 			else
 				expression = "ℓ/2^" + row;
-			System.out.println("5 " + expression);
 			break;
 		}
 		

@@ -27,6 +27,7 @@ import br.ufpr.c3sl.state.SaveState;
 public class Util {
 
 	private static final String ICONS_PATH = "/br/ufpr/c3sl/icons/";
+	public static final String GLOSSARY_PATH = "/br/ufpr/c3sl/glossary/glossary.glo";
 	
 	/**
 	 * CARRIE Framework
