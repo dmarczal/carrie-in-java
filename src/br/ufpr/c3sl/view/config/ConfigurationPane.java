@@ -1,4 +1,4 @@
-package br.ufpr.c3sl.view.user;
+package br.ufpr.c3sl.view.config;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,10 +18,10 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -157,7 +157,7 @@ public class ConfigurationPane extends JPanel {
 		});
 		
 		jpFooter.add(jbOK);
-		jpFooter.add(jbCancel);
+		//jpFooter.add(jbCancel);
 		jpMain.add(jpFooter, BorderLayout.SOUTH);
 	}
 
@@ -166,9 +166,11 @@ public class ConfigurationPane extends JPanel {
 	}
 
 	private void cmdCancel(){
+		System.exit(0);
 		if (this.getRootPane().getParent() instanceof JApplet){
+			JOptionPane.showMessageDialog(null, "Olá");
 			JSObject win = JSObject.getWindow((JApplet) this.getRootPane().getParent());
-			win.eval("self.close();");
+			win.eval("alert('oi');window.close();alert('oi');");
 		}
 	}
 	
@@ -230,7 +232,7 @@ public class ConfigurationPane extends JPanel {
 		if (root instanceof JApplet){
 			((JApplet) root).setContentPane(JpCarrie.getInstance());
 			JpCarrie.getInstance().finalConfiguration();
-			SwingUtilities.updateComponentTreeUI(root);
+			root.validate();
 		}
 	}
 }

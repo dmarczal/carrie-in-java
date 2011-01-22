@@ -22,14 +22,34 @@
         <echo>Compile Sucessfull</echo>
     </target>
 
+    <target name="compileJ5" depends="clean">
+        <mkdir dir="bin" />
+
+       <copy  todir="bin">
+         <fileset dir="src" excludes="**/*.java"/>
+         <fileset dir="fractal" excludes="**/*.java"/>
+       </copy>
+       <javac srcdir="src:fractal" destdir="bin" classpathref="classpath" 
+ 			executable="/home/marczal/opt/jdk1.5.0_10/bin/javac" compiler="extJavac" >
+       </javac>
+        <echo>Compile Sucessfull</echo>
+    </target>
+	
 
     <target name="jar" depends="compile">
-        <copy file="lib/mysql-connector-java-5.0.8-bin.jar" todir="html/jars" overwrite="true" />
+        <!--<copy file="lib/mysql-connector-java-5.0.8-bin.jar" todir="html/jars" overwrite="true" />-->
         <jar destfile="html/jars/fractal.jar" basedir="bin">
         </jar>
         <echo>The Jar File was sucessfull generated!!</echo>
     </target>
 
+    <target name="jarj5" depends="compileJ5">
+        <jar destfile="html/jars/fractal.jar" basedir="bin">
+        </jar>
+        <echo>The Jar File was sucessfull generated!!</echo>
+    </target>
+	
+	
 	 <target name="run" depends="jar">
 	    <property name="browser" location="/usr/bin/firefox"/>
 	    <property name="file" location="html/index.html"/>

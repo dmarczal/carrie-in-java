@@ -263,6 +263,3 @@ public class JpMenuBarFooter extends JPanel {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 }
-
-
-

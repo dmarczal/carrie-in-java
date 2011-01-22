@@ -6,8 +6,8 @@ import javax.swing.JApplet;
 import javax.swing.JPanel;
 
 import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
+import br.ufpr.c3sl.view.config.ConfigurationPane;
 import br.ufpr.c3sl.view.principal.JpCarrie;
-import br.ufpr.c3sl.view.user.ConfigurationPane;
 
 @SuppressWarnings("serial")
 public abstract class JAppletCarrie extends JApplet {
