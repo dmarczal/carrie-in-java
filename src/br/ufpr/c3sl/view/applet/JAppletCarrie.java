@@ -7,18 +7,18 @@ import javax.swing.JPanel;
 
 import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
 import br.ufpr.c3sl.view.principal.JpCarrie;
+import br.ufpr.c3sl.view.user.ConfigurationPane;
 
 @SuppressWarnings("serial")
-public class JAppletCarrie extends JApplet {
+public abstract class JAppletCarrie extends JApplet {
 	
 	private JpCarrie carrie = JpCarrie.getInstance();
 	
 	public void init(String name) {
 		super.init();
-		setObjetLearningName(name);
-		this.setContentPane(carrie);
-		this.setSize(new Dimension(800,600));
-		carrie.loadDataFromBD();
+		carrie.setName(name);
+		this.setContentPane(new ConfigurationPane());
+		this.setSize(new Dimension(710, 540));
 	}
 	
 	/**
@@ -36,13 +36,6 @@ public class JAppletCarrie extends JApplet {
 	 */
 	public void addPageFromHtmlFile(String filepath) {
 		carrie.addPageFromHtmlFile(filepath);
-	}
-	/**
-	 *  Set Object Learning name
-	 *  @param name Objet learing name
-	 */
-	public void setObjetLearningName(String name){
-		JpCarrie.getInstance().setName(name);
 	}
 	
 	@Override

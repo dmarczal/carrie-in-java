@@ -25,69 +25,69 @@ import br.ufpr.c3sl.view.principal.JpCarrie;
  */
 @SuppressWarnings("serial")
 public class JpPaginator extends JPanel {
-	
-	private static final int MAX_SIZE_OF_ITEM_NAME = 50;
-	
+
+	private static final int MAX_SIZE_OF_ITEM_NAME = 35;
+
 	private JButton jbNext;
 	private JButton jbPrevious;
-	
+
 	private JComboBox jcbList;
 
 	private ArrayList<String> toolTips;
 	private ArrayList<String> names;
-	
+
 	private LinkedHashMap<String, JPanel> list = new LinkedHashMap<String, JPanel>();
-	
+
 	private List<PaginatorListener> listeners;
-	
+
 	public JpPaginator() {
 		inicializeVariables();
 		setListeners();
 		listeners = new ArrayList<PaginatorListener>();
 	}
-	
+
 	private void inicializeVariables(){
 		list = new LinkedHashMap<String, JPanel>();
 		toolTips = new ArrayList<String>();
 		names = new ArrayList<String>();
-		
+
 		jbPrevious = new JButton(Util.getImageIcon(getClass(), "backward_nav"));
 		this.add(jbPrevious);
 		jbNext = new JButton(Util.getImageIcon(getClass(), "forward_nav"));
 		this.add(jbNext);
-		
+
 		jcbList = new JComboBox();
 		jcbList.setRenderer(new MyComboBoxRenderer());
 		this.add(jcbList);
 	}
-	
+
 	private void setListeners(){
 		jbNext.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				moveAhead();
 			}
 		});
-		
+
 		jbPrevious.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				moveBack();
 			}
 		});
-		
+
 		jcbList.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox) e.getSource();
 				int index = cb.getSelectedIndex();
-				
+
 				if (index >= 0){
-				   String key = names.get(index);
-				   JpCarrie.getInstance().updateMainPanel(list.get(key));
-				   //br.ufpr.c3sl.condigital.app.model.PaginationChangeNotify.getInstance().changed(l.get(key));
+					String key = names.get(index);
+					JpCarrie.getInstance().updateMainPanel(list.get(key));
+					//br.ufpr.c3sl.condigital.app.model.PaginationChangeNotify.getInstance().changed(l.get(key));
 				}
 			}
 		});
 	}
-	
+
 	private String createTootips(String s){
 		String toolTip = s;
 		if (s.length() > MAX_SIZE_OF_ITEM_NAME){
@@ -95,10 +95,10 @@ public class JpPaginator extends JPanel {
 		}
 		toolTips.add(toolTip);
 		names.add(s);
-		
+
 		return toolTip;
 	}
-	
+
 	/**
 	 *  add a panel to the paginator
 	 *  @param jPanel to be added
@@ -107,27 +107,27 @@ public class JpPaginator extends JPanel {
 		list.put(jPanel.getName(), jPanel);
 		jcbList.addItem(createTootips(jPanel.getName()));
 	}
-	
+
 	/**
 	 *  move the paginator ahead
 	 */
 	public void moveAhead() {
 		int x = jcbList.getSelectedIndex();
-		
+
 		if (++x < jcbList.getItemCount()){
-		  jcbList.setSelectedIndex(x);
-		  paginatorDispacher("AHEAD");
+			jcbList.setSelectedIndex(x);
+			paginatorDispacher("AHEAD");
 		}
 	};
-	
+
 	/**
 	 *  move the paginator back
 	 */
 	public void moveBack () {
 		int x = jcbList.getSelectedIndex();
 		if (x > 0 && x <= jcbList.getItemCount() ){
-		  jcbList.setSelectedIndex(--x);
-		  paginatorDispacher("BACK");
+			jcbList.setSelectedIndex(--x);
+			paginatorDispacher("BACK");
 		}
 	};
 
@@ -140,9 +140,9 @@ public class JpPaginator extends JPanel {
 			jcbList.setSelectedIndex(index);
 			paginatorDispacher("TO:"+ index);
 		}
-		
+
 	}
-	
+
 	/**
 	 *  move the paginator to the last panel
 	 */
@@ -150,7 +150,7 @@ public class JpPaginator extends JPanel {
 		jcbList.setSelectedIndex(jcbList.getItemCount()-1);
 		paginatorDispacher("LAST");
 	}
-	
+
 	/**
 	 *  getAllPanels
 	 *  @return all panels added at the CARRIE
@@ -158,7 +158,7 @@ public class JpPaginator extends JPanel {
 	public Collection<JPanel> getAllPanels() {
 		return list.values();
 	}
-	
+
 
 	//Listeners
 	public synchronized void addPaginatorListener(PaginatorListener listener) {
@@ -170,10 +170,10 @@ public class JpPaginator extends JPanel {
 	public synchronized void removePaginatorListener(PaginatorListener listener) {
 		listeners.remove(listener);
 	}
-	
+
 	private void paginatorDispacher(Object object) {
 		PaginatorEvent<Object> evento = new PaginatorEvent<Object>(object);
-		
+
 		for (PaginatorListener listener : getListenerClone()) {
 			listener.paginated(evento);
 		}
@@ -187,23 +187,25 @@ public class JpPaginator extends JPanel {
 			return (List<PaginatorListener>) ((ArrayList<PaginatorListener>) listeners).clone();
 		}
 	}
-	
+
 	private class MyComboBoxRenderer extends BasicComboBoxRenderer {
 		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
-			
-			if (isSelected) {
-				setBackground(list.getSelectionBackground());
-				setForeground(list.getSelectionForeground());
-				if (-1 < index) {
-					list.setToolTipText(toolTips.get(index));
-				}
-			} else {
-				setBackground(list.getBackground());
-				setForeground(list.getForeground());
-			}
 
-			setFont(list.getFont());
+			if (list != null){
+				if (isSelected) {
+					setBackground(list.getSelectionBackground());
+					setForeground(list.getSelectionForeground());
+					if (-1 < index) {
+						list.setToolTipText(toolTips.get(index));
+					}
+				} else {
+					setBackground(list.getBackground());
+					setForeground(list.getForeground());
+				}
+
+				setFont(list.getFont());
+			}
 			setText((value == null) ? "" : value.toString());
 			return this;
 		}

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import br.ufpr.c3sl.connection.Internet;
 import br.ufpr.c3sl.dao.MistakeDAO;
@@ -170,6 +171,8 @@ public class JpMenuBarFooter extends JPanel {
 	}
 
 	private void updateServer() {
+		JpCarrie.getInstance().showLoading();
+		
 		DAOFactory daoServer = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		MistakeDAO mistakeDaoS = daoServer.getMistakeDAO();
 		UserDAO userDao = daoServer.getUserDAO();
@@ -184,7 +187,8 @@ public class JpMenuBarFooter extends JPanel {
 
 			List<Mistake> list = mistakeDaoL.getAll(user,
 					JpCarrie.getInstance().getName());
-
+			
+			
 			for (Mistake mistake : list) {
 				List<Retroaction> retroactionList = retroactionDAOL.getAll(mistake);
 				mistakeDaoL.delete(mistake);
@@ -207,6 +211,8 @@ public class JpMenuBarFooter extends JPanel {
 		} catch (UserException e) {
 			e.printStackTrace();
 		}
+		
+		JpCarrie.getInstance().hideLoading();
 	}
 
 	private void resetPaginateMistakes(){
@@ -253,6 +259,10 @@ public class JpMenuBarFooter extends JPanel {
 			addButtonServer();
 		}else if (DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O && !imgButtonSendServer.isVisible())
 			imgButtonSendServer.setVisible(true);
+		
+		SwingUtilities.updateComponentTreeUI(this);
 	}
 }
+
+
 

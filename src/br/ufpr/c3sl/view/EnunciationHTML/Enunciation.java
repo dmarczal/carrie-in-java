@@ -50,7 +50,7 @@ public class Enunciation extends JPanel implements SaveState {
 		panel = new JPanelHTML(){
 			public Dimension getPreferredSize(){
 			Dimension d = super.getPreferredSize();
-			d.height = 200;
+			////d.height = 200;
 			return d;
 		}};
 

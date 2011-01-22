@@ -21,8 +21,8 @@ public class Internet {
 	{
 		try {
 			//make a URL to a known source
-			//URL url = new URL("http://www.google.com");
-			URL url = new URL("http://localhost");
+			URL url = new URL("http://www.google.com");
+			//URL url = new URL("http://localhost");
 
 			//open a connection to that source
 			HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();

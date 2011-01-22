@@ -6,8 +6,6 @@ import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.launcher.AppletLauncher;
 import org.junit.Test;
 
-import br.ufpr.c3sl.view.applet.JAppletCarrie;
-
 
 public class TestJAppletCarrie {
 	
@@ -17,7 +15,7 @@ public class TestJAppletCarrie {
 	
 	@org.junit.BeforeClass
 	public static void setup(){
-		jAppletCarrie = new JAppletCarrie();		  
+		jAppletCarrie = new AppletTest();		  
 		viewer = AppletLauncher.applet(jAppletCarrie).start();
 		applet = new FrameFixture(viewer);
 		applet.show();
