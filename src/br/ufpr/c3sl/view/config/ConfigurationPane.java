@@ -128,7 +128,7 @@ public class ConfigurationPane extends JPanel {
 		jpBody.add(new JLabel("Entre com seu Email?"), c);
 
 		c.gridy = 4;
-		jtfEmail = new JTextField("diego@gmail.com");
+		jtfEmail = new JTextField(); //"diego@gmail.com"
 		jpBody.add(jtfEmail, c);
 
 		c.gridy = 5;
@@ -206,10 +206,7 @@ public class ConfigurationPane extends JPanel {
 			lbErrors.setText("<html><div>" + msgs + "</div>");
 			lbErrors.setVisible(true);
 		}else{
-
-
 			configureSession();
-
 		}
 	}
 

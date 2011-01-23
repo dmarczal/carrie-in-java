@@ -266,7 +266,6 @@ public class JpCarrie extends JPanel{
 	}
 
 	private void loadDataFromBD() {
-		
 		Thread loadData = new Thread(new Runnable() {
 			@Override
 			public void run() {
