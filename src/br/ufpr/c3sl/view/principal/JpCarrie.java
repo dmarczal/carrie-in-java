@@ -50,7 +50,12 @@ public class JpCarrie extends JPanel{
 	}
 
 	public static void newInstance(){
+		String name = null;
+		if (carrie != null)
+			name = carrie.getName();
+		
 		carrie = new JpCarrie();
+		carrie.setName(name);
 	}
 	
 	/**

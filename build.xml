@@ -43,7 +43,7 @@
         <echo>The Jar File was sucessfull generated!!</echo>
     </target>
 
-    <target name="jarj5" depends="compileJ5">
+    <target name="jarJ5" depends="compileJ5">
         <jar destfile="html/jars/fractal.jar" basedir="bin">
         </jar>
         <echo>The Jar File was sucessfull generated!!</echo>

@@ -54,7 +54,6 @@ public class LoadingPanel extends JPanel{
 			if (countPoint == 4){ 
 				lbLoading.setText(lbLoading.getText().substring(0, lbLoading.getText().length()-countPoint));
 				countPoint = 0;
-				System.out.println("cortou" + lbLoading.getText());
 			}
 			
 			countPoint++;	

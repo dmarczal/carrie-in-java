@@ -3,6 +3,6 @@ bin/*
 .project
 .settings/org.eclipse.jdt.core.prefs
 
-html/jars/balloontip-1.1.1.jar
-html/jars/db4o-7.12.156.14667-all-java5.jar
-html/jars/mysql-connector-java-5.0.8-bin.jar
+/html/jars/balloontip-1.1.1.jar
+/html/jars/db4o-7.12.156.14667-all-java5.jar
+/html/jars/mysql-connector-java-5.0.8-bin.jar

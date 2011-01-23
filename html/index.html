@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
 <title>Progressões Geométricas em Fractais</title>
 <style type="text/css" media="all">
 html,body {
@@ -78,44 +80,54 @@ h4 {
 }
 </style>
 
-<script src="js/deployJava.js" type="text/javascript"></script>
-
 </head>
 <body>
 <div id="tudo">
-<div id="conteudo">
-<div id="topo">
-<h1><b class="dest">Progressões Geométricas em Fractais</b></h1>
-</div>
+ <div id="conteudo">
+   <div id="topo">
+    <h1><b class="dest">Progressões Geométricas em Fractais</b></h1>
+   </div>
 
-<div id="principal">
-<div id="applet">
-<script type="text/javascript">	
+   <div id="principal">
+   
+   <script src="js/deployJava.js"type="text/javascript"></script>
+   <script>	
+   // check if current JRE version is greater than 1.6.0 
+    //alert("versioncheck " + deployJava.versionCheck('1.6.0_10+'));
+    if (deployJava.versionCheck('1.6.0_10+') == false) {                   
+        userInput = confirm("You need the latest Java(TM) Runtime Environment. Would you like to update now?");        
+        if (userInput == true) {  
+    
+            // Set deployJava.returnPage to make sure user comes back to 
+            // your web site after installing the JRE
+            deployJava.returnPage = location.href;
+            
+            // install latest JRE or redirect user to another page to get JRE from.
+            deployJava.installLatestJRE(); 
+        }
+    }
+   </script>
+   
+     <div id="applet">  </div>
+   </div>
 
-var attributes = {
-		//codebase:'http://java.sun.com/products/plugin/1.5.0/demos/jfc/Java2D',
-        code:'org.c3sl.ufpr.br.main.Fractal.class',
-        archive:'jars/fractal.jar, jars/mysql-connector-java-5.0.8-bin.jar, jars/balloontip-1.1.1.jar, jars/db4o-7.12.156.14667-all-java5.jar, jars/plugin.jar',
-        width:710, height:540};
+   <div class="clear"></div>
 
-var parameters = {fontSize:16} ;
-var version = '1.6' ;
-deployJava.runApplet(attributes, parameters, version);
-</script>
-</div>
-</div>
-<div class="clear"></div>
-
-</div>
+ </div>
 <!-- Fim da div#conteudo -->
 
-<div id="rodape">
+  <div id="rodape">
 
-<p>&copy; Projeto Condigital-UFPR, todos os direitos reservados. <a
-	href="http://www.c3sl.ufpr.br">UFPR</a>.<br />
-</p>
+   <p>&copy; Projeto Condigital-UFPR, todos os direitos reservados. <a
+	 href="http://www.c3sl.ufpr.br">UFPR</a>.<br /></p>
+  </div>
 </div>
-</div>
-<!-- Fim da div#tudo -->
+<script type="text/javascript">  
+
+ document.getElementById("applet").innerHTML = "<applet code='org.c3sl.ufpr.br.main.Fractal.class' mayscript='mayscript' width='710' height='540'> "
+  + "<param name='archive' value='jars/fractal.jar, jars/mysql-connector-java-5.0.8-bin.jar, jars/balloontip-1.1.1.jar, jars/db4o-7.12.156.14667-all-java5.jar' >" 
+ "</applet>";
+
+</script>
 </body>
 </html>
