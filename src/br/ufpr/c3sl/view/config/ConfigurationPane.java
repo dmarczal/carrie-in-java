@@ -231,7 +231,7 @@ public class ConfigurationPane extends JPanel {
 
 				try {
 					User user = userDAO.findOrCreateByEmail(email);
-					Session.setMode(jrbLocal.isSelected() ? "Local" : "Server");
+					Session.setMode((DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O) ? "Local" : "Server");
 					Session.setCurrentUser(user);
 				} catch (UserException e) {
 					e.printStackTrace();

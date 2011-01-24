@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import br.ufpr.c3sl.daoFactory.DAOFactory;
+import br.ufpr.c3sl.session.Session;
 
 public class Internet {
 
@@ -75,8 +76,9 @@ public class Internet {
 	}
 	
 	private static void verify(String msg){
-		if(Internet.isNotReachable() && DAOFactory.DATABASE_CHOOSE == DAOFactory.MYSQL){
+		if(DAOFactory.DATABASE_CHOOSE == DAOFactory.MYSQL && Internet.isNotReachable()){
 			DAOFactory.DATABASE_CHOOSE = DAOFactory.DB4O;
+			Session.setMode("Local");
 			JOptionPane.showMessageDialog(null, msg);
 		}
 	}
