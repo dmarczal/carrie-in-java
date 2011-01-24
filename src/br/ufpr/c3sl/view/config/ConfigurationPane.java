@@ -125,7 +125,7 @@ public class ConfigurationPane extends JPanel {
 
 		c.gridx = 0;
 		c.gridy = 3;
-		jpBody.add(new JLabel("Entre com seu Email?"), c);
+		jpBody.add(new JLabel("Entre com seu Email:"), c);
 
 		c.gridy = 4;
 		jtfEmail = new JTextField(); //"diego@gmail.com"
