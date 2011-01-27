@@ -107,6 +107,10 @@ public class JpCarrie extends JPanel{
 		configureBorder(jpHeader);
 	}
 	
+	public void updateHeader(){
+		jpHeader.updateHeader();
+	}
+	
 	private void updateTitle(){
 		String parte = jpMain.getName().split(":")[0];
 		jpHeader.updateTitle(this.getName() + " - " + parte);

@@ -23,6 +23,8 @@ public class HeaderPane extends JPanel {
 	private static Font FONT_TITLE = new Font("Arial", Font.BOLD, 16);
 	
 	private JLabel lbTitle;
+	private JLabel lbemail;
+	private JLabel lbmode;
 	
 	public HeaderPane(){
 		setLayout(new BorderLayout());
@@ -47,6 +49,14 @@ public class HeaderPane extends JPanel {
 	 */
 	public void showLoading(){
 		loadingPane.startLoading();
+	}
+	
+
+	public void updateHeader(){
+		if (lbemail != null){
+			lbemail.setText("Olá " + Session.getCurrentUser().getEmail());
+			lbmode.setText("Modo de execução: " + Session.getMode());
+		}
 	}
 
 	/**
@@ -81,12 +91,12 @@ public class HeaderPane extends JPanel {
 			mode =  Session.getMode();	
 		}
 
-		JLabel lbemail = new JLabel();
+		lbemail = new JLabel();
 		lbemail.setFont(FONT);
 		lbemail.setForeground(Color.red);
 		lbemail.setText("Olá " + email);
 		
-		JLabel lbmode = new JLabel();	
+		lbmode = new JLabel();	
 		lbmode.setFont(FONT);
 		lbmode.setForeground(Color.red);
 		lbmode.setText("Modo de execução: " + mode);

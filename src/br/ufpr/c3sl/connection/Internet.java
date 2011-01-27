@@ -1,14 +1,13 @@
 package br.ufpr.c3sl.connection;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.sql.Connection;
 
 import javax.swing.JOptionPane;
 
 import br.ufpr.c3sl.daoFactory.DAOFactory;
+import br.ufpr.c3sl.daoFactory.MysqlDAOFactory;
 import br.ufpr.c3sl.session.Session;
+import br.ufpr.c3sl.view.principal.JpCarrie;
 
 public class Internet {
 
@@ -20,29 +19,34 @@ public class Internet {
 	 */
 	public static boolean isReachable()
 	{
-		try {
-			//make a URL to a known source
-			URL url = new URL("http://www.google.com");
-			//URL url = new URL("http://localhost");
-
-			//open a connection to that source
-			HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();
-
-			//trying to retrieve data from the source. If there
-			//is no connection, this line will fail
-			Object objData = urlConnect.getContent();
-			System.out.println(objData);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+		
+	Connection c = MysqlDAOFactory.createConnection();
+	
+	if (c == null) return false; else return true; 
+	
+//		try {
+//			//make a URL to a known source
+//			URL url = new URL("http://www.google.com");
+//			//URL url = new URL("http://localhost");
+//
+//			//open a connection to that source
+//			HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();
+//
+//			//trying to retrieve data from the source. If there
+//			//is no connection, this line will fail
+//			Object objData = urlConnect.getContent();
+//			System.out.println(objData);
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+//		catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+//		return true;
 	}
 
 	/**
@@ -79,6 +83,7 @@ public class Internet {
 		if(DAOFactory.DATABASE_CHOOSE == DAOFactory.MYSQL && Internet.isNotReachable()){
 			DAOFactory.DATABASE_CHOOSE = DAOFactory.DB4O;
 			Session.setMode("Local");
+			JpCarrie.getInstance().updateHeader();
 			JOptionPane.showMessageDialog(null, msg);
 		}
 	}
