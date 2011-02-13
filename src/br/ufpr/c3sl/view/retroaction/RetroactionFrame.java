@@ -96,7 +96,7 @@ public class RetroactionFrame extends JFrame{
 				JpCarrie.getInstance().setPanelToSave(mistakePanel);
 			}
 		});
-		saveRetroaction();
+		//saveRetroaction();
 	}
 
 	public void initComponents(){
@@ -170,13 +170,14 @@ public class RetroactionFrame extends JFrame{
 	 */
 	public static JFrame createAndShowGUI(Mistake mistake) {
 		//Create and set up the window.
-		JFrame frame = new RetroactionFrame(mistake);
+		RetroactionFrame frame = new RetroactionFrame(mistake);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Display the window.
 		frame.pack();
 		frame.setLocationRelativeTo(JpCarrie.getInstance());
 		frame.setVisible(true);
+		frame.saveRetroaction();
 		return frame;
 	}
 	
