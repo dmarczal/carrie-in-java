@@ -85,7 +85,7 @@ public class JExerciseTableFive extends JExerciseTable{
 
 	@Override
 	public String[] arrayHeader() {
-		return new String[] {"Iteração", "Fractal", "Tamanho do lado",
+		return new String[] {"Iteração", "Fractal", "Lado",
 				"Perímetro"};
 	}
 }

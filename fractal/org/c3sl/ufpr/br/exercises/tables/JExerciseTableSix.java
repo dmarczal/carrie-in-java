@@ -58,7 +58,7 @@ public class JExerciseTableSix extends JExerciseTable {
 
 	@Override
 	public String[] arrayHeader() {
-		return new String[] {"Iteração", "Fractal", "Lado do menor",
+		return new String[] {"Iteração", "Fractal", "Lado",
 				"Área de um triângulo verde", "Número de triângulos Verdes", "Área Verde"};
 	}
 
