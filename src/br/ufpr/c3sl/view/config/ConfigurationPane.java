@@ -217,6 +217,10 @@ public class ConfigurationPane extends JPanel {
 		Thread config = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				String email = jtfEmail.getText(); 
+				
+				Session.setCurrentUser(new User(email));
+				
 				DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
 
 				Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
@@ -226,8 +230,6 @@ public class ConfigurationPane extends JPanel {
 
 				DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
 				UserDAO userDAO = bd.getUserDAO();
-
-				String email = jtfEmail.getText(); 
 
 				try {
 					User user = userDAO.findOrCreateByEmail(email);

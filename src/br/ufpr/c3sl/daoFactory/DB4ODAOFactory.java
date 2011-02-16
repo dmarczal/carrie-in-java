@@ -6,6 +6,7 @@ import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoconcrete.DB4OMistake;
 import br.ufpr.c3sl.daoconcrete.DB4ORetroaction;
 import br.ufpr.c3sl.daoconcrete.DB4OUserDAO;
+import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 
 import com.db4o.Db4oEmbedded;
@@ -23,7 +24,10 @@ public class DB4ODAOFactory extends DAOFactory {
 	public static EmbeddedObjectContainer getConnection(){
 		if (container == null)
 			container = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),
-					System.getProperty("user.home") + "/carrie_"+JpCarrie.getInstance().getName()+"_DB4O.db");
+					System.getProperty("user.home") + "/carrie_"
+					+ JpCarrie.getInstance().getName() + "_"
+					+ Session.getCurrentUser().getEmail()
+					+"_DB4O.db");
 		
 		return 	container;
 	}
