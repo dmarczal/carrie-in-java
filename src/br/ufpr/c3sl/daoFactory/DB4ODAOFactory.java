@@ -1,8 +1,10 @@
 package br.ufpr.c3sl.daoFactory;
 
+import br.ufpr.c3sl.dao.HitDAO;
 import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.dao.RetroactionDAO;
 import br.ufpr.c3sl.dao.UserDAO;
+import br.ufpr.c3sl.daoconcrete.DB4OHitDAO;
 import br.ufpr.c3sl.daoconcrete.DB4OMistake;
 import br.ufpr.c3sl.daoconcrete.DB4ORetroaction;
 import br.ufpr.c3sl.daoconcrete.DB4OUserDAO;
@@ -51,6 +53,11 @@ public class DB4ODAOFactory extends DAOFactory {
 	@Override
 	public RetroactionDAO getRetroactionDAO() {
 		return new DB4ORetroaction();
+	}
+
+	@Override
+	public HitDAO getHitDAO() {
+		return new DB4OHitDAO();
 	}
 
 }

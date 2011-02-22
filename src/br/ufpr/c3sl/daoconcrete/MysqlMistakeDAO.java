@@ -19,10 +19,11 @@ import br.ufpr.c3sl.model.User;
 public class MysqlMistakeDAO implements MistakeDAO{
 
 	private static final String INSERT = "INSERT INTO mistakes " +
-	"(object, exercise, learningObject, description, answer, correctAnswer, title, user_id, created_at) " +
-	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	"(object, exercise, learningObject, description, answer, " +
+	"correctAnswer, title, user_id, created_at, cell) " +
+	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String FIND_BY_USER = "SELECT * FROM mistakes " +
-			"WHERE user_id LIKE ? and learningObject LIKE ?";
+			"WHERE user_id LIKE ? and learningObject LIKE ? ORDER BY created_at DESC";
 
 	/**
 	 * insert
@@ -42,12 +43,15 @@ public class MysqlMistakeDAO implements MistakeDAO{
 			pstmt.setString(2, mistake.getExercise());
 			pstmt.setString(3, mistake.getLearningObject());
 			pstmt.setString(4, mistake.getMistakeInfo().getDescription());
-			pstmt.setString(5, mistake.getMistakeInfo().getAnswer());
-			pstmt.setString(6, mistake.getMistakeInfo().getCorrectAnswer());
+			pstmt.setString(5, 
+					mistake.getMistakeInfo().getAnswer().replaceAll("ℓ", "l"));
+			pstmt.setString(6, 
+					mistake.getMistakeInfo().getCorrectAnswer().replaceAll("ℓ", "l"));
 			pstmt.setString(7, mistake.getMistakeInfo().getTitle());
 			pstmt.setLong(8, mistake.getUser().getId());
 			pstmt.setTimestamp(9, mistake.getCreatedAtTime());
-
+			pstmt.setString(10, mistake.getMistakeInfo().getCell());
+			
 			pstmt.executeUpdate();
 			ResultSet rset = pstmt.getGeneratedKeys();
 			rset.next();
@@ -97,9 +101,11 @@ public class MysqlMistakeDAO implements MistakeDAO{
 		mistake.setCreatedAt(rset.getTimestamp("created_at").getTime());
 		
 		MistakeInfo mistakeInfo = new MistakeInfo(rset.getString("title"),
-				rset.getString("answer"), rset.getString("correctAnswer"),
+				rset.getString("answer").replaceAll("l","ℓ"),
+				rset.getString("correctAnswer").replaceAll( "l","ℓ"),
 				rset.getString("description"));
 		
+		mistakeInfo.setCell(rset.getString("cell"));
 		mistake.setMistakeInfo(mistakeInfo);
 
 		return mistake;

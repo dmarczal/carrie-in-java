@@ -8,9 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import br.ufpr.c3sl.connection.Internet;
-import br.ufpr.c3sl.dao.MistakeDAO;
-import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
 import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
@@ -233,7 +230,7 @@ public class JpCarrie extends JPanel{
 	 *  @param mistake information about the mistake
 	 */
 	public void saveState(final MistakeInfo mistakeInfo){
-		Internet.verifyConnection();
+		//Internet.verifyConnection();
 		
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -252,12 +249,8 @@ public class JpCarrie extends JPanel{
 				mistake.setObject(ObjectByteArray.getByteOfArray(toSave));
 				mistake.setUser(Session.getCurrentUser());
 
-				DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
-				MistakeDAO mistakedao = dao.getMistakeDAO();
-
 				try {
-					mistake = mistakedao.insert(mistake);
-					jpMenuFooter.addErrorToMenu(mistake);
+					jpMenuFooter.addErrorToMenu(mistake.save());
 				} catch (UserException e) {
 					e.printStackTrace();
 				}
@@ -273,11 +266,8 @@ public class JpCarrie extends JPanel{
 		Thread loadData = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
-				MistakeDAO mistakedao = dao.getMistakeDAO();
-				
-				List<Mistake> list = mistakedao.getAll(Session.getCurrentUser(), JpCarrie.this.getName());
-
+				List<Mistake> list = Mistake.all(Session.getCurrentUser(),
+												  JpCarrie.this.getName());
 				if(list.size() > 0)
 					jpMenuFooter.getPaginateMistakes().addMistakes(list);			
 			}

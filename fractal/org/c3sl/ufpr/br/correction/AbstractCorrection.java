@@ -2,6 +2,7 @@ package org.c3sl.ufpr.br.correction;
 
 import java.io.Serializable;
 
+import br.ufpr.c3sl.model.Hit;
 import br.ufpr.c3sl.model.MistakeInfo;
 
 public abstract class AbstractCorrection implements Correction, Serializable {
@@ -11,6 +12,12 @@ public abstract class AbstractCorrection implements Correction, Serializable {
 	protected double correctAnswer, answerDouble;
 	transient protected MistakeInfo mistake;
 	protected String message = null;
+	
+	private String exercise;
+	
+	public AbstractCorrection(int exercise){
+		this.exercise = "Exercício "+exercise;
+	}
 	
 	public MistakeInfo getMistakeInfo(){
 		return mistake;
@@ -45,5 +52,22 @@ public abstract class AbstractCorrection implements Correction, Serializable {
 				return -1;
 			else
 				return -2;
+	}
+	
+	public void saveState(String answer, String correctAnswer, int row, int column){
+		mistake = new MistakeInfo(
+				"Erro no Exercício " + exercise + ", na iteração "+ row + " " + column,
+				 answer, correctAnswer,
+				"Ensino de progressões geométrica");
+		mistake.setCell(row + " " + column);
+	}
+	
+	public void saveHit(String answer, String correctAnswer, int row, int column){
+		Hit hit = new Hit();
+		hit.setAnswer(answer);
+		hit.setCell(row+" "+column);
+		hit.setCorrectAnswer(correctAnswer);
+		hit.setExercise(exercise);
+		hit.save();
 	}
 }

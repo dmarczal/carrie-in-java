@@ -253,7 +253,6 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 
 	@Override
 	public void paginated(PaginatorEvent<Object> event) {
-		System.out.println(event);
 		this.keyBoard.setVisible(false);
 		closeBallonTip();
 	}

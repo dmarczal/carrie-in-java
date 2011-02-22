@@ -6,6 +6,7 @@ import javax.swing.JApplet;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
 import br.ufpr.c3sl.view.config.ConfigurationPane;
 import br.ufpr.c3sl.view.principal.JpCarrie;
@@ -40,14 +41,18 @@ public abstract class JAppletCarrie extends JApplet {
 	
 	@Override
 	public void destroy() {
-		DB4ODAOFactory.getConnection().close();
+		if (DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O){
+			DB4ODAOFactory.getConnection().close();
+		}
 		System.exit(0);
 		super.destroy();
 	}
 	
 	@Override
 	public void stop() {
-		DB4ODAOFactory.getConnection().close();
+		if (DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O){
+			DB4ODAOFactory.getConnection().close();
+		}
 		System.exit(0);
 		super.stop();
 	}

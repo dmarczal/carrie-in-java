@@ -204,6 +204,8 @@ public class JpMenuBarFooter extends JPanel {
 				}
 			}
 
+			//TODO: Implementing send Hits to server
+			
 			JOptionPane.showMessageDialog(null, "Os dados foram atualizados com sucesso!!!");
 			imgButtonSendServer.setVisible(false);
 			resetPaginateMistakes();

@@ -10,7 +10,7 @@
     </target>
 	
     <target name="compile" depends="clean">
-        <mkdir dir="bin" />
+       <mkdir dir="bin" />
 
        <copy  todir="bin">
          <fileset dir="src" excludes="**/*.java"/>
@@ -60,5 +60,37 @@
 
 	    <echo>Browser Opened</echo>
 	  </target>
+	
+	<property name="sql.driver" value="com.mysql.jdbc.Driver"/>
+	<property name="sql.url"    value="jdbc:mysql://127.0.0.1:3306/"/>
+	<property name="sql.user"   value="root"/>
+	<property name="sql.pass"   value=""/>
+
+	<target name="createTablesOnLocalhost" >
+	 <sql driver="${sql.driver}" 
+	 	url="${sql.url}" userid="${sql.user}" 
+	    password="${sql.pass}" 
+	 	classpathref="classpath"
+	 	print="yes" >
+	 	
+	    <transaction src="sql/sql.sql" />
+	 </sql>
+	 </target>
+
+	<property name="sql.driver.s" value="com.mysql.jdbc.Driver"/>
+	<property name="sql.url.s"    value="jdbc:mysql://mysql04.maxiambiental.com/"/>
+	<property name="sql.user.s"   value="maxiambiental3"/>
+	<property name="sql.pass.s"   value="abc123654"/>
+
+	<target name="createTablesOnServerhost" >
+	 <sql driver="${sql.driver.s}" 
+	 	url="${sql.url.s}" userid="${sql.user.s}" 
+	    password="${sql.pass.s}" 
+	 	classpathref="classpath"
+	 	print="yes" >
+	 	
+	    <transaction src="sql/sql.sql" />
+	 </sql>
+	 </target>
 	
 </project>

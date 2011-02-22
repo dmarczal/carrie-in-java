@@ -5,7 +5,8 @@ public class MistakeInfo {
 	private String description;
 	private String answer;
 	private String correctAnswer;
-	private String title;	
+	private String title;
+	private String cell;
 	
 	public MistakeInfo(String title, String answer, String correctAnswer, String description) {
 		super();
@@ -36,7 +37,7 @@ public class MistakeInfo {
 	}
 	
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title; // maker softwell
 	}
 
 	public String getCorrectAnswer() {
@@ -45,5 +46,13 @@ public class MistakeInfo {
 
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+	
+	public void setCell(String cell) {
+		this.cell = cell;
+	}
+
+	public String getCell() {
+		return this.cell;
 	}
 }

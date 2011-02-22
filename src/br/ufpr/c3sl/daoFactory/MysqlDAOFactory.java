@@ -4,26 +4,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
+import br.ufpr.c3sl.dao.HitDAO;
 import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.dao.RetroactionDAO;
 import br.ufpr.c3sl.dao.UserDAO;
+import br.ufpr.c3sl.daoconcrete.MysqlHitDAO;
 import br.ufpr.c3sl.daoconcrete.MysqlMistakeDAO;
 import br.ufpr.c3sl.daoconcrete.MysqlRetroactionDAO;
 import br.ufpr.c3sl.daoconcrete.MysqlUserDAO;
 
 public class MysqlDAOFactory extends DAOFactory {
 
-//	private static String url = "jdbc:mysql://127.0.0.1:3306/";
-//	private static String database = "carrie";
-//	private static String driver = "com.mysql.jdbc.Driver";
-//	private static String user = "root";
-//	private static String password = "";
-
-	private static String url = "jdbc:mysql://mysql04.maxiambiental.com/";
-	private static String database = "maxiambiental3";
+	private static String url = "jdbc:mysql://127.0.0.1:3306/";
+	private static String database = "carrie";
 	private static String driver = "com.mysql.jdbc.Driver";
-	private static String user = "maxiambiental3";
-	private static String password = "abc123654";
+	private static String user = "root";
+	private static String password = "";
+
+//	private static String url = "jdbc:mysql://mysql04.maxiambiental.com/";
+//	private static String database = "maxiambiental3";
+//	private static String driver = "com.mysql.jdbc.Driver";
+//	private static String user = "maxiambiental3";
+//	private static String password = "abc123654";
 	
 	
 	// TODO: Recommend connection pool implementation/usage
@@ -35,6 +39,8 @@ public class MysqlDAOFactory extends DAOFactory {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception ex){
+			JOptionPane.showMessageDialog(null,
+					"Não foi possível salvar os dados! O Banco de dados não está repondendo!");
 			ex.printStackTrace();
 		}
 		
@@ -51,7 +57,11 @@ public class MysqlDAOFactory extends DAOFactory {
 
 	@Override
 	public RetroactionDAO getRetroactionDAO() {
-		// TODO Auto-generated method stub
 		return new MysqlRetroactionDAO();
+	}
+
+	@Override
+	public HitDAO getHitDAO() {
+		return new MysqlHitDAO();
 	}
 }

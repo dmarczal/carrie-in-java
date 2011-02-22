@@ -12,21 +12,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import netscape.javascript.JSObject;
-import br.ufpr.c3sl.connection.Internet;
 import br.ufpr.c3sl.dao.UserDAO;
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.exception.UserException;
@@ -48,10 +44,10 @@ public class ConfigurationPane extends JPanel {
 	private JButton jbOK;
 	private JButton jbCancel;
 
-	private ButtonGroup group;
-
-	private JRadioButton jrbServer;
-	private JRadioButton jrbLocal;
+//	private ButtonGroup group;
+//
+//	private JRadioButton jrbServer;
+//	private JRadioButton jrbLocal;
 
 	private JCheckBox jcbAgree;
 
@@ -70,7 +66,8 @@ public class ConfigurationPane extends JPanel {
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.weighty = 1;
 		contentPane = new JPanel(new BorderLayout());
-		contentPane.setBorder(BorderFactory.createTitledBorder("Configuração"));
+		contentPane.setBorder(BorderFactory.createTitledBorder(""));
+		//contentPane.setBorder(BorderFactory.createTitledBorder("Configuração"));
 		this.add(contentPane, gbc);
 		build();
 	}
@@ -91,7 +88,8 @@ public class ConfigurationPane extends JPanel {
 		jpMain.add(jpBody, BorderLayout.CENTER);
 
 		jpHeader = new JPanel();
-		jpHeader.add(new JLabel("Configurações Iniciais da Aplicação"));
+		//jpHeader.add(new JLabel("Configurações Iniciais da Aplicação"));
+		jpHeader.add(new JLabel("Bem-vindo a simulador de Fractais"));
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -99,36 +97,36 @@ public class ConfigurationPane extends JPanel {
 		c.gridwidth = 2;
 		jpBody.add(jpHeader, c);
 
-		c.gridwidth = 1;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weighty = 2.0;
+//		c.gridwidth = 1;
+//		c.gridx = 0;
+//		c.gridy = 1;
+//		c.weighty = 2.0;
 		c.insets = new Insets(10,0,0,0);
-		jpBody.add(new JLabel("Por favor escolha o modo de execução:"), c);
-
-		c.gridy = 2;
-
-		JPanel radioPane = new JPanel();
-		radioPane.setLayout(new BoxLayout(radioPane, BoxLayout.Y_AXIS));
-
-		jrbServer = new JRadioButton("Server Mode");
-		jrbLocal = new JRadioButton("Local Mode");
-
-		group = new ButtonGroup();
-		group.add(jrbLocal);
-		group.add(jrbServer);
-
-		radioPane.add(jrbServer);
-		radioPane.add(jrbLocal);
-
-		jpBody.add(radioPane, c);
+//		jpBody.add(new JLabel("Por favor escolha o modo de execução:"), c);
+//
+//		c.gridy = 2;
+//
+//		JPanel radioPane = new JPanel();
+//		radioPane.setLayout(new BoxLayout(radioPane, BoxLayout.Y_AXIS));
+//
+//		jrbServer = new JRadioButton("Server Mode");
+//		jrbLocal = new JRadioButton("Local Mode");
+//
+//		group = new ButtonGroup();
+//		group.add(jrbLocal);
+//		group.add(jrbServer);
+//
+//		radioPane.add(jrbServer);
+//		radioPane.add(jrbLocal);
+//
+//		jpBody.add(radioPane, c);
 
 		c.gridx = 0;
 		c.gridy = 3;
-		jpBody.add(new JLabel("Entre com seu Email:"), c);
+		jpBody.add(new JLabel("Por favor entre com seu Email:"), c);
 
 		c.gridy = 4;
-		jtfEmail = new JTextField(); //"diego@gmail.com"
+		jtfEmail = new JTextField("diego@gmail.com"); //"diego@gmail.com"
 		jpBody.add(jtfEmail, c);
 
 		c.gridy = 5;
@@ -138,6 +136,7 @@ public class ConfigurationPane extends JPanel {
 		JPanel agreePanel = new JPanel(flow);
 
 		jcbAgree = new JCheckBox();
+		jcbAgree.setSelected(true);
 
 		agreePanel.add(jcbAgree);
 		JLabel lbAgreeText = new JLabel("<html><div style='color:black'>Concordo em ceder os dados gerados por este <br />" +
@@ -181,9 +180,9 @@ public class ConfigurationPane extends JPanel {
 		ArrayList<String> errors = new ArrayList<String>();
 		String msgs = "";
 
-		if(!jrbLocal.isSelected() && !jrbServer.isSelected()){
-			errors.add("Você deve selecionar um dos modos!");
-		}
+//		if(!jrbLocal.isSelected() && !jrbServer.isSelected()){
+//			errors.add("Você deve selecionar um dos modos!");
+//		}
 
 		if(!Util.validateEmail(jtfEmail.getText())){
 			errors.add("Email Inválido!");
@@ -221,10 +220,11 @@ public class ConfigurationPane extends JPanel {
 				
 				Session.setCurrentUser(new User(email));
 				
-				DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
+				//DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
+				DAOFactory.DATABASE_CHOOSE = DAOFactory.MYSQL;
 
-				Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
-				"\n seu modo de execução foi alterado para local");
+//				Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
+//				"\n seu modo de execução foi alterado para local");
 
 				//System.out.println(DAOFactory.DATABASE_CHOOSE);
 
@@ -233,7 +233,8 @@ public class ConfigurationPane extends JPanel {
 
 				try {
 					User user = userDAO.findOrCreateByEmail(email);
-					Session.setMode((DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O) ? "Local" : "Server");
+					//Session.setMode((DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O) ? "Local" : "Server");
+					Session.setMode("Server");
 					Session.setCurrentUser(user);
 				} catch (UserException e) {
 					e.printStackTrace();

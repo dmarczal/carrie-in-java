@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.daoFactory;
 
+import br.ufpr.c3sl.dao.HitDAO;
 import br.ufpr.c3sl.dao.MistakeDAO;
 import br.ufpr.c3sl.dao.RetroactionDAO;
 import br.ufpr.c3sl.dao.UserDAO;
@@ -19,6 +20,7 @@ public abstract class DAOFactory {
   public abstract UserDAO getUserDAO();
   public abstract MistakeDAO getMistakeDAO();
   public abstract RetroactionDAO getRetroactionDAO();
+  public abstract HitDAO getHitDAO();
 
   public static DAOFactory getDAOFactory(
       int whichFactory) {

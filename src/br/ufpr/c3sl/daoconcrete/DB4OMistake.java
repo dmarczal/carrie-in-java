@@ -28,6 +28,7 @@ public class DB4OMistake implements MistakeDAO{
 	public List<Mistake> getAll(final User user, final String learningObjectString) {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
 
+		//TODO: ORDER BY created_at DESC
 		List<Mistake> results = dbo.query(new Predicate<Mistake>() {
 			private static final long serialVersionUID = 7067504373296785410L;
 

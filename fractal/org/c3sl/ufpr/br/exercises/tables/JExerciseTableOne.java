@@ -10,7 +10,6 @@ public class JExerciseTableOne extends JExerciseTable{
 
 	public JExerciseTableOne(String axiom, String rules, double angle) {
 		super(axiom, rules, angle, new CorrectionOne(), 4, 3);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

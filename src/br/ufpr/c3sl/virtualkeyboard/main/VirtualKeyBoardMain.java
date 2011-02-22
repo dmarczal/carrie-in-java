@@ -387,7 +387,7 @@ public class VirtualKeyBoardMain extends JDialog {
 		
 		if (isEnableVariableL) {
 			JButton jbNvarL = new JButton("ℓ");
-			jbNvarL.setName("ℓ");
+			jbNvarL.setName("l");
 			jbNvarL.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cmdVariable(e.getActionCommand());
@@ -401,7 +401,12 @@ public class VirtualKeyBoardMain extends JDialog {
 			jbPvar.setName("\160");
 			jbPvar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					cmdVariable(e.getActionCommand());
+//					private static String url = "jdbc:mysql://127.0.0.1:3306/";
+//					private static String database = "carrie";
+//					private static String driver = "com.mysql.jdbc.Driver";
+//					private static String user = "root";
+//					private static String password = "";
+cmdVariable(e.getActionCommand());
 				}
 			});
 			jpButtons.add(jbPvar);

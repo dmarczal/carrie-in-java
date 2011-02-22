@@ -1,6 +1,11 @@
 package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import br.ufpr.c3sl.dao.MistakeDAO;
+import br.ufpr.c3sl.daoFactory.DAOFactory;
+import br.ufpr.c3sl.exception.UserException;
 
 public class Mistake {
 	
@@ -80,5 +85,24 @@ public class Mistake {
 	
 	public Long getId() {
 		return id;
+	}
+	
+	public Mistake save() throws UserException{
+		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
+		MistakeDAO mistakedao = dao.getMistakeDAO();
+		
+		return mistakedao.insert(this);
+	}
+	
+	/**
+	 * Get All mistakes from a user and from a learningObjetct
+	 * @param user The user
+	 * @param learningObject The name of learning object 
+	 */
+	public static List<Mistake> all(User user, String learningObjetct){
+		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
+		MistakeDAO mistakedao = dao.getMistakeDAO();
+		
+		return mistakedao.getAll(user, learningObjetct);
 	}
 }

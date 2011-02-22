@@ -1,10 +1,13 @@
 package org.c3sl.ufpr.br.correction;
 
 import br.ufpr.c3sl.mistakes.MistakeOccurrence;
-import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.virtualkeyboard.mathevaluator.MathEvaluator;
 
 public class CorrectionTwo extends AbstractCorrection {
+
+	public CorrectionTwo() {
+		super(2);
+	}
 
 	private static final long serialVersionUID = 8032322462671188618L;
 
@@ -34,6 +37,7 @@ public class CorrectionTwo extends AbstractCorrection {
 		switch (comparationReturn) {
 		case 1:
 			this.message = null;
+			saveHit(answer, expression, row, column);
 			return true;
 		case -1:
 			this.message = MistakeOccurrence.getMistakeMessage("3", 3, row);
@@ -48,11 +52,4 @@ public class CorrectionTwo extends AbstractCorrection {
 			return false;
 		}
 	}
-	
-	private void saveState(String answer, String correctAnswer, int row, int column){
-		mistake = new MistakeInfo(
-		"Erro no exercicio 2 Iteração "+ row + " " + column, answer, correctAnswer,
-		"Erro no ensino de progressões geométrica no exercício 2");
-	}
-
 }

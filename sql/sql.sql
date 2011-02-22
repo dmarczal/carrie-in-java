@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS carrie;
+
 create database carrie;
 
 use carrie;
@@ -21,6 +23,8 @@ create table mistakes (
 	created_at timestamp,
 	user_id  BIGINT NOT NULL,
 	
+	cell varchar(200),
+	
 	PRIMARY KEY (id),
 	
 	FOREIGN KEY (user_id) REFERENCES users(id)
@@ -38,3 +42,21 @@ create table retroactions (
     FOREIGN KEY (mistake_id) REFERENCES users(id)
              ON DELETE SET NULL         
 );
+
+create table hits (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	created_at timestamp,
+	exercise varchar(200),
+	cell varchar(200),
+	learningObject varchar(200),
+	answer varchar(400),
+	correctAnswer varchar(400),
+	
+	user_id  BIGINT NOT NULL,
+	
+	PRIMARY KEY (id),
+              
+    FOREIGN KEY (user_id) REFERENCES users(id)
+             ON DELETE SET NULL
+);
+
