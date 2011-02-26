@@ -30,7 +30,7 @@ import br.ufpr.c3sl.view.util.EnableDisable;
 @SuppressWarnings("serial")
 public class JpCarrie extends JPanel{
 
-	
+
 	private JPanel jpBody;
 	private JPanel jpMain;
 	private JPanel jpFooter;
@@ -38,10 +38,10 @@ public class JpCarrie extends JPanel{
 
 	private JpMenuBarFooter jpMenuFooter;
 	private HeaderPane jpHeader;
-	
+
 	private static final Border BORDER = BorderFactory.createEtchedBorder();
 	private static JpCarrie carrie = new JpCarrie();
-	
+
 	public static JpCarrie getInstance(){
 		return carrie;
 	}
@@ -50,11 +50,11 @@ public class JpCarrie extends JPanel{
 		String name = null;
 		if (carrie != null)
 			name = carrie.getName();
-		
+
 		carrie = new JpCarrie();
 		carrie.setName(name);
 	}
-	
+
 	/**
 	 * Private Constructor , initialize variables
 	 */ 
@@ -92,7 +92,7 @@ public class JpCarrie extends JPanel{
 		this.add(jpBody, BorderLayout.CENTER);
 		this.add(jpFooter, BorderLayout.SOUTH);
 	}
-	
+
 	private void addBorder(){
 		configureBorder(this);
 		configureBorder(jpBody);
@@ -103,11 +103,11 @@ public class JpCarrie extends JPanel{
 		jpHeader.configureHeader();
 		configureBorder(jpHeader);
 	}
-	
+
 	public void updateHeader(){
 		jpHeader.updateHeader();
 	}
-	
+
 	private void updateTitle(){
 		String parte = jpMain.getName().split(":")[0];
 		jpHeader.updateTitle(this.getName() + " - " + parte);
@@ -134,7 +134,7 @@ public class JpCarrie extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*----------------------------------------*/
 
 	/**
@@ -154,7 +154,7 @@ public class JpCarrie extends JPanel{
 	public JPanel getMainPanel(){
 		return jpMain;
 	}
-	
+
 	/**
 	 *  update main panel
 	 *  @param JPanel newPanel new main panel
@@ -169,7 +169,7 @@ public class JpCarrie extends JPanel{
 		updateTitle();
 		SwingUtilities.updateComponentTreeUI(jpBody);		
 	}
-	
+
 	/**
 	 *  Get the paginator Object
 	 *  @return paginator Objetc
@@ -187,7 +187,7 @@ public class JpCarrie extends JPanel{
 		panel.setName(name);
 		jpMenuFooter.addPanelToPaginator(panel);
 	}
-	
+
 	/**
 	 *  add a panel to the paginator from a html file
 	 *  @param String filepath path
@@ -196,7 +196,7 @@ public class JpCarrie extends JPanel{
 		addHtmlContent(Util.getTextFromFile(getClass(), filepath));
 	}
 
-	
+
 	/**
 	 *  Show loading Message on the top of application
 	 */
@@ -212,9 +212,9 @@ public class JpCarrie extends JPanel{
 		jpHeader.hideLoading();
 		EnableDisable.setComponentsEnabled(this, true);
 	}
-	
+
 	/*----------------------------------------*/
-	
+
 	private void addHtmlContent(String code) {
 		JPanelHTML panel = new JPanelHTML();
 		Html html = new Html(code);
@@ -224,40 +224,47 @@ public class JpCarrie extends JPanel{
 		addPanel(html.getLegend(), panel);
 	}
 
-		
+
 	/**
 	 *  Save the main panel state 
 	 *  @param mistake information about the mistake
 	 */
 	public void saveState(final MistakeInfo mistakeInfo){
 		//Internet.verifyConnection();
-		
-		SwingUtilities.invokeLater(new Runnable() {
 
+		final Mistake mistake = new Mistake();
+
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				
 				JPanel toSave = null;
 				if (paneToSave == null)
 					toSave = jpMain;
 				else
 					toSave = paneToSave;
-					
-				Mistake mistake = new Mistake();
+
 				mistake.setExercise(toSave.getName());
 				mistake.setLearningObject(JpCarrie.this.getName());
 				mistake.setMistakeInfo(mistakeInfo);
 				mistake.setObject(ObjectByteArray.getByteOfArray(toSave));
 				mistake.setUser(Session.getCurrentUser());
 
-				try {
-					jpMenuFooter.addErrorToMenu(mistake.save());
-				} catch (UserException e) {
-					e.printStackTrace();
-				}
+
+				Thread sendToBd = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							jpMenuFooter.addErrorToMenu(mistake.save());
+						} catch (UserException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+
+				sendToBd.start();
 			}
 		});
 	}
-	
+
 	public void setPanelToSave(JPanel paneToSave){
 		this.paneToSave = paneToSave;
 	}
@@ -267,12 +274,12 @@ public class JpCarrie extends JPanel{
 			@Override
 			public void run() {
 				List<Mistake> list = Mistake.all(Session.getCurrentUser(),
-												  JpCarrie.this.getName());
+						JpCarrie.this.getName());
 				if(list.size() > 0)
 					jpMenuFooter.getPaginateMistakes().addMistakes(list);			
 			}
 		});
-		
+
 		loadData.start();
 	}
 }

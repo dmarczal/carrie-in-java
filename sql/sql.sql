@@ -1,8 +1,7 @@
-DROP DATABASE IF EXISTS carrie;
-
-create database carrie;
-
-use carrie;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS mistakes;
+DROP TABLE IF EXISTS retroactions;
+DROP TABLE IF EXISTS hits;
 
 create table users (
 	id BIGINT NOT NULL AUTO_INCREMENT,

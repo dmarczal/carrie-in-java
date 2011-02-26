@@ -23,7 +23,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 	"correctAnswer, title, user_id, created_at, cell) " +
 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String FIND_BY_USER = "SELECT * FROM mistakes " +
-			"WHERE user_id LIKE ? and learningObject LIKE ? ORDER BY created_at DESC";
+			"WHERE user_id LIKE ? and learningObject LIKE ? ORDER BY created_at ASC";
 
 	/**
 	 * insert
@@ -51,6 +51,8 @@ public class MysqlMistakeDAO implements MistakeDAO{
 			pstmt.setLong(8, mistake.getUser().getId());
 			pstmt.setTimestamp(9, mistake.getCreatedAtTime());
 			pstmt.setString(10, mistake.getMistakeInfo().getCell());
+			
+			System.out.println(pstmt);
 			
 			pstmt.executeUpdate();
 			ResultSet rset = pstmt.getGeneratedKeys();

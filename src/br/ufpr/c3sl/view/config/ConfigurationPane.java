@@ -123,10 +123,10 @@ public class ConfigurationPane extends JPanel {
 
 		c.gridx = 0;
 		c.gridy = 3;
-		jpBody.add(new JLabel("Por favor entre com seu Email:"), c);
+		jpBody.add(new JLabel("Por favor entre com seu email:"), c);
 
 		c.gridy = 4;
-		jtfEmail = new JTextField("diego@gmail.com"); //"diego@gmail.com"
+		jtfEmail = new JTextField(""); //"diego@gmail.com"
 		jpBody.add(jtfEmail, c);
 
 		c.gridy = 5;
@@ -179,7 +179,8 @@ public class ConfigurationPane extends JPanel {
 	private void validateAnwser(){
 		ArrayList<String> errors = new ArrayList<String>();
 		String msgs = "";
-
+		jtfEmail.setText(jtfEmail.getText().trim());
+		
 //		if(!jrbLocal.isSelected() && !jrbServer.isSelected()){
 //			errors.add("Você deve selecionar um dos modos!");
 //		}

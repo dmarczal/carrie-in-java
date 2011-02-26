@@ -69,6 +69,10 @@ public class PaginateMistakes extends JPanel {
 				return c;
 			}
 		};
+		
+		//invisible column
+		table.getColumnModel().getColumn(0).setMaxWidth(10);
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		//table.setIntercellSpacing(new Dimension());
 		table.setShowGrid(false);
@@ -251,14 +255,17 @@ class MistakesTableModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1118824776778151336L;
 	private Hashtable<Integer, Mistake> map;
-
+	
+	private int mistakeID; //this is necessary because BD4O doesn't support id
+	
 	MistakesTableModel() {
 
+		addColumn("");
 		addColumn("Exercise");
 		addColumn("Resposta");
 		addColumn("Titulo do Erro");
 		addColumn("Ocorrido em:");
-
+		
 		map = new Hashtable<Integer, Mistake>();
 	}
 
@@ -267,11 +274,12 @@ class MistakesTableModel extends DefaultTableModel {
 	}
 	
 	public void addMistake(Mistake mistake){
-		map.put(getRowCount(), mistake);
-		addRow(new Object[] { mistake.getExercise(), 
+		map.put(mistakeID, mistake);
+		insertRow(0, new Object[] {mistakeID, mistake.getExercise(), 
 				mistake.getMistakeInfo().getAnswer(),
 				mistake.getMistakeInfo().getTitle(),
 				mistake.getCreatedAtTime(),});
+		mistakeID++;
 	}
 	
 	public void addMistakes(List<Mistake> list){
@@ -282,7 +290,7 @@ class MistakesTableModel extends DefaultTableModel {
 	
 	@Override
 	public boolean isCellEditable(int row, int column) {
-		final Mistake mistake = map.get(row);
+		final Mistake mistake = map.get(getValueAt(row, 0));
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

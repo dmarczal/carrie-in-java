@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="fractal"/>
 	<classpathentry kind="src" path="examples"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/Fest-Swing/debug-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/Fest-Swing/fest-assert-1.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/Fest-Swing/fest-assert-1.0.jar"/>
@@ -21,5 +21,10 @@
 	<classpathentry kind="lib" path="lib/db4o-7.12.156.14667-all-java5.jar"/>
 	<classpathentry kind="lib" path="lib/balloontip-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/plugin.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/json-1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/rapa-0.8.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

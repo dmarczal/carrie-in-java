@@ -84,6 +84,7 @@ public class Enunciation extends JPanel implements SaveState {
 	//	}
 
 	private class ActionListenerjrbShowHideEnun implements ActionListener{
+		
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			if (panel.isVisible()) {
 				panel.setVisible(false);

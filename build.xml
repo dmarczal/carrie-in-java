@@ -6,7 +6,8 @@
     </path>
 
     <target name="clean">
-       <!-- <delete dir="bin"/> -->
+       <delete dir="bin"/>
+       <mkdir dir="bin"/>
     </target>
 	
     <target name="compile" depends="clean">
@@ -17,7 +18,7 @@
          <fileset dir="fractal" excludes="**/*.java"/>
        </copy>
        <javac srcdir="src:fractal" destdir="bin" classpathref="classpath" 
- 			executable="/home/marczal/jdk1.6.0_21/bin/javac" compiler="extJavac" >
+ 			executable="/home/marczal/jdk1.6.0_01/bin/javac" compiler="extJavac" >
        </javac>
         <echo>Compile Sucessfull</echo>
     </target>
@@ -72,16 +73,23 @@
 	    password="${sql.pass}" 
 	 	classpathref="classpath"
 	 	print="yes" >
-	 	
+	 	<transaction src="sql/createDatabase.sql" />
 	    <transaction src="sql/sql.sql" />
 	 </sql>
 	 </target>
-
+	<!--
 	<property name="sql.driver.s" value="com.mysql.jdbc.Driver"/>
-	<property name="sql.url.s"    value="jdbc:mysql://mysql04.maxiambiental.com/"/>
+	<property name="sql.url.s"    value="jdbc:mysql://mysql04.maxiambiental.com/maxiambiental3"/>
 	<property name="sql.user.s"   value="maxiambiental3"/>
 	<property name="sql.pass.s"   value="abc123654"/>
+	-->
 
+	<property name="sql.driver.s" value="com.mysql.jdbc.Driver"/>
+	<property name="sql.url.s"    value="jdbc:mysql://educacional.c3sl.ufpr.br:3306"/>
+	<property name="sql.user.s"   value="root"/>
+	<property name="sql.pass.s"   value="caRRie"/>
+	
+	
 	<target name="createTablesOnServerhost" >
 	 <sql driver="${sql.driver.s}" 
 	 	url="${sql.url.s}" userid="${sql.user.s}" 
@@ -89,7 +97,8 @@
 	 	classpathref="classpath"
 	 	print="yes" >
 	 	
-	    <transaction src="sql/sql.sql" />
+	 	<transaction src="sql/createDatabase.sql" />
+	 	<transaction src="sql/sql.sql" />
 	 </sql>
 	 </target>
 	

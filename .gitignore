@@ -3,5 +3,5 @@ java.policy.applet
 .project
 .settings/org.eclipse.jdt.core.prefs
 .gitignore
-/html/jars/*
+html/jars/*
 *~
