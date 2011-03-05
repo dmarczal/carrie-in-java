@@ -14,7 +14,7 @@ import br.ufpr.c3sl.model.Hit;
 public class MysqlHitDAO implements HitDAO{
 
 	private static final String INSERT = "INSERT INTO hits " +
-	"(exercise, learningObject, user_id, created_at, cell, answer, correctAnswer ) " +
+	"(exercise, learningObject, user_id, created_at, cell, answer, correct_answer ) " +
 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
 	@Override

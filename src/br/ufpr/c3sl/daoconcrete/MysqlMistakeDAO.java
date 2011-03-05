@@ -21,7 +21,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 
 	private static final String INSERT = "INSERT INTO mistakes " +
 	"(object, exercise, oa, description, answer, " +
-	"correctAnswer, title, user_id, created_at, cell) " +
+	"correct_answer, title, user_id, created_at, cell) " +
 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String FIND_BY_USER = "SELECT * FROM mistakes " +
 			"WHERE user_id LIKE ? and learningObject LIKE ? ORDER BY created_at ASC";
@@ -52,8 +52,6 @@ public class MysqlMistakeDAO implements MistakeDAO{
 			pstmt.setLong(8, mistake.getUser().getId());
 			pstmt.setTimestamp(9, mistake.getCreatedAt());
 			pstmt.setString(10, mistake.getCell());
-			
-			System.out.println(pstmt);
 			
 			pstmt.executeUpdate();
 			ResultSet rset = pstmt.getGeneratedKeys();
@@ -104,7 +102,7 @@ public class MysqlMistakeDAO implements MistakeDAO{
 		mistake.setCreatedAt(rset.getTimestamp("created_at"));
 		mistake.setTitle(rset.getString("title"));
 		mistake.setAnswer(rset.getString("answer").replaceAll("l","ℓ"));
-		mistake.setCorrectAnswer(rset.getString("correctAnswer").replaceAll( "l","ℓ"));
+		mistake.setCorrectAnswer(rset.getString("correct_answer").replaceAll( "l","ℓ"));
 		mistake.setDescription(rset.getString("description"));
 		mistake.setCell(rset.getString("cell"));
 		mistake.setUser(Session.getCurrentUser());
