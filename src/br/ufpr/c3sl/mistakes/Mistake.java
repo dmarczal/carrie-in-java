@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class Mistake {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private String id;
 	private String msg;
 	

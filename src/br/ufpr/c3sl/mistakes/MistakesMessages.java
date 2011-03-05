@@ -17,7 +17,9 @@ import br.ufpr.c3sl.util.Util;
  */
 
 public class MistakesMessages {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	private TreeMap<String, Mistake> messagesMap = new TreeMap<String, Mistake>();
 
 	private Pattern patternComment = Pattern.compile("/{2}.*");

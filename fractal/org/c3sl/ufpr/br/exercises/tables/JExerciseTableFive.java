@@ -7,7 +7,7 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 public class JExerciseTableFive extends JExerciseTable{
 
-	private static final long serialVersionUID = -7306113789036805006L;
+	private static final long serialVersionUID = 1L;
 
 	private static final int ROW = 5;
 	private static final int COLUMN = 4;

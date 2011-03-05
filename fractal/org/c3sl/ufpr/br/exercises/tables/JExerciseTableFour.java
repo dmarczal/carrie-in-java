@@ -1,19 +1,22 @@
 package org.c3sl.ufpr.br.exercises.tables;
 
+import javax.swing.JPanel;
+
 import org.c3sl.ufpr.br.correction.CorrectionFour;
+import org.c3sl.ufpr.br.exercises.events.ExerciseEvent;
 
 import br.ufpr.c3sl.virtualkeyboard.compositedElements.Division;
 import br.ufpr.c3sl.virtualkeyboard.compositedElements.Power;
+import br.ufpr.c3sl.virtualkeyboard.elements.Number;
 import br.ufpr.c3sl.virtualkeyboard.elements.Variable;
 import br.ufpr.c3sl.virtualkeyboard.formula.ElementOfFormula;
 import br.ufpr.c3sl.virtualkeyboard.formula.FormulaInitial;
 import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
-import br.ufpr.c3sl.virtualkeyboard.elements.Number;
-
 public class JExerciseTableFour extends JExerciseTable{
 
-	private static final long serialVersionUID = 5587952136472209059L;
+	private static final long serialVersionUID = 1L;
+	
 	private static final int ROW = 5;
 	private static final int COLUMN = 5;	
 
@@ -29,11 +32,11 @@ public class JExerciseTableFour extends JExerciseTable{
 			setValueAt(new FormulaInitial(), i, 3);
 			setValueAt(new FormulaInitial(), i, 4);
 			setValueAt(new FormulaInitial(), i, 5);
-			setValueAt(getFormula(i+""), i, 2);
+//			setValueAt(getFormula(i+""), i, 2);
 		}
 
-		this.setValueAt("ℓ", 0, 2);
-		setValueAt(getFormula("n"), ROW, 2);
+//		this.setValueAt("ℓ", 0, 2);
+//		setValueAt(getFormula("n"), ROW, 2);
 
 		this.getColumnModel().getColumn(2).setMaxWidth(140);
 		this.getColumnModel().getColumn(2).setPreferredWidth(140);
@@ -127,5 +130,11 @@ public class JExerciseTableFour extends JExerciseTable{
 		division.addElement(power);
 
 		return division;
+	}
+	
+	@Override
+	public void changedValue(ExerciseEvent<JPanel> event) {
+		if (event.getColumn() == 2)
+			setValueAt(event.getSource(), event.getRow(), event.getColumn());
 	}
 }

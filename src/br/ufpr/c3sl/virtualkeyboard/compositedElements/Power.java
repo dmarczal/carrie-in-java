@@ -39,9 +39,10 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
  * 
  */
 
-@SuppressWarnings("serial")
 public class Power extends ElementCompositeOfFormula {
 
+	private static final long serialVersionUID = 1L;
+	
 	/** The Northwest Constraint. */
 	private GridBagConstraints nwConstraint = new GridBagConstraints();
 	/** The SouthEast Constraint. */

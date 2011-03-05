@@ -12,6 +12,8 @@ import java.awt.geom.Rectangle2D;
 public class Polygon2D
         implements Shape
 {
+		private static final long serialVersionUID = 1L;
+	
         public int npoints;
         public double xpoints[];
         public double ypoints[];

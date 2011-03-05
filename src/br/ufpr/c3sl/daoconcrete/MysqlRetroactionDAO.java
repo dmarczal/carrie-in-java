@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +23,12 @@ public class MysqlRetroactionDAO implements RetroactionDAO{
 	public Retroaction insert(Retroaction retroaction) throws UserException {
 		Connection c = MysqlDAOFactory.createConnection();
 		if (retroaction.getCreatedAt() == null)
-			retroaction.setCreatedAt(new Date().getTime());
+			retroaction.setCreatedAt(new Timestamp(new Date().getTime()));
 		PreparedStatement pstmt;
 		try {
 			pstmt = c.prepareStatement(INSERT);
 			pstmt.setLong(1, retroaction.getMistake().getId());
-			pstmt.setTimestamp(2, retroaction.getCreatedAtTime());
+			pstmt.setTimestamp(2, retroaction.getCreatedAt());
 
 			pstmt.executeUpdate();
 			

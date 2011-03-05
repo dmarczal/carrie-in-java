@@ -37,9 +37,10 @@ import br.ufpr.c3sl.virtualkeyboard.formula.ElementOfFormula;
  * parentheses it possible to insert the elements
  * 
  */
-@SuppressWarnings("serial")
 public class Root extends ElementCompositeOfFormula {
 
+	private static final long serialVersionUID = 1L;
+	
 	/** The Northwest Constraint. */
 	private GridBagConstraints nwConstraint = new GridBagConstraints();
 	/** The Northeast Constraint. */

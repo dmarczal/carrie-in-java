@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.daoconcrete;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ public class DB4OUserDAO implements UserDAO{
 
 	public User insert(User user) throws UserException {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
-		user.setCreatedAt(new Date().getTime());
+		user.setCreatedAt(new Timestamp(new Date().getTime()));
 		dbo.store(user);
 		return findByEmail(user.getEmail());
 	}

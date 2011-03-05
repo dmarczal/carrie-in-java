@@ -2,24 +2,32 @@ package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
+@Root
 public class User {
 	
+	@Element
 	private String email;
+	@Element
 	private Long id;
-	private Long createdAt;
+	@Element
+	private Timestamp created_at;
+	
+	public User(){}
 	
 	public User(String email) {
 		super();
 		this.email = email;
 	}
 
-	public Long getCreatedAt() {
-		return createdAt;
+	public Timestamp getCreatedAt() {
+		return created_at;
 	}
 
-	public void setCreatedAt(Long createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedAt(Timestamp created_at) {
+		this.created_at = created_at;
 	}
 	
 	public String getEmail() {
@@ -38,12 +46,8 @@ public class User {
 		this.id = id;
 	}
 	
-	public Timestamp getCreateAtTime(){
-		return new Timestamp(createdAt);
-	}
-	
 	@Override
 	public String toString() {
-		return email+"/"+id+"/"+createdAt;
+		return email+"/"+id+"/"+created_at;
 	}
 }

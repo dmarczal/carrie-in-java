@@ -2,77 +2,69 @@ package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
 
-import br.ufpr.c3sl.dao.HitDAO;
-import br.ufpr.c3sl.daoFactory.DAOFactory;
+import org.simpleframework.xml.Element;
+
+import br.ufpr.c3sl.client.webservices.XMLHitDAO;
 import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 
 public class Hit {
 	
-	private Long createdAt;
-	private User user;
+	@Element(required=false)
+	private Timestamp created_at;
+	@Element(required=false)
 	private Long id;
-	
+	@Element
 	private String cell;
-	private String learningObject;
+	@Element
+	private String oa;
+	@Element
 	private String exercise;
-	
+	@Element
 	private String answer;
-	private String correctAnswer;
+	@Element
+	private String correct_answer;
+	
+	@Element
+	private Long user_id;
 	
 	public Hit(){
-		this.learningObject = JpCarrie.getInstance().getName();
-		user = Session.getCurrentUser();
+		this.oa = JpCarrie.getInstance().getName();
+		this.user_id = Session.getCurrentUser().getId();
 	}
 	
-	public Timestamp getCreatedAtTime() {
-		return new Timestamp(createdAt);
+	public Timestamp getCreatedAt() {
+		return created_at;
 	}
-	
-	public Long getCreatedAt() {
-		return createdAt;
+
+	public void setCreatedAt(Timestamp created_at) {
+		this.created_at = created_at;
 	}
-	
-	public void setCreatedAt(Long createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
+
 	public String getCell() {
 		return cell;
 	}
-	
+
 	public void setCell(String cell) {
 		this.cell = cell;
 	}
-	
-	public String getLearningObject() {
-		return learningObject;
+
+	public String getOa() {
+		return oa;
 	}
-	
-	public void setLearningObject(String learningObject) {
-		this.learningObject = learningObject;
+
+	public void setOa(String oa) {
+		this.oa = oa;
 	}
-	
+
 	public String getExercise() {
 		return exercise;
 	}
-	
+
 	public void setExercise(String exercise) {
 		this.exercise = exercise;
 	}
@@ -81,25 +73,38 @@ public class Hit {
 		return answer;
 	}
 
+
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 
+
 	public String getCorrectAnswer() {
-		return correctAnswer;
+		return correct_answer;
 	}
 
-	public void setCorrectAnswer(String correctAnswer) {
-		this.correctAnswer = correctAnswer;
+	public void setCorrectAnswer(String correct_answer) {
+		this.correct_answer = correct_answer;
 	}
-	
+
+	public Long getUserId() {
+		return user_id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	/**
 	 * Save this object in database
 	 */
 	public void save(){
-		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
-		HitDAO hitdao = dao.getHitDAO();
-		
-		hitdao.insert(this);
+		Thread save = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				XMLHitDAO.save(Hit.this);
+			}
+		});
+		save.start();
 	}
 }

@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class Drawing extends JPanel {
 
-	private static final long serialVersionUID = -8684100207687105447L;
+	private static final long serialVersionUID = 1L;
 	/* Reference to a fractal */
     Fractal f, thumb_f;
     Point cell = new Point(-1, -1);;

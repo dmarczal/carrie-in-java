@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -31,6 +33,8 @@ import net.java.balloontip.TablecellBalloonTip;
 import net.java.balloontip.styles.EdgedBalloonStyle;
 
 import org.c3sl.ufpr.br.correction.Correction;
+import org.c3sl.ufpr.br.exercises.events.ExerciseEvent;
+import org.c3sl.ufpr.br.exercises.listeners.ExerciseListener;
 import org.c3sl.ufpr.br.fractal.Drawing;
 import org.c3sl.ufpr.br.fractal.Fractal;
 
@@ -44,9 +48,11 @@ import br.ufpr.c3sl.virtualkeyboard.formula.FormulaInitial;
 import br.ufpr.c3sl.virtualkeyboard.listeners.VirtualKeyBoardListener;
 import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
-@SuppressWarnings("serial")
-public abstract class JExerciseTable extends JTable implements VirtualKeyBoardListener, SaveState, PaginatorListener{
-
+public abstract class JExerciseTable extends JTable implements VirtualKeyBoardListener,
+			SaveState, PaginatorListener, ExerciseListener{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private TableModel model = new TableModel();
 	private String axiom;
 	private String rules;
@@ -64,6 +70,8 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 	private int numberRow;
 	private int numberColumn;
 
+	private List<ExerciseListener> listeners;
+	
 	public JExerciseTable(String axiom, String rules, double angle, Correction correction,
 			int numberRow, int numberColumn) {
 		this.axiom = axiom;
@@ -79,6 +87,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		buildEventsAndTransientvariables();
 		configureEditable();
 		JpCarrie.getInstance().getPaginator().addPaginatorListener(this);
+		listeners = new ArrayList<ExerciseListener>();
 	}
 
 	public boolean isRowCollumnCorrect(int row, int column){
@@ -149,7 +158,9 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 	public abstract String[] arrayHeader();
 	
 	private class TableModel extends DefaultTableModel{
-
+		
+		private static final long serialVersionUID = 1L;
+		
 		public TableModel() {
 			super(new Object[][]{}, arrayHeader());
 		}
@@ -188,6 +199,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 				new LineBorder(new Color(0, 150, 0), 5), "Correto",
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.CENTER, getFont(), Color.black));
 		
+		sendChange(answer, getSelectedRow(), getSelectedColumn());
 	}
 
 	private void processWrongAnswer(JPanel answer){
@@ -261,7 +273,40 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 		return 20;
 	}
 	
+	@Override
+	public void changedValue(ExerciseEvent<JPanel> event) {}
+	
+	/**** Listener ****/
+	public synchronized void addExerciseListener(ExerciseListener listener) {
+		if(!listeners.contains(listener)) {
+			listeners.add(listener);
+		}
+	}
+
+	public synchronized void removeExerciseListener(ExerciseListener listener) {
+		listeners.remove(listener);
+	}
+
+	private void sendChange(JPanel jPanel, int row, int column) {
+		ExerciseEvent<JPanel> evento = new ExerciseEvent<JPanel>(jPanel, row, column);
+		
+		for (ExerciseListener listener : getListenerClone()) {
+			listener.changedValue(evento);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<ExerciseListener> getListenerClone(){
+		synchronized (this) {
+			// Clonar para evitar problemas de sincronização
+			// durante a propagação
+			return (List<ExerciseListener>) ((ArrayList<ExerciseListener>) listeners).clone();
+		}
+	}
+	/**** End Listener ****/
+	
 	class Renderer implements TableCellRenderer, Serializable {
+		private static final long serialVersionUID = 1L;
 		private DefaultTableCellRenderer __defaultRenderer;
 
 		public Renderer(TableCellRenderer renderer) {

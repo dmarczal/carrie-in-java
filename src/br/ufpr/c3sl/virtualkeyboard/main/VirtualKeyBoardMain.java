@@ -60,9 +60,10 @@ import br.ufpr.c3sl.virtualkeyboard.listeners.VirtualKeyBoardListener;
  * The Class VirtualKeyboardGUI created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public class VirtualKeyBoardMain extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel jpMain;
 	private JPanel jpDisplay;
 	private JPanel jpButtons;

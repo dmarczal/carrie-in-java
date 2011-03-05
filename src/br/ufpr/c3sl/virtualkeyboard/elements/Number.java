@@ -26,9 +26,10 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
  * The Class NumberPanel created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public class Number extends ElementOfFormula {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel jlNumber = new JLabel();
 	
 	/** The Constant COMMA. */

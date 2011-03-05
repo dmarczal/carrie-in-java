@@ -5,11 +5,11 @@ import br.ufpr.c3sl.virtualkeyboard.mathevaluator.MathEvaluator;
 
 public class CorrectionOne extends AbstractCorrection{
 
+	private static final long serialVersionUID = 1L;
+	
 	public CorrectionOne() {
 		super(1);
 	}
-
-	private static final long serialVersionUID = 2412805759758300505L;
 
 	private double firstAnswer;
 

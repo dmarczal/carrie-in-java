@@ -26,14 +26,14 @@ import javax.swing.Timer;
  * It uses a JLabel to display the Cursor 
  * It show and hidden the JLabel to simulate a cursor
  */
-@SuppressWarnings("serial")
 public class Cursor extends JLabel {
+	private static final long serialVersionUID = 1L;
 	
 	private boolean shown;
 	
 	private String text;
 	
-	private Timer timer;
+	transient private Timer timer;
 	
 	/**
 	 * Construct for a Cursor
@@ -43,12 +43,15 @@ public class Cursor extends JLabel {
 	public Cursor(){
 		this.setName("Cursor");
 		setCursor("|");
-	
-		timer = new Timer(250, new ActionListener() {  
+		
+		timer = new Timer(250, new ActionListener() {
+			private static final long serialVersionUID = 1L;
+			
 			public void actionPerformed(java.awt.event.ActionEvent e) {  
 				switchView();
 			}  
-		});
+		}){private static final long serialVersionUID = 1L;};
+		
 		shown = true;
 		timer.start();
 		hideCursor();

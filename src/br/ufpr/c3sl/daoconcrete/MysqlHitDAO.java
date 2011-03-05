@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import br.ufpr.c3sl.dao.HitDAO;
@@ -22,15 +23,15 @@ public class MysqlHitDAO implements HitDAO{
 		PreparedStatement pstmt = null;
 		
 		if (hit.getCreatedAt() == null)
-			hit.setCreatedAt(new Date().getTime());
+			hit.setCreatedAt(new Timestamp(new Date().getTime()));
 		
 		
 			try {
 				pstmt = c.prepareStatement(INSERT);
 				pstmt.setString(1, hit.getExercise());
-				pstmt.setString(2, hit.getLearningObject());
-				pstmt.setLong(3, hit.getUser().getId());
-				pstmt.setTimestamp(4, hit.getCreatedAtTime());
+				pstmt.setString(2, hit.getOa());
+				pstmt.setLong(3, hit.getUserId());
+				pstmt.setTimestamp(4, hit.getCreatedAt());
 				pstmt.setString(5, hit.getCell());
 				pstmt.setString(6, 
 						hit.getAnswer().replaceAll("ℓ", "l"));

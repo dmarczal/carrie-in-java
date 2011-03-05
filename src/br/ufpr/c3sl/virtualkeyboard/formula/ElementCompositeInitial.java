@@ -21,10 +21,11 @@ package br.ufpr.c3sl.virtualkeyboard.formula;
  * The Class ElementCompositeInitial created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public abstract class ElementCompositeInitial 
 	extends ElementOfFormula implements ElementOfFormulaIF{
 
+	private static final long serialVersionUID = 1L;
+	
 	/* (non-Javadoc)
 	 * @see virtualkeyboard.formula.ElementOfFormulaIF#getLastElementAdded()
 	 * return the last Element Added at the formula. The last added is 

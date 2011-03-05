@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.daoconcrete;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class DB4ORetroaction implements RetroactionDAO{
 	@Override
 	public Retroaction insert(Retroaction retroaction) throws UserException {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
-		retroaction.setCreatedAt(new Date().getTime());
+		retroaction.setCreatedAt(new Timestamp(new Date().getTime()));
 		dbo.store(retroaction);
 		return retroaction;
 	}
@@ -65,5 +66,4 @@ public class DB4ORetroaction implements RetroactionDAO{
 		}
 		return true;
 	}
-
 }

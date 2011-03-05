@@ -31,9 +31,9 @@ import br.ufpr.c3sl.virtualkeyboard.formula.ElementOfFormula;
  * parentheses it possible to insert the elements
  *  
  */
-@SuppressWarnings("serial")
 public class Parentheses extends ElementCompositeOfFormula {
-
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel jlBracketLeft = new JLabel("(");
 	private JLabel jlBracketRight = new JLabel(")");
 	

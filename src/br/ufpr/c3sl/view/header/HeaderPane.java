@@ -88,7 +88,7 @@ public class HeaderPane extends JPanel {
 		User user = Session.getCurrentUser();
 		if(user != null){
 			email = user.getEmail();
-			mode =  Session.getMode();	
+			//mode =  Session.getMode();	
 		}
 
 		lbemail = new JLabel();
@@ -102,7 +102,7 @@ public class HeaderPane extends JPanel {
 		lbmode.setText("Modo de execução: " + mode);
 		
 		jpInfo.add(lbemail);
-		jpInfo.add(lbmode);
+		//jpInfo.add(lbmode);
 		
 		this.add(jpInfo, BorderLayout.WEST);
 	}

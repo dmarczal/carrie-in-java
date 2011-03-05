@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -28,13 +29,13 @@ public class MysqlUserDAO implements UserDAO{
 		Connection c = MysqlDAOFactory.createConnection();
 		
 		if (user.getCreatedAt() == null)
-			user.setCreatedAt(new Date().getTime());
+			user.setCreatedAt(new Timestamp(new Date().getTime()));
 		
 		PreparedStatement pstmt;
 		try {
 			pstmt = c.prepareStatement(INSERT);
 			pstmt.setString(1, user.getEmail());
-			pstmt.setTimestamp(2, user.getCreateAtTime());
+			pstmt.setTimestamp(2, user.getCreatedAt());
 			
 			pstmt.executeUpdate();
 			
@@ -78,7 +79,7 @@ public class MysqlUserDAO implements UserDAO{
 	
 	private User createUser(ResultSet rset) throws SQLException{
 		User user = new User(rset.getString("email"));
-		user.setCreatedAt(rset.getTimestamp("created_at").getTime());
+		user.setCreatedAt(rset.getTimestamp("created_at"));
 		user.setId(rset.getLong("id"));
 		return user;
 	}

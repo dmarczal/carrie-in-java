@@ -1,13 +1,16 @@
 package org.c3sl.ufpr.br.exercises.tables;
 
+import javax.swing.JPanel;
+
 import org.c3sl.ufpr.br.correction.CorrectionThree;
+import org.c3sl.ufpr.br.exercises.events.ExerciseEvent;
 
 import br.ufpr.c3sl.virtualkeyboard.formula.FormulaInitial;
 import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 public class JExerciseTableThree extends JExerciseTable {
 
-	private static final long serialVersionUID = 2636022967748655631L;
+	private static final long serialVersionUID = 1L;
 
 	private static final int ROW = 5;
 	private static final int COLUMN = 3;
@@ -34,43 +37,48 @@ public class JExerciseTableThree extends JExerciseTable {
 		cellEditable = new boolean[6][4];
 		cellEditable[0][3] = true;
 		
-		setRowCollumnCorrect(0, 2, true);
+		//setRowCollumnCorrect(0, 2, true);
 	}
 	
-	private boolean isRowCorrect(int line){
-		for (int i = 2; i < 4; i++) {
-			if (!isRowCollumnCorrect(line, i))
-				return false;
-		}	
+//	private boolean isRowCorrect(int line){
+//		for (int i = 2; i < 4; i++) {
+//			if (!isRowCollumnCorrect(line, i))
+//				return false;
+//		}	
+//
+//		return true;
+//	}
 
-		return true;
-	}
-
-	private void nexts(boolean _true){
-		if (getSelectedRow() < getRowCount()-1){
-			cellEditable[getSelectedRow()+1][2] = _true;
-			cellEditable[getSelectedRow()+1][3] = _true;
-		}
-	}
-
-	private void previous(boolean _true){
-		if (getSelectedRow() > 0){
-			if (getSelectedRow() != 1)
-				cellEditable[getSelectedRow()-1][2] = _true;
-			cellEditable[getSelectedRow()-1][3] = _true;
-		}
-	}
+//	private void nexts(boolean _true){
+//		if (getSelectedRow() < getRowCount()-1){
+//			cellEditable[getSelectedRow()+1][2] = _true;
+//			cellEditable[getSelectedRow()+1][3] = _true;
+//		}
+//	}
+//
+//	private void previous(boolean _true){
+//		if (getSelectedRow() > 0){
+//			if (getSelectedRow() != 1)
+//				cellEditable[getSelectedRow()-1][2] = _true;
+//			cellEditable[getSelectedRow()-1][3] = _true;
+//		}
+//	}
 
 	@Override
 	public void activeCell(boolean _true){
-		if (isRowCorrect(getSelectedRow())){
-			nexts(true);
-			previous(false);
-		}else
-		{
-			nexts(false);
-			previous(true);
-		}
+//		if (isRowCorrect(getSelectedRow())){
+//			nexts(true);
+//			previous(false);
+//		}else
+//		{
+//			nexts(false);
+//			previous(true);
+//		}
+		if (getSelectedRow() > 0){
+			cellEditable[getSelectedRow()-1][getSelectedColumn()] = !_true;
+		}	
+		if (getSelectedRow() < getRowCount()-1)	
+			cellEditable[getSelectedRow()+1][getSelectedColumn()] = _true;
 	}
 	
 	@Override
@@ -83,5 +91,11 @@ public class JExerciseTableThree extends JExerciseTable {
 	public String[] arrayHeader() {
 		return new String[] {"Iteração", "Fractal", "Lado",
 				"Perímetro"};
+	}
+
+	@Override
+	public void changedValue(ExerciseEvent<JPanel> event) {
+		if (event.getColumn() == 2)
+			setValueAt(event.getSource(), event.getRow(), event.getColumn());
 	}
 }

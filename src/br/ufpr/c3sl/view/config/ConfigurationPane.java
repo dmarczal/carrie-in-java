@@ -23,12 +23,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import netscape.javascript.JSObject;
-import br.ufpr.c3sl.dao.UserDAO;
-import br.ufpr.c3sl.daoFactory.DAOFactory;
-import br.ufpr.c3sl.exception.UserException;
-import br.ufpr.c3sl.model.User;
-import br.ufpr.c3sl.session.Session;
-import br.ufpr.c3sl.util.Util;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 import br.ufpr.c3sl.view.util.EnableDisable;
 import br.ufpr.c3sl.view.util.LoadingPanel;
@@ -43,11 +37,6 @@ public class ConfigurationPane extends JPanel {
 
 	private JButton jbOK;
 	private JButton jbCancel;
-
-//	private ButtonGroup group;
-//
-//	private JRadioButton jrbServer;
-//	private JRadioButton jrbLocal;
 
 	private JCheckBox jcbAgree;
 
@@ -123,11 +112,11 @@ public class ConfigurationPane extends JPanel {
 
 		c.gridx = 0;
 		c.gridy = 3;
-		jpBody.add(new JLabel("Por favor entre com seu email:"), c);
+		//jpBody.add(new JLabel("Por favor entre com seu email:"), c);
 
 		c.gridy = 4;
 		jtfEmail = new JTextField(""); //"diego@gmail.com"
-		jpBody.add(jtfEmail, c);
+		//jpBody.add(jtfEmail, c);
 
 		c.gridy = 5;
 
@@ -142,7 +131,7 @@ public class ConfigurationPane extends JPanel {
 		JLabel lbAgreeText = new JLabel("<html><div style='color:black'>Concordo em ceder os dados gerados por este <br />" +
 		" software para futuras análises de Pesquisas");
 		agreePanel.add(lbAgreeText);
-		jpBody.add(agreePanel, c);
+		//jpBody.add(agreePanel, c);
 
 		jpFooter = new JPanel();
 		jbOK = new JButton("OK");
@@ -185,14 +174,14 @@ public class ConfigurationPane extends JPanel {
 //			errors.add("Você deve selecionar um dos modos!");
 //		}
 
-		if(!Util.validateEmail(jtfEmail.getText())){
-			errors.add("Email Inválido!");
-		}
-
-		if(!jcbAgree.isSelected()){
-			errors.add("Para executar o sofwre você deve concordar em " +
-			"<br />fornecer os dados");
-		}
+//		if(!Util.validateEmail(jtfEmail.getText())){
+//			errors.add("Email Inválido!");
+//		}
+//
+//		if(!jcbAgree.isSelected()){
+//			errors.add("Para executar o sofwre você deve concordar em " +
+//			"<br />fornecer os dados");
+//		}
 
 		if (errors.size() > 0){
 			for (int i = 0; i < errors.size(); i++) 
@@ -217,29 +206,29 @@ public class ConfigurationPane extends JPanel {
 		Thread config = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				String email = jtfEmail.getText(); 
-				
-				Session.setCurrentUser(new User(email));
-				
-				//DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
-				DAOFactory.DATABASE_CHOOSE = DAOFactory.MYSQL;
-
-//				Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
-//				"\n seu modo de execução foi alterado para local");
-
-				//System.out.println(DAOFactory.DATABASE_CHOOSE);
-
-				DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
-				UserDAO userDAO = bd.getUserDAO();
-
-				try {
-					User user = userDAO.findOrCreateByEmail(email);
-					//Session.setMode((DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O) ? "Local" : "Server");
-					Session.setMode("Server");
-					Session.setCurrentUser(user);
-				} catch (UserException e) {
-					e.printStackTrace();
-				}
+//				String email = jtfEmail.getText(); 
+//				
+//				Session.setCurrentUser(new User(email));
+//				
+//				//DAOFactory.DATABASE_CHOOSE = jrbLocal.isSelected() ? DAOFactory.DB4O : DAOFactory.MYSQL;
+//				DAOFactory.DATABASE_CHOOSE = DAOFactory.MYSQL;
+//
+////				Internet.verifyConnection("Foi verificado que não existe conexão com a internet," +
+////				"\n seu modo de execução foi alterado para local");
+//
+//				//System.out.println(DAOFactory.DATABASE_CHOOSE);
+//
+//				DAOFactory bd = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
+//				UserDAO userDAO = bd.getUserDAO();
+//
+//				try {
+//					User user = userDAO.findOrCreateByEmail(email);
+//					//Session.setMode((DAOFactory.DATABASE_CHOOSE == DAOFactory.DB4O) ? "Local" : "Server");
+//					Session.setMode("Server");
+//					Session.setCurrentUser(user);
+//				} catch (UserException e) {
+//					e.printStackTrace();
+//				}
 
 				loading.stopLoading();
 				Container root = ConfigurationPane.this.getRootPane().getParent();

@@ -8,7 +8,8 @@ import javax.swing.SwingUtilities;
 
 import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.daoFactory.DB4ODAOFactory;
-import br.ufpr.c3sl.view.config.ConfigurationPane;
+import br.ufpr.c3sl.model.User;
+import br.ufpr.c3sl.session.Session;
 import br.ufpr.c3sl.view.principal.JpCarrie;
 
 @SuppressWarnings("serial")
@@ -33,10 +34,16 @@ public abstract class JAppletCarrie extends JApplet {
 	public void createGUI(String name){
 		carrie = JpCarrie.getInstance();
 		carrie.setName(name);
-		JPanel pane = new ConfigurationPane();
-		pane.setOpaque(true);
-		this.setContentPane(pane);
+		configSession();
+		this.setContentPane(carrie);
 		this.setSize(new Dimension(710, 540));
+	}
+	
+	private void configSession(){
+		User user = new User(getParameter("user[email]"));
+		user.setId(Long.parseLong(getParameter("user[id]")));
+		Session.setCurrentUser(user);
+		carrie.finalConfiguration();
 	}
 	
 	@Override

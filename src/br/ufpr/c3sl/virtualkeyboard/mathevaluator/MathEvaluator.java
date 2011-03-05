@@ -24,6 +24,7 @@ public class MathEvaluator
 	private 			String  	expression 	= null;
 	private 			HashMap<String, Double>	 	variables  	= new HashMap<String, Double>();
 
+	private static final long serialVersionUID = 1L;
 	/***
 	 * Main. To run the program in command line.
 	 * Usage: java MathEvaluator.main [your math expression]

@@ -1,6 +1,9 @@
 package org.c3sl.ufpr.br.exercises.tables;
 
+import javax.swing.JPanel;
+
 import org.c3sl.ufpr.br.correction.CorrectionSix;
+import org.c3sl.ufpr.br.exercises.events.ExerciseEvent;
 
 import br.ufpr.c3sl.virtualkeyboard.compositedElements.Division;
 import br.ufpr.c3sl.virtualkeyboard.compositedElements.Power;
@@ -12,7 +15,7 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 public class JExerciseTableSix extends JExerciseTable {
 
-	private static final long serialVersionUID = -7965997075128702636L;
+	private static final long serialVersionUID = 1L;
 	
 	private static final int ROW = 5;
 	private static final int COLUMN = 5;
@@ -29,11 +32,11 @@ public class JExerciseTableSix extends JExerciseTable {
 			setValueAt(new FormulaInitial(), i, 3);
 			setValueAt(new FormulaInitial(), i, 4);
 			setValueAt(new FormulaInitial(), i, 5);
-			setValueAt(getFormula(i+""), i, 2);
+//			setValueAt(getFormula(i+""), i, 2);
 		}
 
-		this.setValueAt("ℓ", 0, 2);
-		setValueAt(getFormula("n"), ROW, 2);
+//		this.setValueAt("ℓ", 0, 2);
+//		setValueAt(getFormula("n"), ROW, 2);
 
 		this.getColumnModel().getColumn(0).setMaxWidth(60);
 		this.getColumnModel().getColumn(0).setPreferredWidth(60);
@@ -131,7 +134,8 @@ public class JExerciseTableSix extends JExerciseTable {
 		power.addElement(numberI);				
 
 		Division division = new Division();
-		division.setDividend(label);		this.getColumnModel().getColumn(0).setMaxWidth(100);
+		division.setDividend(label);		
+		this.getColumnModel().getColumn(0).setMaxWidth(100);
 		this.getColumnModel().getColumn(0).setPreferredWidth(100);
 
 		this.getColumnModel().getColumn(1).setMaxWidth(148);
@@ -142,5 +146,11 @@ public class JExerciseTableSix extends JExerciseTable {
 		division.addElement(power);
 
 		return division;
-	}	
+	}
+	
+	@Override
+	public void changedValue(ExerciseEvent<JPanel> event) {
+		if (event.getColumn() == 2)
+			setValueAt(event.getSource(), event.getRow(), event.getColumn());
+	}
 }

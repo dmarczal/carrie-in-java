@@ -28,8 +28,9 @@ import br.ufpr.c3sl.virtualkeyboard.elements.Cursor;
  * The Class ElementOfFormula created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public abstract class ElementOfFormula extends JPanel implements ElementOfFormulaIF{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Cursor cursor = new Cursor();	
 	private ElementOfFormula father;

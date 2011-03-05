@@ -27,9 +27,10 @@ import br.ufpr.c3sl.virtualkeyboard.formula.ElementOfFormula;
  * It is a JPanel with the template, which uses a JLabel to display the number
  * 
  */
-@SuppressWarnings("serial")
 public class Operation extends ElementOfFormula {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel jlOperation;
 
 	/**

@@ -82,9 +82,9 @@ public class ErrorMenuBar extends JMenuBar {
 	public void updateMenu(Mistake mistake){
 		JMenuItem item = new JMenuItem(
 				"Erro: " + mistake.getExercise() + " - "
-				+ Util.getDateTimeFormated(mistake.getCreatedAtTime()));
+				+ Util.getDateTimeFormated(mistake.getCreatedAt()));
 
-		item.setToolTipText(mistake.getMistakeInfo().getDescription());
+		item.setToolTipText(mistake.getDescription());
 		item.addActionListener(new MenuMistakeItemListener(mistake));
 
 		subMenuerror.add(item);

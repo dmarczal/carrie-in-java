@@ -6,7 +6,7 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 public class JExerciseTableOne extends JExerciseTable{
 
-	private static final long serialVersionUID = 8618510175150055446L;
+	private static final long serialVersionUID = 1L;
 
 	public JExerciseTableOne(String axiom, String rules, double angle) {
 		super(axiom, rules, angle, new CorrectionOne(), 4, 3);

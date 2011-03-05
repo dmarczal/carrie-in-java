@@ -13,10 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import br.ufpr.c3sl.dao.RetroactionDAO;
-import br.ufpr.c3sl.daoFactory.DAOFactory;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
-import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.Retroaction;
 import br.ufpr.c3sl.util.Util;
@@ -32,7 +29,7 @@ public class RetroactionFrame extends JFrame{
 	private Mistake mistake;
 
 	public RetroactionFrame(Mistake mistake){
-		super("Retroação: " + mistake.getMistakeInfo().getTitle() + " : " + mistake.getCreatedAtTime());
+		super("Retroação: " + mistake.getTitle() + " : " + mistake.getCreatedAt());
 		this.setName("RetroactionFrame");
 		this.mistake = mistake;
 		this.mistakePanel = (JPanel) ObjectByteArray.getObject(mistake.getObject());
@@ -41,7 +38,7 @@ public class RetroactionFrame extends JFrame{
 		Util.updateStaticFields(this.mistakePanel);
 
 		this.mistakePanel.setPreferredSize(this.mistakePanel.getSize());
-		this.mistakePanel.setName("Erro na Retroação do " + this.mistakePanel.getName());
+		changeMistakePanelName();
 		 
 		mainPanel.setLayout(new BorderLayout());
 		setContentPane(mainPanel);
@@ -99,6 +96,16 @@ public class RetroactionFrame extends JFrame{
 		//saveRetroaction();
 	}
 
+	private void changeMistakePanelName() {
+		String name = this.mistakePanel.getName();
+		String[] names = name.split(":");
+		
+		if (names.length > 1)
+			this.mistakePanel.setName(names[0] + ":" + names[1] + "-" );
+		else
+			this.mistakePanel.setName(names[0] + ": - ");
+	}
+
 	public void initComponents(){
 		setupMenu();
 		mistakePanel.setPreferredSize(mistakePanel.getPreferredSize());
@@ -116,10 +123,10 @@ public class RetroactionFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 
 				JOptionPane.showMessageDialog(RetroactionFrame.this,
-						"Retroação: " + mistake.getMistakeInfo().getTitle() + " : " + mistake.getCreatedAtTime()+"\n\n"+
-						mistake.getMistakeInfo().getTitle()+"\n\n"
-						+ mistake.getMistakeInfo().getDescription() + "\n\n",
-						mistake.getMistakeInfo().getTitle() + " : "+ mistake.getCreatedAtTime(),
+						"Retroação: " + mistake.getTitle() + " : " + mistake.getCreatedAt()+"\n\n"+
+						mistake.getTitle()+"\n\n"
+						+ mistake.getDescription() + "\n\n",
+						mistake.getTitle() + " : "+ mistake.getCreatedAt(),
 						JOptionPane.INFORMATION_MESSAGE);
 
 			}
@@ -152,7 +159,7 @@ public class RetroactionFrame extends JFrame{
 	private void resetState() {
 		mainPanel.remove(this.mistakePanel);
 		this.mistakePanel = (JPanel) ObjectByteArray.getObject(mistake.getObject());
-		this.mistakePanel.setName("Erro na Retroação do " + this.mistakePanel.getName());
+		changeMistakePanelName();
 		Util.updateStaticFields(this.mistakePanel);
 		mainPanel.add(this.mistakePanel);
 		mainPanel.revalidate();
@@ -182,17 +189,14 @@ public class RetroactionFrame extends JFrame{
 	}
 	
 	private void saveRetroaction(){
-		DAOFactory dao = DAOFactory.getDAOFactory(DAOFactory.DATABASE_CHOOSE);
-		RetroactionDAO retroactionDao = dao.getRetroactionDAO();
-		
-		Retroaction retroaction = new Retroaction();
-		retroaction.setMistake(mistake);
-		//retroaction.sUser(Session.getCurrentUser());
-		
-		try {
-			retroactionDao.insert(retroaction);
-		} catch (UserException e1) {
-			e1.printStackTrace();
-		}
+		Thread save = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Retroaction retroaction = new Retroaction();
+				retroaction.setMistake(mistake);
+				retroaction.save();
+			}
+		});
+		save.start();
 	}
 }

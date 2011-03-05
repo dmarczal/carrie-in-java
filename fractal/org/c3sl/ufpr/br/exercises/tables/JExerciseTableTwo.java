@@ -5,9 +5,9 @@ import org.c3sl.ufpr.br.correction.CorrectionTwo;
 import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
 
 
-public class JExerciseTableTwo extends JExerciseTable{
+public class JExerciseTableTwo extends JExerciseTable {
 
-	private static final long serialVersionUID = -161837439302595511L;
+	private static final long serialVersionUID = 1L;
 	
 	public JExerciseTableTwo(String axiom, String rules, double angle) {
 		super(axiom, rules, angle, new CorrectionTwo(), 5, 3);

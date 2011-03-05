@@ -22,12 +22,12 @@ import br.ufpr.c3sl.view.principal.JpCarrie;
 
 public class JPanelHTML extends JPanel{
 	
-	private static final long serialVersionUID = -2837566491870483686L;
+	private static final long serialVersionUID = 1L;
 	
 	private String textualContent = null;
 	private String title = null;
 	private JEditorPane content = new JEditorPane(){
-		private static final long serialVersionUID = -575473651471656605L;
+		private static final long serialVersionUID = 1L;
 	};
 	private JPanel mainPanel = null;
 
@@ -62,9 +62,9 @@ public class JPanelHTML extends JPanel{
 		}
 	}
 
-	@SuppressWarnings("serial")
 	public void create() {
 		mainPanel = new JPanel(new BorderLayout()){
+			private static final long serialVersionUID = 1L;
 			public Dimension getPreferredSize(){
 				Dimension d = super.getPreferredSize();
 				d.width = 5;

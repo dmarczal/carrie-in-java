@@ -32,9 +32,10 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
  * The Class FormulaInitial created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public class FormulaInitial extends ElementCompositeInitial {
 
+	private static final long serialVersionUID = 1L;
+	
 	/* (non-Javadoc)
 	 * @see virtualkeyboard.formula.ElementOfFormula#addElement(virtualkeyboard.formula.ElementOfFormula)
 	 * This method make several verifications 

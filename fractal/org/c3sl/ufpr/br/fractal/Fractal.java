@@ -34,7 +34,7 @@ import java.util.Vector;
  */
 @SuppressWarnings("unchecked")
 public class Fractal implements Serializable{
-    private static final long serialVersionUID = -3281917256291850681L;
+	private static final long serialVersionUID = 1L;
 	/* The L-system's axiom, the initial set of symbols */
     private String axiom;
     /* The L-system's set of production rules */
@@ -422,7 +422,7 @@ class Turtle implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -5406692716427019724L;
+	private static final long serialVersionUID = 1L;
 	private double x;
     private double y;
     private double angle;

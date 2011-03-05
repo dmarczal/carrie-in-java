@@ -2,6 +2,7 @@ package br.ufpr.c3sl.mistakes;
 
 public class MistakeOccurrence {
 
+	private static final long serialVersionUID = 1L;
 	private static MistakesMessages messages = new MistakesMessages();
 	
 	/**

@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.daoconcrete;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.db4o.EmbeddedObjectContainer;
@@ -13,7 +14,7 @@ public class DB4OHitDAO implements HitDAO{
 	@Override
 	public Hit insert(Hit hit) {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
-		hit.setCreatedAt(new Date().getTime());
+		hit.setCreatedAt(new Timestamp(new Date().getTime()));
 		dbo.store(hit);
 		return hit;
 	}

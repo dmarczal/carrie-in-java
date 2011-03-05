@@ -6,8 +6,8 @@ import br.ufpr.c3sl.model.Hit;
 import br.ufpr.c3sl.model.MistakeInfo;
 
 public abstract class AbstractCorrection implements Correction, Serializable {
-
-	private static final long serialVersionUID = 7354268779520647241L;
+	
+	private static final long serialVersionUID = 1L;
 
 	protected double correctAnswer, answerDouble;
 	transient protected MistakeInfo mistake;

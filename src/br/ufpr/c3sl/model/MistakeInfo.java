@@ -2,6 +2,8 @@ package br.ufpr.c3sl.model;
 
 public class MistakeInfo {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String description;
 	private String answer;
 	private String correctAnswer;

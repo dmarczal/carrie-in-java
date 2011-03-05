@@ -16,8 +16,8 @@ import br.ufpr.c3sl.view.PageHTML.JPanelHTML;
 
 public class Enunciation extends JPanel implements SaveState {
 
-	private static final long serialVersionUID = 3743623610914220124L;
-
+	private static final long serialVersionUID = 1L;
+	
 	private JCheckBox jcbShowHideEnun;
 	private JPanelHTML panel;
 	private String text;
@@ -45,9 +45,9 @@ public class Enunciation extends JPanel implements SaveState {
 		createComonents();
 	}
 
-	@SuppressWarnings("serial")
 	private void createComonents() {
 		panel = new JPanelHTML(){
+			private static final long serialVersionUID = 1L;
 			public Dimension getPreferredSize(){
 			Dimension d = super.getPreferredSize();
 			////d.height = 200;
@@ -69,19 +69,6 @@ public class Enunciation extends JPanel implements SaveState {
 		jcbShowHideEnun.setFocusable(false);
 		buildEventsAndTransientvariables();
 	}
-
-	//	public boolean enunciationIsVisiable(){
-	//		return panel.isVisible();
-	//	}
-	//	
-	//	public void setEnuciationVisiable(boolean visible){
-	//		panel.setVisible(visible);
-	//		jcbShowHideEnun.setSelected(!visible);
-	//	}
-
-	//	public StyleSheet getStyleSheetFromEnun(){
-	//		return panel.getStyleSheetFromEditorPane();
-	//	}
 
 	private class ActionListenerjrbShowHideEnun implements ActionListener{
 		

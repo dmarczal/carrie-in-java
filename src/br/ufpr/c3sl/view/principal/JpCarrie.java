@@ -1,6 +1,8 @@
 package br.ufpr.c3sl.view.principal;
 
 import java.awt.BorderLayout;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -9,7 +11,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
-import br.ufpr.c3sl.exception.UserException;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.MistakeInfo;
 import br.ufpr.c3sl.pageHTML.Html;
@@ -242,21 +243,24 @@ public class JpCarrie extends JPanel{
 				else
 					toSave = paneToSave;
 
-				mistake.setExercise(toSave.getName());
-				mistake.setLearningObject(JpCarrie.this.getName());
-				mistake.setMistakeInfo(mistakeInfo);
+
 				mistake.setObject(ObjectByteArray.getByteOfArray(toSave));
+				mistake.setExercise(toSave.getName());
+				mistake.setOa(JpCarrie.this.getName());
 				mistake.setUser(Session.getCurrentUser());
-
-
+				
+				mistake.setAnswer(mistakeInfo.getAnswer());
+				mistake.setCell(mistakeInfo.getCell());
+				mistake.setCorrectAnswer(mistakeInfo.getCorrectAnswer());
+				mistake.setDescription(mistakeInfo.getDescription());
+				mistake.setTitle(mistakeInfo.getTitle());
+				mistake.setCreatedAt(new Timestamp(new Date().getTime()));
+				mistake.setUpdatedAt(new Timestamp(new Date().getTime()));
+				
 				Thread sendToBd = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						try {
-							jpMenuFooter.addErrorToMenu(mistake.save());
-						} catch (UserException e) {
-							e.printStackTrace();
-						}
+						jpMenuFooter.addErrorToMenu(mistake.save());
 					}
 				});
 
@@ -273,8 +277,7 @@ public class JpCarrie extends JPanel{
 		Thread loadData = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				List<Mistake> list = Mistake.all(Session.getCurrentUser(),
-						JpCarrie.this.getName());
+				List<Mistake> list = Mistake.all(JpCarrie.this.getName());
 				if(list.size() > 0)
 					jpMenuFooter.getPaginateMistakes().addMistakes(list);			
 			}

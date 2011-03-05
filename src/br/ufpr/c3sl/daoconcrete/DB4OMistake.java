@@ -1,5 +1,6 @@
 package br.ufpr.c3sl.daoconcrete;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class DB4OMistake implements MistakeDAO{
 	@Override
 	public Mistake insert(Mistake mistake) throws UserException {
 		EmbeddedObjectContainer dbo = DB4ODAOFactory.getConnection();
-		mistake.setCreatedAt(new Date().getTime());
+		mistake.setCreatedAt(new Timestamp(new Date().getTime())); //TODO: DB40 must save Time
 		dbo.store(mistake);
 		return mistake;
 	}
@@ -34,7 +35,7 @@ public class DB4OMistake implements MistakeDAO{
 
 			public boolean match(Mistake mistake){
 				return (mistake.getUser().getEmail().equals(user.getEmail()) 
-						&& mistake.getLearningObject().equals(learningObjectString));
+						&& mistake.getOa().equals(learningObjectString));
 			}
 		});
 
@@ -56,26 +57,16 @@ public class DB4OMistake implements MistakeDAO{
 			Mistake m = new Mistake();
 			
 			m.setCreatedAt(mistake.getCreatedAt());
-			m.setLearningObject(mistake.getLearningObject());
+			m.setOa(mistake.getOa());
 			m.setUser(mistake.getUser());
-			m.setMistakeInfo(null);
 			ObjectSet<Mistake> result = dbo.queryByExample(m);
 			
 			found = result.next();
 			dbo.delete(found);
-			dbo.delete(found.getMistakeInfo());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
-
 }
-
-
-
-
-
-
-

@@ -276,9 +276,9 @@ class MistakesTableModel extends DefaultTableModel {
 	public void addMistake(Mistake mistake){
 		map.put(mistakeID, mistake);
 		insertRow(0, new Object[] {mistakeID, mistake.getExercise(), 
-				mistake.getMistakeInfo().getAnswer(),
-				mistake.getMistakeInfo().getTitle(),
-				mistake.getCreatedAtTime(),});
+				mistake.getAnswer(),
+				mistake.getTitle(),
+				mistake.getCreatedAt(),});
 		mistakeID++;
 	}
 	

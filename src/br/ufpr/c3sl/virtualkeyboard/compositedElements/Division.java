@@ -36,9 +36,9 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
  * division (on the divisor) is possible to insert the elements 
  * 
  */
-@SuppressWarnings("serial")
 public class Division extends ElementCompositeOfFormula {
-
+	private static final long serialVersionUID = 1L;
+	
 	private GridBagConstraints constraintLine = new GridBagConstraints();
 	private GridBagConstraints constraintDivisor = new GridBagConstraints();
 	private GridBagConstraints constraintDividend = new GridBagConstraints();

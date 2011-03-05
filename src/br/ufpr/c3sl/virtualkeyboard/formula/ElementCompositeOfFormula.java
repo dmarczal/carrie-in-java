@@ -26,10 +26,11 @@ import br.ufpr.c3sl.virtualkeyboard.main.VirtualKeyBoardMain;
  * The Class ElementCompositeOfFormula created on Mar 28, 2009.
  * 
  */
-@SuppressWarnings("serial")
 public abstract class ElementCompositeOfFormula 
 				extends ElementOfFormula implements ElementOfFormulaIF{
 
+	private static final long serialVersionUID = 1L;
+	
 	/** The formula inside all the element composite have a formula inside. */
 	protected ElementOfFormula formulaInside = new FormulaInitial();
 	

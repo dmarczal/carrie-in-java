@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import br.ufpr.c3sl.util.Util;
 
 public class Html {
+	private static final long serialVersionUID = 1L;
+	
 	private String code, legend, title;
 	
 	public Html(String code) {

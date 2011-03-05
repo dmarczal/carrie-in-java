@@ -2,10 +2,24 @@ package br.ufpr.c3sl.model;
 
 import java.sql.Timestamp;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+import br.ufpr.c3sl.client.webservices.XMLRetroactionDAO;
+
+@Root
 public class Retroaction {
 	
+	@Element(required=false)
 	private Long id;
-	private Long createdAt;
+	
+	@Element(required=false)
+	private Timestamp created_at;
+	
+	@SuppressWarnings("unused")
+	@Element
+	private Long mistake_id;
+	
 	private Mistake mistake;
 	
 	public Retroaction(){
@@ -20,22 +34,28 @@ public class Retroaction {
 		this.id = id;
 	}
 	
-	public Timestamp getCreatedAtTime() {
-		return new Timestamp(createdAt);
+	public Timestamp getCreatedAt() {
+		return created_at;
 	}
 	
-	public Long getCreatedAt() {
-		return createdAt;
-	}
-	
-	public void setCreatedAt(long createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedAt(Timestamp createdAt) {
+		this.created_at = createdAt;
 	}
 
 	public Mistake getMistake() {
 		return mistake;
 	}
 	public void setMistake(Mistake mistake) {
+		this.mistake_id = mistake.getId();
 		this.mistake = mistake;
 	}
+	
+	/**
+	 * Save the mistake
+	 * @return Mistake saved
+	 */
+	public Retroaction save(){
+		return XMLRetroactionDAO.save(this);
+	}
+	
 }

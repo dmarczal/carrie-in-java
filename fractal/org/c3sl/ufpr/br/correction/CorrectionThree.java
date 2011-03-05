@@ -5,11 +5,11 @@ import br.ufpr.c3sl.virtualkeyboard.mathevaluator.MathEvaluator;
 
 public class CorrectionThree extends AbstractCorrection{
 
+	private static final long serialVersionUID = 1L;
+	
 	public CorrectionThree() {
 		super(3);
 	}
-
-	private static final long serialVersionUID = 3183228478248324360L;
 
 	@Override
 	public boolean isCorrect(String answer, int row, int column) {
