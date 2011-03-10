@@ -16,6 +16,7 @@
  */
 package br.ufpr.c3sl.virtualkeyboard.formula;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -32,7 +33,7 @@ public abstract class ElementOfFormula extends JPanel implements ElementOfFormul
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Cursor cursor = new Cursor();	
+	transient private Cursor cursor = new Cursor();	
 	private ElementOfFormula father;
 	protected static final Font fONT_FOR_TEMPLATE_ELEMENT = new Font("Lucida Sans Unicode", 0, 20);
 	
@@ -43,7 +44,7 @@ public abstract class ElementOfFormula extends JPanel implements ElementOfFormul
 	 * and add the cursor.
 	 */
 	public ElementOfFormula() {
-		this.setBackground(null);
+		this.setBackground(Color.WHITE);
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));
 		this.add(cursor); 
 	}

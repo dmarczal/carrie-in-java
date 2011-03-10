@@ -54,19 +54,19 @@ public class FastByteArrayOutputStream extends OutputStream {
         return buf;
     }
 
-    public final void write(byte b[]) {
+    public synchronized final void write(byte b[]) {
         verifyBufferSize(size + b.length);
         System.arraycopy(b, 0, buf, size, b.length);
         size += b.length;
     }
 
-    public final void write(byte b[], int off, int len) {
+    public synchronized final void write(byte b[], int off, int len) {
         verifyBufferSize(size + len);
         System.arraycopy(b, off, buf, size, len);
         size += len;
     }
 
-    public final void write(int b) {
+    public synchronized final void write(int b) {
         verifyBufferSize(size + 1);
         buf[size++] = (byte) b;
     }

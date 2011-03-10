@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import br.ufpr.c3sl.deepClone.Compressor;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.MistakeInfo;
@@ -237,18 +238,24 @@ public class JpCarrie extends JPanel{
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JPanel toSave = null;
+				final JPanel toSave;
 				if (paneToSave == null)
 					toSave = jpMain;
 				else
 					toSave = paneToSave;
 
+				byte[] obj;
+				
+				synchronized (toSave) {
+					obj = ObjectByteArray.getByteOfArray(toSave);
+				}
 
-				mistake.setObject(ObjectByteArray.getByteOfArray(toSave));
+				mistake.setObject(Compressor.compress(obj));
+				
 				mistake.setExercise(toSave.getName());
 				mistake.setOa(JpCarrie.this.getName());
 				mistake.setUser(Session.getCurrentUser());
-				
+
 				mistake.setAnswer(mistakeInfo.getAnswer());
 				mistake.setCell(mistakeInfo.getCell());
 				mistake.setCorrectAnswer(mistakeInfo.getCorrectAnswer());
@@ -256,7 +263,7 @@ public class JpCarrie extends JPanel{
 				mistake.setTitle(mistakeInfo.getTitle());
 				mistake.setCreatedAt(new Timestamp(new Date().getTime()));
 				mistake.setUpdatedAt(new Timestamp(new Date().getTime()));
-				
+
 				Thread sendToBd = new Thread(new Runnable() {
 					@Override
 					public void run() {

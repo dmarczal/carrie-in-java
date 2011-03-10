@@ -5,7 +5,7 @@ cd html/jars
 if ! [ -z $1 ]; then
   if [ $1 = "f" ]; then 
   	jarsigner fractal.jar mykey 
-	cp fractal.jar ../../../carrieWebServices/public/jars
+	cp fractal.jar ../../../carrieWebServices/public/fractal/jars
   fi
 else
     jarsigner fractal.jar mykey
@@ -19,6 +19,8 @@ else
     jarsigner xmlsec-2.0.jar  mykey
 
     jarsigner simple-xml-2.4.1.jar  mykey
+
+    jarsigner commons-io-2.0.1.jar mykey
  fi
 
 cd ..

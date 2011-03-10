@@ -896,7 +896,20 @@ cmdVariable(e.getActionCommand());
 	 * @return the formula
 	 */
 	public ElementOfFormula getFormula() {
-		return formula.getClone();
+		ElementOfFormula ef = formula.getClone(); 
+		setChangeColor(ef);
+		return ef;
+	}
+	
+	private void setChangeColor(java.awt.Container c) {
+	    Component[] components = c.getComponents();
+	    for (Component comp: components) {
+	        if (comp instanceof java.awt.Container)
+	        	setChangeColor((java.awt.Container) comp);
+	        
+	        if (comp instanceof ElementOfFormula)
+	        	((ElementOfFormula) comp).setBackground(new Color(220, 226, 225));
+	    }
 	}
 
 	/**

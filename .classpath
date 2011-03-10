@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/balloontip-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/plugin.jar"/>
 	<classpathentry kind="lib" path="lib/simple-xml-2.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

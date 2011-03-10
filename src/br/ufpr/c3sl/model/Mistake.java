@@ -60,19 +60,19 @@ public class Mistake {
 	}
 
 	public String getAnswer() {
-		return answer;
+		return answer.replaceAll("l","ℓ");
 	}
 
 	public void setAnswer(String answer) {
-		this.answer = answer;
+		this.answer = answer.replaceAll("ℓ", "l");
 	}
 
 	public String getCorrectAnswer() {
-		return correct_answer;
+		return correct_answer.replaceAll("l","ℓ");
 	}
 
 	public void setCorrectAnswer(String correct_answer) {
-		this.correct_answer = correct_answer;
+		this.correct_answer = correct_answer.replaceAll("ℓ", "l");;
 	}
 
 	public String getCell() {

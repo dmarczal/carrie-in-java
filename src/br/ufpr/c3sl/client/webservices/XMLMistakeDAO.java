@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -32,7 +34,9 @@ public class XMLMistakeDAO {
 			mistake2 = serializer.read(Mistake.class, conn.getInputStream());
 	        
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "" +
+					"Erro na comunicação com o servidor! O software pode não \n" +
+					"Funcionar corretamente");
 			e.printStackTrace();
 		}
 		return mistake2;
@@ -56,9 +60,14 @@ public class XMLMistakeDAO {
 	        Serializer serializer = new Persister();
 	        
 	        MistakesArray mArray = serializer.read(MistakesArray.class, conn.getInputStream());
-	        mistakes = Arrays.asList(mArray.getMistakes());
+	        
+	        if (mArray != null && mArray.getMistakes() != null)
+	        	mistakes = Arrays.asList(mArray.getMistakes());
 	       
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "" +
+			"Erro na comunicação com o servidor! O software pode não \n" +
+			"Funcionar corretamente");
 			e.printStackTrace();
 		}
 		

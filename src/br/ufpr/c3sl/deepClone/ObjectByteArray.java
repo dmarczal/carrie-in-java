@@ -10,7 +10,7 @@ public class ObjectByteArray {
 	 * transform a Object in a getByteOfArray
 	 * @param object 
 	 */
-	public static byte[] getByteOfArray(Object object){
+	public  synchronized static byte[] getByteOfArray(Object object){
 		FastByteArrayOutputStream fbos =
 			new FastByteArrayOutputStream();
 		ObjectOutputStream out;

@@ -3,6 +3,8 @@ package br.ufpr.c3sl.client.webservices;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.swing.JOptionPane;
+
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -32,6 +34,9 @@ public class XMLHitDAO {
 			h = serializer.read(Hit.class, conn.getInputStream());
 			
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "" +
+					"Erro na comunicação com o servidor! O software pode não \n" +
+					"Funcionar corretamente");
 			e.printStackTrace();
 		}
 		return h;

@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import br.ufpr.c3sl.deepClone.Compressor;
 import br.ufpr.c3sl.deepClone.ObjectByteArray;
 import br.ufpr.c3sl.model.Mistake;
 import br.ufpr.c3sl.model.Retroaction;
@@ -32,7 +33,10 @@ public class RetroactionFrame extends JFrame{
 		super("Retroação: " + mistake.getTitle() + " : " + mistake.getCreatedAt());
 		this.setName("RetroactionFrame");
 		this.mistake = mistake;
-		this.mistakePanel = (JPanel) ObjectByteArray.getObject(mistake.getObject());
+		
+		byte[] obj = Compressor.decompress(mistake.getObject());
+		this.mistakePanel = (JPanel) ObjectByteArray.getObject(obj);
+		
 		this.mainPanel = new JPanel();
 
 		Util.updateStaticFields(this.mistakePanel);
@@ -158,7 +162,9 @@ public class RetroactionFrame extends JFrame{
 
 	private void resetState() {
 		mainPanel.remove(this.mistakePanel);
-		this.mistakePanel = (JPanel) ObjectByteArray.getObject(mistake.getObject());
+		byte[] obj = Compressor.decompress(mistake.getObject());
+		this.mistakePanel = (JPanel) ObjectByteArray.getObject(obj);
+
 		changeMistakePanelName();
 		Util.updateStaticFields(this.mistakePanel);
 		mainPanel.add(this.mistakePanel);
