@@ -25,15 +25,15 @@ public class CorrectionFive extends AbstractCorrection {
 		switch (column) {
 		case 2:
 			if (row == 5)
-				expression = "ℓ/ (3 ^ n)";
+				expression = "ℓ/3^(n)";
 			else
-				expression = "ℓ/3^" + row;
+				expression = "ℓ/3^(" + row +")";
 			break;
 		case 3:
 			if (row == 5)
-				expression = "( 4 ^ n ) * 3 * (ℓ/ 3 ^ n )";
+				expression = " 4^(n) * 3 * (ℓ/3^(n))";
 			else
-				expression = "(4^" + row + ")* 3 * (ℓ/3^" + row +")";
+				expression = "4^(" + row + ") * 3 * (ℓ/3^(" + row +"))";
 			break;
 		default:
 			break;

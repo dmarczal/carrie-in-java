@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta http-equiv="cache-control" content="no-cache" />
 <meta http-equiv="pragma" content="no-cache" />
-<title>Resolução de problemas</title>
+<title>Resoluï¿½ï¿½o de problemas</title>
 <style type="text/css" media="all">
 html,body {
 	height: 100%;
@@ -86,18 +86,27 @@ h4 {
 <div id="tudo">
  <div id="conteudo">
    <div id="topo">
-   <h1><b class="dest">Resoluções de problemas software</b></h1>
+   <h1><b class="dest">ResoluÃ§Ãµes de problemas software</b></h1>
    </div>
   
    <div id="principal">
-   <h1>Usuários dos laptops UCA</h1>
+   <h1>UsuÃ¡rios dos laptops UCA</h1>
 	<div>
-   		<p>A versão do plugin Java usada no seu navegador é incompatível com este programa, por favor sigue as instruções abaixo para atualizar o plugin do Java</p>
+   		<p>A versÃ£o do plugin Java usada no seu navegador Ã© incompatÃ­vel com este programa, por favor sigue as instruÃ§Ãµes abaixo para atualizar o plugin do Java</p>
    		
    		<ol>
 			<li>Abra o terminal:<p>Para isso, clique em metasys -> Aba Favoritos -> Terminal</p></li>
-			<li>No terminal copie e cole o seguinte comando: <p>sudo ln -sf /usr/java/jre1.6.0_10/plugin/i386/ns7/libjavaplugin_oji.so /usr/lib/browser-plugins/libjavaplugin.so</p></li>
-			<li>Quando pedir, a senha digite: metasys</li>
+			<li>No terminal copie e cole o seguinte comando: 
+			                    <ol>
+                                        <li>cd /usr/local</li>
+                                        <li>sudo wget http://educacional.c3sl.ufpr.br/java/jre-6u24-linux-i586.bin</li>
+                                        <li>sudo chmod +x jre-6u24-linux-i586.bin</li>
+                                        <li>sudo ./jre-6u24-linux-i586.bin</li>
+                                        <li>sudo rm jre-6u24-linux-i586.bin</li>
+                                        <li>sudo ln -sf /usr/java/jre1.6.0_24/plugin/i386/ns7/libjavaplugin_oji.so /usr/lib/browser-plugins/libjavaplugin_oji.so</li>
+                                </ol>
+ 
+                        <li>Quando pedir a senha, digite: metasys</li>
 		</ol>
    		<div><a href="index.html">Voltar ao Software</div>
    	</div>

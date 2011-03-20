@@ -23,7 +23,7 @@ public class CorrectionTwo extends AbstractCorrection {
 		String expression = "";
 
 		if (row == 5)
-			expression = "ℓ/ ( 2 ^ n )";
+			expression = "ℓ/ 2 ^ n";
 		else
 			expression = "ℓ/2^" + row;
 

@@ -24,16 +24,10 @@ public class CorrectionThree extends AbstractCorrection{
 
 		switch (row) {
 		case 5:
-			if (column == 3)
-				expression = "( 3 ^ ( n + 1 ) ) * ℓ/ ( 2 ^ n ) ";
-			else
-				expression = "ℓ/ ( 2 ^ n )";
+				expression = "3^( n + 1 ) * ℓ/2^n";
 			break;
 		default:
-			if (column == 3)
-				expression = "3^"+(row+1) + "*" + "ℓ/2^" + row;
-			else
-				expression = "ℓ/2^" + row;
+				expression = "3^("+ (row+1) + ") * " + "ℓ/2^" + row;
 			break;
 		}
 		

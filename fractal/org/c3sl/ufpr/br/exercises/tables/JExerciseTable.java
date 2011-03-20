@@ -72,6 +72,8 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 
 	private List<ExerciseListener> listeners;
 	
+	transient private MultiLineHeaderRenderer renderer = new MultiLineHeaderRenderer();
+	
 	public JExerciseTable(String axiom, String rules, double angle, Correction correction,
 			int numberRow, int numberColumn) {
 		this.axiom = axiom;
@@ -105,9 +107,7 @@ public abstract class JExerciseTable extends JTable implements VirtualKeyBoardLi
 
 	private void configureModel(){
 		Enumeration<TableColumn> columns = this.getColumnModel().getColumns();
-
-		 MultiLineHeaderRenderer renderer = new MultiLineHeaderRenderer();
-		
+		 
 		while (columns.hasMoreElements()) {
 			TableColumn column = columns.nextElement();
 			column.setMinWidth(16);

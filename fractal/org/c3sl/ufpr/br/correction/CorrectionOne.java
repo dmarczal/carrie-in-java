@@ -18,6 +18,7 @@ public class CorrectionOne extends AbstractCorrection{
 		MathEvaluator math = new MathEvaluator();
 		math.addVariable("n", 0.8);
 		math.setExpression(answer);
+		
 		answerDouble = math.getValue();
 		math.reset();
 
@@ -29,15 +30,19 @@ public class CorrectionOne extends AbstractCorrection{
 				return false;
 			}
 
+		String expr = "";
+		
 		if(row == 4){
-			math.addVariable("n", 0.8);
-			math.setExpression(firstAnswer + "/( 2 ^ n )");	
+			expr = firstAnswer + "/ 2 ^ n";	
 		}else
-			math.setExpression(firstAnswer + "/" + Math.pow(2, row));
-
+			expr = firstAnswer + "/ 2 ^ " + row;
+		
+		math.addVariable("n", 0.8);
+		math.setExpression(expr);
+		
 		correctAnswer = math.getValue();
 
-		int comparationReturn = compareDouble(correctAnswer, answerDouble, 0.009);
+		int comparationReturn = compareDouble(correctAnswer, answerDouble, 0.001);
 
 		String stVCorrectAnswer = ""; 
 		if (row == 4)
@@ -62,53 +67,5 @@ public class CorrectionOne extends AbstractCorrection{
 			this.message = null;
 			return false;
 		}
-	}
-
-
-	/* 
-	 * verify if the answer is similar to the answer
-	 * @param correctAnswer The answer expected
-	 * @param answer The answer entered
-	 * @param error The error accepted
-	 * @return 1 If correct
-	 * @return -1 If size smaller than the correct size
-	 * @return -2 If size bigger than the correct size
-	 */
-	public int compareDouble(double correctAnswer, double answer, double error){
-		correctAnswer = correctAnswer * 1000;
-
-		int changeValue = (int) (correctAnswer);
-		correctAnswer = (double) changeValue / 1000;
-
-		answer = answer * 1000;
-		changeValue = (int) (answer);
-		answer = (double) changeValue / 1000;
-
-		int greaterOrSmaller = (answer < correctAnswer)?-1:-2;
-
-		if (correctAnswer == answer)
-			return 1;
-		if (correctAnswer + 0.001 == answer)
-			return 1;    	
-
-
-		correctAnswer = correctAnswer * 100;
-		changeValue = (int) (correctAnswer);
-		correctAnswer = (double) changeValue / 100;
-
-		if (correctAnswer == answer)
-			return 1;
-		if (correctAnswer + 0.01 == answer)
-			return 1;    	
-
-		correctAnswer = correctAnswer * 10;
-		changeValue = (int) (correctAnswer);
-		correctAnswer = (double) changeValue / 10;
-		if (correctAnswer == answer)
-			return 1;
-		if (correctAnswer + 0.1 == answer)
-			return 1;
-
-		return greaterOrSmaller;
 	}
 }

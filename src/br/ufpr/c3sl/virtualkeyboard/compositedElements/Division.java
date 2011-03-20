@@ -131,8 +131,9 @@ public class Division extends ElementCompositeOfFormula {
 	 * @return a string with the formula, e.g. 10/(9-10)	
 	 */
 	public String toString() {
-		String s = formulaDivend.toString();		
-		s += "/("+ formulaInside + ")";
+		String s = formulaDivend.toString();
+		s += "/"+ formulaInside;
+		//s += "/("+ formulaInside + ")";
 		return s;
 	}
 	

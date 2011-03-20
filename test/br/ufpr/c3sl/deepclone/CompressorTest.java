@@ -1,7 +1,9 @@
 package br.ufpr.c3sl.deepclone;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 import javax.swing.JPanel;
 
@@ -27,7 +29,7 @@ public class CompressorTest {
 	}
 	
 	@Test
-	public void should_compress(){
+	public void should_compress() throws IOException, DataFormatException{
 		JPanel jp = new JPanel();
 		jp.setName("Teste");
 		
@@ -42,7 +44,7 @@ public class CompressorTest {
 	}
 	
 	@Test
-	public void should_compress_and_save(){
+	public void should_compress_and_save() throws IOException, DataFormatException{
 		user = new User("dmarczal@gmail.com");
 		user.setId(1l);
 		Session.setCurrentUser(user);
@@ -58,7 +60,12 @@ public class CompressorTest {
 			obj = ObjectByteArray.getByteOfArray(jp);
 		}
 
-		mistake.setObject(Compressor.compress(obj));
+		try {
+			mistake.setObject(Compressor.compress(obj));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 				
 		mistake.setExercise(jp.getName());
 		mistake.setOa("Fractal Simulator");
@@ -74,7 +81,13 @@ public class CompressorTest {
 	
 		Mistake msave = mistake.save();
 		
-		byte[] decompress = Compressor.decompress(msave.getObject());
+		byte[] decompress;
+		try {
+			decompress = Compressor.decompress(msave.getObject());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JPanel newpanel = (JPanel) ObjectByteArray.getObject(decompress);
 		

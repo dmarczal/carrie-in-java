@@ -1,5 +1,13 @@
 package br.ufpr.c3sl.view;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.IOException;
+
+import javax.swing.JPanel;
+
+import br.ufpr.c3sl.deepClone.FastByteArrayOutputStream;
+
 
 
 
@@ -89,6 +97,36 @@ public class Main {
 //		for (Retroaction retroaction : retroactionList) {
 //			System.out.println(retroaction.getCreatedAt());
 //		}
-	}
+		
+		
+			
+			FastByteArrayOutputStream fbos =
+				new FastByteArrayOutputStream();
+			
+			XMLEncoder out = new XMLEncoder(fbos);
+			
+			//ObjectOutputStream out;
+			
+			try {
+				//out = new ObjectOutputStream(fbos);
 
+				JPanel p = new JPanel();
+				p.setName("Teste");
+				
+				out.writeObject(p);
+				out.flush();
+				out.close();
+				fbos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		
+			XMLDecoder xd = new XMLDecoder(fbos.getInputStream());
+			
+			JPanel obj = (JPanel) xd.readObject();
+			
+			System.out.println("->" + obj.getName());
+	}
+	
 }

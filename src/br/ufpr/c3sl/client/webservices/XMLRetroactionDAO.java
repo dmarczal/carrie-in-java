@@ -1,30 +1,28 @@
 package br.ufpr.c3sl.client.webservices;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
 
 import javax.swing.JOptionPane;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import br.ufpr.c3sl.connection.HTTPClientFactory;
 import br.ufpr.c3sl.model.Retroaction;
 import br.ufpr.c3sl.session.Session;
 
 public class XMLRetroactionDAO {
 
 	public static Retroaction save(Retroaction retroaction){
-		URL url;
 		Retroaction r = null;
 		try {
-			url = new URL(HOST.URL + "/"
-					+ Session.getCurrentUser().getId()
-					+ "/mistakes/"
-					+ retroaction.getMistake().getId()
-					+ "/retroactions.xml");
-
+		    String _url = HOST.URL + "/"
+		    				+ Session.getCurrentUser().getId()
+		    				+ "/mistakes/"
+		    				+ retroaction.getMistake().getId()
+		    				+ "/retroactions.xml";
 			
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpURLConnection conn = HTTPClientFactory.getURLConnection(_url);
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "text/xml");

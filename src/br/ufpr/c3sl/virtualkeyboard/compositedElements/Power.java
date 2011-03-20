@@ -117,7 +117,7 @@ public class Power extends ElementCompositeOfFormula {
 	 * @return a string with the formula, e.g. ^(9-10)	
 	 */
 	public String toString() {
-		String s = "("+firstElement+"^("+ formulaInside + "))";
+		String s = firstElement+"^("+ formulaInside +")";
 		return s;
 	}
 	

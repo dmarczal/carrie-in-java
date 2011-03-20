@@ -26,9 +26,10 @@ public class JPanelHTML extends JPanel{
 	
 	private String textualContent = null;
 	private String title = null;
-	private JEditorPane content = new JEditorPane(){
-		private static final long serialVersionUID = 1L;
-	};
+	private transient JEditorPane content = new JEditorPane();
+//	{
+//		private static final long serialVersionUID = 1L;
+//	};
 	private JPanel mainPanel = null;
 
 	public JPanelHTML() {

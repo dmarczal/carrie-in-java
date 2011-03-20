@@ -44,14 +44,32 @@ public abstract class AbstractCorrection implements Correction, Serializable {
 	 * @return -2 If size bigger than the correct size
 	 */
 	public int compareDouble(double correctAnswer, double answer, double error){
-		double diference = Math.abs(answer - correctAnswer);
-		if (diference == 0)
-			return 1;
-		else
-			if (answer < correctAnswer)
-				return -1;
-			else
-				return -2;
+		
+		int greaterOrSmaller = (answer < correctAnswer)?-1:-2;
+
+		final double TOLERANCE = 0.00001;
+		final double TRUCAMENTO = 10000;
+		
+		if (Math.abs(correctAnswer - answer) <= TOLERANCE) {
+			return 1;  
+		}
+		
+		correctAnswer = correctAnswer * TRUCAMENTO;
+
+		int changeValue = (int) (correctAnswer);
+		correctAnswer = (double) changeValue / TRUCAMENTO;
+				
+		answer = answer * TRUCAMENTO;
+		changeValue = (int) (answer);
+		answer = (double) changeValue / TRUCAMENTO;
+		
+//		System.out.println("C "+ correctAnswer);
+//		System.out.println("A "+ answer);
+		
+		if ((correctAnswer ==  answer) || Math.abs(correctAnswer - answer) <= TOLERANCE) {
+			return 1;  
+		}
+		return greaterOrSmaller;
 	}
 	
 	public void saveState(String answer, String correctAnswer, int row, int column){

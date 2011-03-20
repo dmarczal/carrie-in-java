@@ -1,6 +1,7 @@
 package br.ufpr.c3sl.view.principal;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -250,7 +251,12 @@ public class JpCarrie extends JPanel{
 					obj = ObjectByteArray.getByteOfArray(toSave);
 				}
 
-				mistake.setObject(Compressor.compress(obj));
+				try {
+					mistake.setObject(Compressor.compress(obj));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				mistake.setExercise(toSave.getName());
 				mistake.setOa(JpCarrie.this.getName());

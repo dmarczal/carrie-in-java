@@ -25,27 +25,27 @@ public class CorrectionSix extends AbstractCorrection {
 		switch (column) {
 		case 3:
 			if (row == 5)
-				expression = " ( ( ( ℓ/ (3 ^ n)  ) ^ 2 ) * sqrt ( 3 ) ) / 4 ";
+				expression = "(ℓ/3^(n))^(2) * sqrt(3)/4";
 			else
-				expression = " ( ( ( ℓ/ (3 ^ " + row + " )  ) ^ 2 )) * sqrt ( 3 ) / 4 ";
+				expression = "(ℓ/3^("+row+"))^(2) * sqrt(3)/4";
 			break;
 		case 4:
 			if (row == 5)
-				expression = " 3 * ( 4 ^ ( n - 1 ) )";
+				expression = "3 * 4^(n - 1)";
 			else
 				if (row == 0)
 					expression = "1";
 				else
-					expression = "3 * (4 ^ (" + row + "-1 ))";
+					expression = "3 * 4^(" + row + "-1 )";
 			break;
 		case 5:
 			if (row == 5)
-				expression = "3 * (4 ^ (n -1 )) * ( ( ( ℓ/ (3 ^ n) ) ^ 2 ) * sqrt ( 3 ) ) / 4 ";
+				expression = "3 * 4^(n -1) * ( ℓ/3^(n) )^(2) * sqrt(3)/4";
 			else
 				if (row == 0)
-					expression = "( ( ℓ ) ^ 2 ) * sqrt ( 3 )  / 4";
+					expression = "ℓ^(2) * sqrt(3)/4";
 				else
-					expression = "3 * (4 ^ (" + row + "-1 ))" + " * ( ( ( ℓ/3^" + row + " ) ^ 2 ) * sqrt ( 3 ) ) / 4 ";
+					expression = "3 * 4^("+ row +"-1)" + " * (ℓ/3^("+ row +"))^ (2) * sqrt(3)/4";
 			break;	
 		default:
 			break;

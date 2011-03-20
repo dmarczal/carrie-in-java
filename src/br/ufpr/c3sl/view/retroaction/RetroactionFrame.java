@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.util.zip.DataFormatException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -34,7 +36,17 @@ public class RetroactionFrame extends JFrame{
 		this.setName("RetroactionFrame");
 		this.mistake = mistake;
 		
-		byte[] obj = Compressor.decompress(mistake.getObject());
+		byte[] obj = null;
+		try {
+			obj = Compressor.decompress(mistake.getObject());
+		} catch (DataFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		this.mistakePanel = (JPanel) ObjectByteArray.getObject(obj);
 		
 		this.mainPanel = new JPanel();
@@ -162,7 +174,16 @@ public class RetroactionFrame extends JFrame{
 
 	private void resetState() {
 		mainPanel.remove(this.mistakePanel);
-		byte[] obj = Compressor.decompress(mistake.getObject());
+		byte[] obj = null;
+		try {
+			obj = Compressor.decompress(mistake.getObject());
+		} catch (DataFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.mistakePanel = (JPanel) ObjectByteArray.getObject(obj);
 
 		changeMistakePanelName();
