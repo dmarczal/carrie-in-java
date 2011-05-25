@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="fractal"/>
 	<classpathentry kind="src" path="examples"/>
-	<classpathentry kind="src" path="fracta.test"/>
+	<classpathentry kind="src" path="fractal.test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/Fest-Swing/debug-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/Fest-Swing/fest-assert-1.0-sources.jar"/>

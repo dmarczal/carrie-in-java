@@ -81,17 +81,16 @@ public class CompressorTest {
 	
 		Mistake msave = mistake.save();
 		
-		byte[] decompress;
+		byte[] decompress = null;
 		try {
 			decompress = Compressor.decompress(msave.getObject());
+			JPanel newpanel = (JPanel) ObjectByteArray.getObject(decompress);
+			
+			Assert.assertEquals(newpanel.getName(), "Teste");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		JPanel newpanel = (JPanel) ObjectByteArray.getObject(decompress);
-		
-		Assert.assertEquals(newpanel.getName(), "Teste");
 	}
 	
 }
